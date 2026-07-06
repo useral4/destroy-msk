@@ -1,0 +1,99 @@
+.elementor-127 .elementor-element.elementor-element-d29eb97{--display:flex;--flex-direction:column;--container-widget-width:100%;--container-widget-height:initial;--container-widget-flex-grow:0;--container-widget-align-self:initial;--flex-wrap-mobile:wrap;--gap:25px 25px;--row-gap:25px;--column-gap:25px;}.elementor-127 .elementor-element.elementor-element-d29eb97:not(.elementor-motion-effects-element-type-background), .elementor-127 .elementor-element.elementor-element-d29eb97 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-color:#362D2D;}.elementor-theme-builder-content-area{height:400px;}.elementor-location-header:before, .elementor-location-footer:before{content:"";display:table;clear:both;}/* Start custom CSS for html, class: .elementor-element-ed894d1 */.elementor-127 .elementor-element.elementor-element-ed894d1 .footerWrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    font-family: Manrope, sans-serif;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.elementor-127 .elementor-element.elementor-element-ed894d1 .wrapper{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.elementor-127 .elementor-element.elementor-element-ed894d1 .menu{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    text-align: center;
+    gap: 15px;
+}
+
+.elementor-127 .elementor-element.elementor-element-ed894d1 .footerItem{
+    display: flex;
+    flex-direction: column;
+    gap: 14.400px;
+}
+
+.elementor-127 .elementor-element.elementor-element-ed894d1 .logo{
+    width: 325px;
+    height: auto;
+}
+
+.elementor-127 .elementor-element.elementor-element-ed894d1 .icon{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.elementor-127 .elementor-element.elementor-element-ed894d1 .icon svg{
+    width: 32px;
+    height: 32px;
+}
+
+.elementor-127 .elementor-element.elementor-element-ed894d1 .social {
+    display: flex;
+    gap: 15px;
+}
+
+.elementor-127 .elementor-element.elementor-element-ed894d1 .social a {
+    width: 30px;
+    height: 30px;
+}
+
+.elementor-127 .elementor-element.elementor-element-ed894d1 a{
+    color: #fff;
+}
+
+.elementor-127 .elementor-element.elementor-element-ed894d1 .lawInfo{
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+}
+
+.elementor-127 .elementor-element.elementor-element-ed894d1 .lawInfo a:last-child{
+    margin-left: auto;
+}
+
+@media(max-width: 1200px){
+    .elementor-127 .elementor-element.elementor-element-ed894d1 .wrapper{
+        grid-template-columns: repeat(1, 1fr);
+        gap: 10px;
+    }
+
+    .elementor-127 .elementor-element.elementor-element-ed894d1 .lawInfo{
+        flex-direction: column;
+        align-items: center;
+        font-size: 12px;
+        gap: 10px;
+    }
+
+    .elementor-127 .elementor-element.elementor-element-ed894d1 .lawInfo a:last-child{
+        margin-left: 0;
+    }
+
+    .elementor-127 .elementor-element.elementor-element-ed894d1 .icon,
+    .elementor-127 .elementor-element.elementor-element-ed894d1 .social,
+    .elementor-127 .elementor-element.elementor-element-ed894d1 .footerItem{
+        align-items: center;
+        text-align: center;
+        font-size: 14px;
+    }
+    
+    .elementor-127 .elementor-element.elementor-element-ed894d1 .menu{
+        grid-template-columns: repeat(1, 1fr);
+    }
+}/* End custom CSS */

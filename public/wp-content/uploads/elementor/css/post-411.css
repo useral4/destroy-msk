@@ -1,0 +1,218 @@
+.elementor-411 .elementor-element.elementor-element-5ac5d0b{--display:flex;--flex-direction:column;--container-widget-width:100%;--container-widget-height:initial;--container-widget-flex-grow:0;--container-widget-align-self:initial;--flex-wrap-mobile:wrap;--gap:50px 50px;--row-gap:50px;--column-gap:50px;}.elementor-411 .elementor-element.elementor-element-5ac5d0b.e-con{--flex-grow:0;--flex-shrink:0;}@media(max-width:700px){.elementor-411 .elementor-element.elementor-element-5ac5d0b{--gap:25px 25px;--row-gap:25px;--column-gap:25px;}}/* Start custom CSS for html, class: .elementor-element-ed6ff0b */.elementor-411 .elementor-element.elementor-element-ed6ff0b .wrapper{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.elementor-411 .elementor-element.elementor-element-ed6ff0b .content{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.elementor-411 .elementor-element.elementor-element-ed6ff0b .h1{
+    text-align: left;
+}
+
+.elementor-411 .elementor-element.elementor-element-ed6ff0b p{
+    font-family: "Manrope", Sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
+    margin: 0;
+}
+
+.elementor-411 .elementor-element.elementor-element-ed6ff0b .contact{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-family: "Manrope", Sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;   
+}
+
+.elementor-411 .elementor-element.elementor-element-ed6ff0b a{
+    color: #B01212;
+}
+
+.elementor-411 .elementor-element.elementor-element-ed6ff0b .social {
+    display: flex;
+    gap: 15px;
+}
+
+.elementor-411 .elementor-element.elementor-element-ed6ff0b .social a {
+    width: 30px;
+    height: 30px;
+}
+
+.elementor-411 .elementor-element.elementor-element-ed6ff0b iframe{
+    height: 100%;
+    border-radius: 20px;
+}
+
+@media(max-width: 1200px){
+    .elementor-411 .elementor-element.elementor-element-ed6ff0b .wrapper{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    
+    .elementor-411 .elementor-element.elementor-element-ed6ff0b .h1,
+    .elementor-411 .elementor-element.elementor-element-ed6ff0b p{
+        text-align: center;
+    }
+    
+    .elementor-411 .elementor-element.elementor-element-ed6ff0b p{
+        font-size: 14px;
+    }
+    
+    .elementor-411 .elementor-element.elementor-element-ed6ff0b .contact,
+    .elementor-411 .elementor-element.elementor-element-ed6ff0b .social{
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .elementor-411 .elementor-element.elementor-element-ed6ff0b iframe{
+        height: 250px;
+    }
+}
+
+@media(max-width: 700px){
+    .elementor-411 .elementor-element.elementor-element-ed6ff0b p{
+        font-size: 12px;
+    }
+    
+    .elementor-411 .elementor-element.elementor-element-ed6ff0b .contact,
+    .elementor-411 .elementor-element.elementor-element-ed6ff0b .social{
+        font-size: 14px;
+        gap: 5px;
+    }
+    
+    .elementor-411 .elementor-element.elementor-element-ed6ff0b .content{
+        gap: 10px;
+    }
+    
+    .elementor-411 .elementor-element.elementor-element-ed6ff0b iframe{
+        height: 200px;
+    }
+}/* End custom CSS */
+/* Start custom CSS for global, class: .elementor-global-4659 */.elementor-411 .elementor-element.elementor-global-4659 .wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 50px;
+    background-image: url('/wp-content/uploads/2025/09/grunge-bg-vector.jpg');
+    border-radius: 20px;
+}
+
+.elementor-411 .elementor-element.elementor-global-4659 .h2{
+    color: #fff;
+}
+
+.elementor-411 .elementor-element.elementor-global-4659 .h3{
+    font-size: 20px;
+}
+
+.elementor-411 .elementor-element.elementor-global-4659 .content{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.elementor-411 .elementor-element.elementor-global-4659 .contentItem{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 25px;
+    background-color: #fff;
+    border-radius: 20px;
+    position: relative;
+}
+
+.elementor-411 .elementor-element.elementor-global-4659 .num{
+    font-family: "Merriweather", Sans-serif;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 900;
+    position: absolute;
+    top: 10px;
+    left: auto;
+    right: 20px;
+    z-index: 1;
+}
+
+.elementor-411 .elementor-element.elementor-global-4659 .num:before{
+    content: "";
+    position: absolute;
+    top: auto;
+    bottom: 50%;
+    left: auto;
+    right: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: #B01212;
+    z-index: -1;
+    transform: translate(50%, 50%);
+    border-radius: 50%;
+    box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.25);
+}
+
+.elementor-411 .elementor-element.elementor-global-4659 .title{
+    font-family: "Merriweather", Sans-serif;
+    font-size: 18px;
+    color: #000;
+    text-transform: uppercase;
+    text-align: left;
+    text-wrap: balance;
+    font-weight: 600;
+    line-height: 1.25em;
+}
+
+.elementor-411 .elementor-element.elementor-global-4659 p{
+    margin-bottom: 0;
+    font-family: "Manrope", Sans-Serif;
+    font-size: 16px;
+    text-wrap: balance;
+    color: #000;
+}
+
+@media(max-width: 1440px){
+    .elementor-411 .elementor-element.elementor-global-4659 .title{
+        font-size: 16px;
+    }
+}
+
+@media(max-width: 1200px){
+    .elementor-411 .elementor-element.elementor-global-4659 .wrapper{
+        padding: 50px 25px;
+    }
+    
+    .elementor-411 .elementor-element.elementor-global-4659 .content{
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .elementor-411 .elementor-element.elementor-global-4659 .title{
+        font-size: 14px;
+    }
+    
+    .elementor-411 .elementor-element.elementor-global-4659 p{
+        font-size: 12px;
+    }
+}
+
+@media(max-width: 700px){
+    .elementor-411 .elementor-element.elementor-global-4659 .wrapper{
+        padding: 25px 10px;
+    }
+    
+    .elementor-411 .elementor-element.elementor-global-4659 .content{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    
+    .elementor-411 .elementor-element.elementor-global-4659 .contentItem{
+        padding: 25px 10px;
+    }
+    
+    .elementor-411 .elementor-element.elementor-global-4659 .title{
+        font-size: 12px;
+    }
+}/* End custom CSS */

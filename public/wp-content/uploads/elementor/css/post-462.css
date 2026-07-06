@@ -1,0 +1,281 @@
+.elementor-462 .elementor-element.elementor-element-68e0a4d{--display:flex;--flex-direction:column;--container-widget-width:100%;--container-widget-height:initial;--container-widget-flex-grow:0;--container-widget-align-self:initial;--flex-wrap-mobile:wrap;--gap:50px 50px;--row-gap:50px;--column-gap:50px;}@media(max-width:700px){.elementor-462 .elementor-element.elementor-element-68e0a4d{--gap:25px 25px;--row-gap:25px;--column-gap:25px;}}/* Start custom CSS for html, class: .elementor-element-1948d71 */.elementor-462 .elementor-element.elementor-element-1948d71 .wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.elementor-462 .elementor-element.elementor-element-1948d71 .content{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.elementor-462 .elementor-element.elementor-element-1948d71 p{
+    font-family: "Manrope", Sans-Serif;
+    font-size: 16px;
+    color: #000;
+    text-align: justify;
+}
+
+.elementor-462 .elementor-element.elementor-element-1948d71 .contentItem:nth-child(2){
+    display: flex;
+    flex-direction: row;
+    background-image: url('/wp-content/uploads/2025/09/orig.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 20px;
+}
+
+.elementor-462 .elementor-element.elementor-element-1948d71 .bannerContent{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 25px;
+    width: 300px;
+    z-index: 1;
+}
+
+.elementor-462 .elementor-element.elementor-element-1948d71 .bannerContent:before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 95%;
+    background-color: #000;
+    z-index: -1;
+    border-radius: 20px 0px 40px 0px;
+}
+
+.elementor-462 .elementor-element.elementor-element-1948d71 .bannerContent:after{
+    content: "";
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    width: 80%;
+    height: 5%;
+    background-color: #ED1C1C;
+    z-index: -1;
+    border-radius: 0px 0px 20px 20px;
+}
+
+.elementor-462 .elementor-element.elementor-element-1948d71 .logo{
+    width: 325px;
+    height: auto;
+}
+
+.elementor-462 .elementor-element.elementor-element-1948d71 .title{
+    font-family: "Merriweather", Sans-serif;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 600;
+    line-height: 1.25em;
+    color: #fff;
+}
+
+.elementor-462 .elementor-element.elementor-element-1948d71 .list{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.elementor-462 .elementor-element.elementor-element-1948d71 .listItem{
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    align-items: center;
+    gap: 15px;
+    font-family: "Manrope", Sans-Serif;
+    font-size: 16px;
+    color: #fff;
+}
+
+.elementor-462 .elementor-element.elementor-element-1948d71 .listItem svg{
+    width: 50px;
+    height: 50px;
+}
+
+.elementor-462 .elementor-element.elementor-element-1948d71 .bannerContent p{
+    color: #fff;
+    margin-bottom: 25px;
+}
+
+@media(max-width: 1440px){
+    .elementor-462 .elementor-element.elementor-element-1948d71 .title{
+        font-size: 18px;
+    }
+}
+
+@media(max-width: 1200px){
+    .elementor-462 .elementor-element.elementor-element-1948d71 .content{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    
+    .elementor-462 .elementor-element.elementor-element-1948d71 .listItem svg{
+        width: 30px;
+        height: 30px;
+    }
+    
+    .elementor-462 .elementor-element.elementor-element-1948d71 .title{
+        font-size: 16px;
+    }
+    
+    .elementor-462 .elementor-element.elementor-element-1948d71 p{
+        font-size: 14px;
+    }
+    
+    .elementor-462 .elementor-element.elementor-element-1948d71 .listItem{
+        grid-template-columns: 30px 1fr;
+        gap: 10px;
+    }
+}
+
+@media(max-width: 700px){
+    .elementor-462 .elementor-element.elementor-element-1948d71 p{
+        font-size: 12px;
+    }
+
+    .elementor-462 .elementor-element.elementor-element-1948d71 .title{
+        font-size: 14px;
+    }
+    
+    .elementor-462 .elementor-element.elementor-element-1948d71 .bannerContent{
+        padding: 25px 10px;
+        width: 100%;
+    }
+    
+    .elementor-462 .elementor-element.elementor-element-1948d71 .bannerContent:before{
+        border-radius: 20px 20px 40px 0px;
+    }
+    
+    .elementor-462 .elementor-element.elementor-element-1948d71 .logo{
+        width: 225px;
+    }
+    
+    .elementor-462 .elementor-element.elementor-element-1948d71 .listItem{
+        font-size: 14px;
+    }
+}/* End custom CSS */
+/* Start custom CSS for global, class: .elementor-global-4659 */.elementor-462 .elementor-element.elementor-global-4659 .wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 50px;
+    background-image: url('/wp-content/uploads/2025/09/grunge-bg-vector.jpg');
+    border-radius: 20px;
+}
+
+.elementor-462 .elementor-element.elementor-global-4659 .h2{
+    color: #fff;
+}
+
+.elementor-462 .elementor-element.elementor-global-4659 .h3{
+    font-size: 20px;
+}
+
+.elementor-462 .elementor-element.elementor-global-4659 .content{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.elementor-462 .elementor-element.elementor-global-4659 .contentItem{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 25px;
+    background-color: #fff;
+    border-radius: 20px;
+    position: relative;
+}
+
+.elementor-462 .elementor-element.elementor-global-4659 .num{
+    font-family: "Merriweather", Sans-serif;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 900;
+    position: absolute;
+    top: 10px;
+    left: auto;
+    right: 20px;
+    z-index: 1;
+}
+
+.elementor-462 .elementor-element.elementor-global-4659 .num:before{
+    content: "";
+    position: absolute;
+    top: auto;
+    bottom: 50%;
+    left: auto;
+    right: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: #B01212;
+    z-index: -1;
+    transform: translate(50%, 50%);
+    border-radius: 50%;
+    box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.25);
+}
+
+.elementor-462 .elementor-element.elementor-global-4659 .title{
+    font-family: "Merriweather", Sans-serif;
+    font-size: 18px;
+    color: #000;
+    text-transform: uppercase;
+    text-align: left;
+    text-wrap: balance;
+    font-weight: 600;
+    line-height: 1.25em;
+}
+
+.elementor-462 .elementor-element.elementor-global-4659 p{
+    margin-bottom: 0;
+    font-family: "Manrope", Sans-Serif;
+    font-size: 16px;
+    text-wrap: balance;
+    color: #000;
+}
+
+@media(max-width: 1440px){
+    .elementor-462 .elementor-element.elementor-global-4659 .title{
+        font-size: 16px;
+    }
+}
+
+@media(max-width: 1200px){
+    .elementor-462 .elementor-element.elementor-global-4659 .wrapper{
+        padding: 50px 25px;
+    }
+    
+    .elementor-462 .elementor-element.elementor-global-4659 .content{
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .elementor-462 .elementor-element.elementor-global-4659 .title{
+        font-size: 14px;
+    }
+    
+    .elementor-462 .elementor-element.elementor-global-4659 p{
+        font-size: 12px;
+    }
+}
+
+@media(max-width: 700px){
+    .elementor-462 .elementor-element.elementor-global-4659 .wrapper{
+        padding: 25px 10px;
+    }
+    
+    .elementor-462 .elementor-element.elementor-global-4659 .content{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    
+    .elementor-462 .elementor-element.elementor-global-4659 .contentItem{
+        padding: 25px 10px;
+    }
+    
+    .elementor-462 .elementor-element.elementor-global-4659 .title{
+        font-size: 12px;
+    }
+}/* End custom CSS */

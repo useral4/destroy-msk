@@ -1,0 +1,33 @@
+.elementor-536 .elementor-element.elementor-element-73b1073{--display:flex;--flex-direction:column;--container-widget-width:100%;--container-widget-height:initial;--container-widget-flex-grow:0;--container-widget-align-self:initial;--flex-wrap-mobile:wrap;--gap:25px 25px;--row-gap:25px;--column-gap:25px;}@media(max-width:700px){.elementor-536 .elementor-element.elementor-element-73b1073{--gap:25px 25px;--row-gap:25px;--column-gap:25px;}}/* Start custom CSS for shortcode, class: .elementor-element-0f0d58e */.elementor-536 .elementor-element.elementor-element-0f0d58e .gallery{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    line-height: 0;
+}
+
+.elementor-536 .elementor-element.elementor-element-0f0d58e img{
+    object-fit: cover;
+    width: 100%;
+    height: 350px;
+    transition: 0.75s;
+    padding: 10px;
+    border: solid 1px #ED1C1C;
+    border-radius: 20px;
+    object-position: center top;
+}
+
+.elementor-536 .elementor-element.elementor-element-0f0d58e a:hover img{
+    object-position: bottom center !important;
+}
+
+@media(max-width: 1200px){
+    .elementor-536 .elementor-element.elementor-element-0f0d58e .gallery{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 700px){
+    .elementor-536 .elementor-element.elementor-element-0f0d58e .gallery{
+        grid-template-columns: repeat(1, 1fr);
+    }
+}/* End custom CSS */

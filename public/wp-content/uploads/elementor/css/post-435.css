@@ -1,0 +1,96 @@
+.elementor-435 .elementor-element.elementor-element-684ce2c{--display:flex;--flex-direction:column;--container-widget-width:100%;--container-widget-height:initial;--container-widget-flex-grow:0;--container-widget-align-self:initial;--flex-wrap-mobile:wrap;--gap:50px 50px;--row-gap:50px;--column-gap:50px;}@media(max-width:700px){.elementor-435 .elementor-element.elementor-element-684ce2c{--gap:25px 25px;--row-gap:25px;--column-gap:25px;}}/* Start custom CSS for html, class: .elementor-element-3a10358 */.elementor-435 .elementor-element.elementor-element-3a10358 .wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.elementor-435 .elementor-element.elementor-element-3a10358 .priceContent{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.elementor-435 .elementor-element.elementor-element-3a10358 .price-table,
+.elementor-435 .elementor-element.elementor-element-3a10358 .price-tableFull{
+    margin: 0;
+    width: 100%;
+    font-family: "Manrope", Sans-Serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+    border: none;
+}
+
+.elementor-435 .elementor-element.elementor-element-3a10358 thead > tr > th{
+    font-weight: 700;
+}
+
+.elementor-435 .elementor-element.elementor-element-3a10358 thead > tr > th:nth-child(1){
+    text-align: left;
+}
+
+.elementor-435 .elementor-element.elementor-element-3a10358 thead > tr > th:nth-child(2),
+.elementor-435 .elementor-element.elementor-element-3a10358 thead > tr > th:nth-child(3),
+.elementor-435 .elementor-element.elementor-element-3a10358 tr > td:nth-child(2),
+.elementor-435 .elementor-element.elementor-element-3a10358 tr > td:nth-child(3){
+    text-align: center;
+}
+
+.elementor-435 .elementor-element.elementor-element-3a10358 th, td{
+    border: none !important;
+    background: transparent !important;
+    vertical-align: middle !important;
+}
+
+.elementor-435 .elementor-element.elementor-element-3a10358 tbody > tr:nth-child(odd){
+    background-color: #F5F5F5;
+    border-radius: 20px !important;
+}
+
+.elementor-435 .elementor-element.elementor-element-3a10358 tbody > tr:nth-child(odd) td:first-child{
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.elementor-435 .elementor-element.elementor-element-3a10358 tbody > tr:nth-child(odd) td:last-child{
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.elementor-435 .elementor-element.elementor-element-3a10358 p{
+    margin-bottom: 0;
+    font-family: "Manrope", Sans-Serif;
+    font-size: 16px;
+    color: #000;
+}
+
+@media(max-width: 1200px){
+    .elementor-435 .elementor-element.elementor-element-3a10358 .price-table{
+        font-size: 12px;
+    }
+    
+    .elementor-435 .elementor-element.elementor-element-3a10358 p{
+        font-size: 12px;
+    }
+}
+
+@media(max-width: 700px){
+    .elementor-435 .elementor-element.elementor-element-3a10358 .wrapper{
+        gap: 25px;
+    }
+
+    /*.elementor-435 .elementor-element.elementor-element-3a10358 .scroll{*/
+    /*    overflow: hidden;*/
+    /*    overflow-x: scroll;*/
+    /*}*/
+    
+    /*.elementor-435 .elementor-element.elementor-element-3a10358 .price-table,*/
+    /*.elementor-435 .elementor-element.elementor-element-3a10358 .price-tableFull{*/
+    /*    width: 700px;*/
+    /*}*/
+    
+    .elementor-435 .elementor-element.elementor-element-3a10358 p{
+        font-size: 12px;
+        text-align: center;
+    }
+}/* End custom CSS */
