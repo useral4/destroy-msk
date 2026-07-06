@@ -16,11 +16,30 @@ const pages = manifest.pages as RenderedPage[];
 const compatibilityLayer = String.raw`
 <style id="destroy-static-compatibility">
   html {
+    max-width: 100%;
+    overflow-x: hidden;
     scroll-behavior: smooth;
+  }
+
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   body.destroy-menu-open {
     overflow: hidden;
+  }
+
+  .reviews {
+    overflow: hidden;
+  }
+
+  .reviews .prev-button {
+    left: 0 !important;
+  }
+
+  .reviews .next-button {
+    right: 0 !important;
   }
 
   .elementor-location-popup {

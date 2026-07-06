@@ -2,8 +2,12 @@ import type { Metadata } from "next";
 
 const siteUrl = "https://destroy-msk.ru";
 const criticalCompatibilityCss = String.raw`
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;max-width:100%;overflow-x:hidden}
+body{max-width:100%;overflow-x:hidden}
 body.destroy-menu-open{overflow:hidden}
+.reviews{overflow:hidden}
+.reviews .prev-button{left:0!important}
+.reviews .next-button{right:0!important}
 .elementor-location-popup{display:none}
 .elementor-location-popup.destroy-popup-open{position:fixed!important;inset:0!important;display:flex!important;align-items:center!important;justify-content:center!important;width:100vw!important;height:100vh!important;padding:20px!important;background:rgba(0,0,0,.8)!important;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:999999!important;opacity:1!important;pointer-events:all!important}
 .elementor-location-popup.destroy-popup-open>.e-con,.elementor-location-popup.destroy-popup-open>.elementor-element{width:min(650px,92vw)!important;max-height:90vh!important;overflow:visible!important;position:relative!important}
