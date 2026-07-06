@@ -76,7 +76,7 @@ export default function Home() {
               Рассчитать стоимость <Calculator size={18} />
             </a>
             <a className="button button--ghost" href="tel:+74991106077">
-              <Phone size={18} /> +7 (499) 110-60-77
+              <Phone size={18} /> +7 (916)-006-77-77
             </a>
           </motion.div>
         </div>
@@ -243,7 +243,7 @@ function Header() {
         <Link href="/contakts/">Контакты</Link>
       </nav>
       <a className="header__phone" href="tel:+74991106077">
-        <Phone size={17} /> +7 (499) 110-60-77
+        <Phone size={17} /> +7 (916)-006-77-77
       </a>
     </header>
   );
@@ -265,7 +265,7 @@ function Footer() {
         </div>
         <div>
           <strong>Контакты</strong>
-          <a href="tel:+74991106077">+7 (499) 110-60-77</a>
+          <a href="tel:+74991106077">+7 (916)-006-77-77</a>
           <span><MapPin size={16} /> Москва и область</span>
         </div>
       </div>

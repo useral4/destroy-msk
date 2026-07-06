@@ -35,6 +35,21 @@ async function fetchAll(type) {
   return items;
 }
 
+async function fetchSitemapUrls(path) {
+  const response = await fetch(`${origin}/${path}`, {
+    headers: {
+      "User-Agent": "Mozilla/5.0 (compatible; DESTROY migration bot)",
+    },
+  });
+
+  if (!response.ok) {
+    return [];
+  }
+
+  const xml = await response.text();
+  return [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
+}
+
 function stripTags(html = "") {
   return html
     .replace(/<script[\s\S]*?<\/script>/gi, "")
@@ -51,7 +66,8 @@ function cleanHtml(html = "") {
     .replace(/\sclass="[^"]*"/g, "")
     .replace(/\sid="[^"]*"/g, "")
     .replace(/\sstyle="[^"]*"/g, "")
-    .replace(/https:\/\/destroy-msk\.ru/g, "");
+    .replace(/(src|srcset)="\/wp-content/gi, `$1="${origin}/wp-content`)
+    .replace(/href="https:\/\/destroy-msk\.ru\//g, 'href="/');
 }
 
 function normalizeItem(item, type) {
@@ -74,14 +90,146 @@ function normalizeItem(item, type) {
     canonical: item.yoast_head_json?.canonical || `${origin}${link.pathname}`,
     date: item.modified_gmt || item.date_gmt || null,
     featured,
+    categories: item.categories ?? [],
+    author: item.author ?? null,
     content,
+  };
+}
+
+function archiveDescription(title) {
+  return `${title}: выполненные демонтажные работы в Москве и Московской области. Аккуратная разборка, погрузка и вывоз строительного мусора.`;
+}
+
+function archiveContent(title, description, items) {
+  const cards = items
+    .map((item) => {
+      const img = item.featured
+        ? `<img src="${item.featured}" alt="${item.title}" loading="lazy" />`
+        : "";
+
+      return `<article class="archive-card">
+        ${img}
+        <div>
+          <h3>${item.title}</h3>
+          <p>${item.description}</p>
+          <a href="/${item.slug}/">Подробнее</a>
+        </div>
+      </article>`;
+    })
+    .join("");
+
+  return `<section class="archive-list">
+    <h2>${title}</h2>
+    <p>${description}</p>
+    <div class="archive-grid">${cards}</div>
+  </section>`;
+}
+
+function normalizeArchive({ id, slug, title, description, canonical, date, featured, items, type }) {
+  return {
+    id,
+    type,
+    slug,
+    title,
+    description,
+    canonical,
+    date,
+    featured,
+    categories: [],
+    author: null,
+    content: archiveContent(title, description, items),
+  };
+}
+
+function normalizeQuizPage(slug) {
+  const title = "Узнайте стоимость демонтажа онлайн за 2 минуты";
+  const description = "Калькулятор DESTROY для предварительной оценки демонтажных работ в Москве и Московской области.";
+
+  return {
+    id: `quizle-${slug}`,
+    type: "quizle",
+    slug,
+    title,
+    description,
+    canonical: `${origin}/${slug}/`,
+    date: "2025-10-06T11:34:06",
+    featured: null,
+    categories: [],
+    author: null,
+    content: `<section class="quiz-fallback">
+      <h2>${title}</h2>
+      <p>${description}</p>
+      <form>
+        <label>Тип объекта<select><option>Квартира</option><option>Дом</option><option>Коммерческое помещение</option></select></label>
+        <label>Какие работы нужны<select><option>Демонтаж пола</option><option>Демонтаж перегородок</option><option>Полный демонтаж под ключ</option></select></label>
+        <label>Площадь, м²<input type="number" min="1" placeholder="Например, 60" /></label>
+        <label>Телефон<input type="tel" placeholder="+7 (___) ___-__-__" /></label>
+        <button type="button">Получить расчет цены</button>
+      </form>
+    </section>`,
   };
 }
 
 const pages = await fetchAll("pages");
 const posts = await fetchAll("posts");
+const categories = await fetchAll("categories");
+const users = await fetchAll("users");
+const sitemapUrls = [
+  ...(await fetchSitemapUrls("post-sitemap.xml")),
+  ...(await fetchSitemapUrls("page-sitemap.xml")),
+  ...(await fetchSitemapUrls("quizle-sitemap.xml")),
+  ...(await fetchSitemapUrls("category-sitemap.xml")),
+  ...(await fetchSitemapUrls("author-sitemap.xml")),
+];
 
-const normalized = [...pages.map((item) => normalizeItem(item, "page")), ...posts.map((item) => normalizeItem(item, "post"))]
+const normalizedPosts = posts.map((item) => normalizeItem(item, "post"));
+const normalizedPages = pages.map((item) => normalizeItem(item, "page"));
+const sitemapSlugs = new Set(sitemapUrls.map((url) => new URL(url).pathname.replace(/^\/|\/$/g, "")));
+
+const categoryArchives = categories
+  .filter((category) => category.count > 0)
+  .map((category) => {
+    const slug = new URL(category.link).pathname.replace(/^\/|\/$/g, "");
+    const title = `Архивы ${category.name}`;
+    const items = normalizedPosts.filter((post) => post.categories.includes(category.id));
+
+    return normalizeArchive({
+      id: `category-${category.id}`,
+      type: "category",
+      slug,
+      title,
+      description: category.yoast_head_json?.description || archiveDescription(title),
+      canonical: `${origin}/${slug}/`,
+      date: items[0]?.date ?? null,
+      featured: items[0]?.featured ?? null,
+      items,
+    });
+  })
+  .filter((archive) => sitemapSlugs.has(archive.slug));
+
+const authorArchives = users.map((user) => {
+  const slug = new URL(user.link).pathname.replace(/^\/|\/$/g, "");
+  const title = `${user.name}, Автор в DESTROY`;
+  const items = normalizedPosts.filter((post) => post.author === user.id);
+
+  return normalizeArchive({
+    id: `author-${user.id}`,
+    type: "author",
+    slug,
+    title,
+    description: user.yoast_head_json?.description || "DESTROY - услуги демонтажа в Москве и Московской области.",
+    canonical: `${origin}/${slug}/`,
+    date: items[0]?.date ?? null,
+    featured: items[0]?.featured ?? null,
+    items,
+  });
+}).filter((archive) => sitemapSlugs.has(archive.slug));
+
+const quizPages = [...sitemapSlugs]
+  .filter((slug) => slug === "quizle" || slug.startsWith("quizle/"))
+  .map((slug) => normalizeQuizPage(slug));
+
+const normalized = [...normalizedPages, ...normalizedPosts, ...categoryArchives, ...authorArchives, ...quizPages]
   .filter((item) => item.content)
   .sort((a, b) => a.slug.localeCompare(b.slug, "ru"));
 

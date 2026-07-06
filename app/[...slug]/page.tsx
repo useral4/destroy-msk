@@ -81,7 +81,7 @@ export default async function ContentPage({ params }: Props) {
                 Рассчитать стоимость <ArrowRight size={18} />
               </a>
               <a className="button button--ghost" href="tel:+74991106077">
-                <Phone size={18} /> Позвонить
+                <Phone size={18} /> +7 (916)-006-77-77
               </a>
             </div>
           </div>
@@ -118,7 +118,7 @@ function InnerHeader() {
         <Link href="/o-kompanii/">О компании</Link>
         <Link href="/contakts/">Контакты</Link>
       </nav>
-      <a href="tel:+74991106077">+7 (499) 110-60-77</a>
+      <a href="tel:+74991106077">+7 (916)-006-77-77</a>
     </header>
   );
 }
