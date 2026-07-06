@@ -3,6 +3,8 @@ import contentData from "../data/pages.json";
 
 const base = "https://destroy-msk.ru";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   return contentData.pages.map((page) => ({
     url: page.slug ? `${base}/${page.slug}/` : `${base}/`,
