@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: destroy-msk
+    runtime: docker
+    repo: https://github.com/useral4/destroy-msk
+    branch: main
+    region: oregon
+    plan: starter
+    autoDeploy: true
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
