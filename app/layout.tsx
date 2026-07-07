@@ -29,11 +29,19 @@ body.destroy-menu-open{overflow:hidden}
 .elementor-6457 input[type=file]{width:100%;min-height:38px;border:0!important;border-radius:999px!important;background:rgba(255,255,255,.1)!important;color:#fff!important;font:500 14px/1.2 Manrope,Arial,sans-serif!important}
 .elementor-6457 input[type=file]::file-selector-button{margin-right:12px;padding:11px 20px;border:0;border-radius:999px;background:#c91515;color:#fff;font:700 14px/1 Manrope,Arial,sans-serif;cursor:pointer;transition:background 160ms ease,transform 160ms ease}
 .elementor-6457 input[type=file]::file-selector-button:hover{background:#e11a1a;transform:translateY(-1px)}
-.destroy-scroll-video-target{position:relative!important;overflow:hidden!important;isolation:isolate;background-image:none!important;background-color:#2c2323!important}
-.destroy-scroll-video-target::before{background-image:none!important}
-.destroy-scroll-video-target>.destroy-scroll-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;opacity:1;filter:brightness(.88) contrast(1.18) saturate(.95)}
-.destroy-scroll-video-target::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(120deg,rgba(0,0,0,.46),rgba(0,0,0,.12) 48%,rgba(0,0,0,.42))}
-.destroy-scroll-video-target>:not(.destroy-scroll-video){position:relative;z-index:2}
+.destroy-scroll-scene{position:relative;width:100vw;min-height:220vh;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);isolation:isolate}
+.destroy-scroll-scene__sticky{position:sticky;top:0;min-height:100vh;overflow:hidden;border-radius:0;background:#201818;isolation:isolate;box-shadow:none}
+.destroy-scroll-scene__sticky.is-fixed{position:fixed;top:0;left:0;width:100vw;z-index:40}
+.destroy-scroll-scene__sticky.is-after{position:absolute;top:auto;bottom:0;left:0;width:100vw}
+.destroy-scroll-scene__canvas,.destroy-scroll-scene__video-source{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
+.destroy-scroll-scene__video-source{opacity:0}
+.destroy-scroll-scene__sticky::before{content:"";position:absolute;inset:-20%;z-index:1;pointer-events:none;background:radial-gradient(circle at var(--destroy-scene-glow-x,20%) var(--destroy-scene-glow-y,15%),rgba(176,18,18,.35),transparent 34%),linear-gradient(120deg,rgba(0,0,0,.74),rgba(0,0,0,.22) 48%,rgba(0,0,0,.68));mix-blend-mode:normal}
+.destroy-scroll-scene__sticky::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 88px),repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0 1px,transparent 1px 88px);opacity:var(--destroy-scene-grid-opacity,.16)}
+.destroy-scroll-scene__shade{position:absolute;inset:auto -18% -35% -18%;height:52%;z-index:2;pointer-events:none;background:radial-gradient(ellipse at center,rgba(176,18,18,.4),transparent 64%);transform:translateY(var(--destroy-scene-shade-y,0%));filter:blur(18px)}
+.destroy-scroll-scene__overlay{position:relative!important;z-index:3!important;width:min(1120px,calc(100vw - 48px));min-height:100vh;height:auto;margin:0 auto;background-image:none!important;background-color:transparent!important;border-radius:0!important}
+.destroy-scroll-scene__overlay::before{background-image:none!important}
+.destroy-scroll-scene__overlay>*{position:relative;z-index:3}
+@media (max-width:700px){.destroy-scroll-scene{min-height:175vh}.destroy-scroll-scene__sticky{top:0;min-height:100vh}.destroy-scroll-scene__overlay{width:min(100vw - 20px,100%);min-height:100vh}}
 @media (max-width:1200px){.elementor-43 .elementor-element.elementor-element-ab81c16 .megaMenu{position:static!important}.elementor-43 .elementor-element.elementor-element-ab81c16 .menuIcon{position:relative;z-index:1000000;width:40px;height:40px;padding:0;border:1px solid rgba(0,0,0,.12);border-radius:999px;background:#fff;align-items:center;justify-content:center;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.08)}.elementor-43 .elementor-element.elementor-element-ab81c16 .menuIcon span{width:18px;height:2px;border-radius:3px;transition:transform 180ms ease,opacity 180ms ease}.elementor-43 .elementor-element.elementor-element-ab81c16 .menuItems{position:fixed!important;inset:0!important;display:flex!important;width:100vw!important;min-height:100dvh!important;padding:96px 24px 36px!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;gap:22px!important;background:rgba(255,255,255,.97)!important;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:none!important;text-align:center!important;z-index:999998!important;opacity:0;pointer-events:none;transform:translateY(-10px);transition:opacity 220ms ease,transform 220ms ease}.elementor-43 .elementor-element.elementor-element-ab81c16 .menuItems.active{opacity:1;pointer-events:auto;transform:translateY(0)}.elementor-43 .elementor-element.elementor-element-ab81c16 .menuItem a{color:#111!important;font-size:16px!important;font-weight:700!important;line-height:1.2!important;letter-spacing:0!important}}
 @media (max-width:700px){.elementor-location-popup.destroy-popup-open{padding:12px!important}.destroy-popup-close{top:8px;right:8px;width:34px;height:34px;font-size:24px}.elementor-4938 .elementor-element.elementor-element-a1da801,.destroy-article-card{min-height:350px;border-radius:18px!important}.elementor-4938 .elementor-element.elementor-element-a1da801>.e-con-inner,.destroy-article-card>.e-con-inner{padding:0 22px 24px!important}.elementor-4938 .elementor-element.elementor-element-a1da801 .elementor-heading-title,.elementor-4938 .elementor-element.elementor-element-a1da801 .bal,.destroy-article-card .elementor-heading-title,.destroy-article-card .bal{font-size:20px!important}.elementor-43 .elementor-element.elementor-element-ab81c16 .menuItems{padding-top:88px!important;gap:20px!important}}
 `;
@@ -154,15 +162,14 @@ const criticalCompatibilityJs = String.raw`
       }
     });
 
-    var scrollVideoItems = [];
-    var scrollVideoFrame = 0;
-    var scrollVideoSelector = [
+    var scrollSceneItems = [];
+    var scrollSceneSelector = [
       ".elementor-global-4659",
       ".elementor-global-5598",
       ".elementor-element-4659",
       ".elementor-element-27cc395"
     ].join(",");
-    var scrollVideoSurfaceSelector = [
+    var scrollSceneSurfaceSelector = [
       ".elementor-global-4659 > .wrapper",
       ".elementor-global-5598 > .wrapper",
       ".elementor-element-4659 > .wrapper",
@@ -173,11 +180,11 @@ const criticalCompatibilityJs = String.raw`
       return Math.max(min, Math.min(max, value));
     }
 
-    function shouldUseScrollVideo(element) {
-      if (!element || element.classList.contains("destroy-scroll-video-target")) return false;
+    function shouldUseScrollScene(element) {
+      if (!element || element.classList.contains("destroy-scroll-scene__overlay")) return false;
       if (element.closest(".elementor-location-popup")) return false;
-      if (element.matches(scrollVideoSurfaceSelector)) return true;
-      if (element.matches(scrollVideoSelector)) return true;
+      if (element.matches(scrollSceneSurfaceSelector)) return true;
+      if (element.matches(scrollSceneSelector)) return false;
       if (!element.classList || !element.classList.contains("elementor-element")) return false;
       if ((element.offsetHeight || element.getBoundingClientRect().height) < 180) return false;
       var background = "";
@@ -187,61 +194,126 @@ const criticalCompatibilityJs = String.raw`
       return /grunge|scratch|scratched/i.test(background);
     }
 
-    function getScrollVideoSurface(element) {
-      if (element && element.matches(scrollVideoSelector)) {
+    function getScrollSceneSurface(element) {
+      if (element && element.matches(scrollSceneSelector)) {
         return element.querySelector(":scope > .wrapper") || element;
       }
       return element;
     }
 
-    function updateScrollVideos() {
-      scrollVideoFrame = 0;
-      var viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
-      scrollVideoItems.forEach(function (item) {
-        var rect = item.target.getBoundingClientRect();
+    function resizeScrollScene(item) {
+      var rect = item.sticky.getBoundingClientRect();
+      var ratio = Math.min(window.devicePixelRatio || 1, 1.6);
+      var width = Math.max(1, Math.round(rect.width * ratio));
+      var height = Math.max(1, Math.round(rect.height * ratio));
+      if (item.canvas.width !== width || item.canvas.height !== height) {
+        item.canvas.width = width;
+        item.canvas.height = height;
+      }
+    }
+
+    function drawScrollScene(item) {
+      if (!item.context || !item.ready || item.video.readyState < 2) return;
+      resizeScrollScene(item);
+      var canvas = item.canvas;
+      var context = item.context;
+      var videoWidth = item.video.videoWidth || 16;
+      var videoHeight = item.video.videoHeight || 9;
+      var scale = Math.max(canvas.width / videoWidth, canvas.height / videoHeight);
+      var sourceWidth = canvas.width / scale;
+      var sourceHeight = canvas.height / scale;
+      var sourceX = (videoWidth - sourceWidth) / 2;
+      var sourceY = (videoHeight - sourceHeight) / 2;
+      try {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(item.video, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
+      } catch (error) {}
+    }
+
+    function updateScrollScenes() {
+      scrollSceneItems.forEach(function (item) {
+        var sceneRect = item.scene.getBoundingClientRect();
+        var viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+        var stickyHeight = item.sticky.offsetHeight || viewportHeight;
+        item.sticky.classList.toggle("is-fixed", sceneRect.top <= 0 && sceneRect.bottom >= stickyHeight);
+        item.sticky.classList.toggle("is-after", sceneRect.bottom < stickyHeight);
+        var scrollable = Math.max(1, sceneRect.height - viewportHeight);
+        var targetProgress = clamp(-sceneRect.top / scrollable, 0, 1);
+        item.progress = targetProgress;
+        item.sticky.style.setProperty("--destroy-scene-progress", item.progress.toFixed(3));
+        item.sticky.style.setProperty("--destroy-scene-glow-x", (20 + item.progress * 55).toFixed(2) + "%");
+        item.sticky.style.setProperty("--destroy-scene-glow-y", (15 + item.progress * 42).toFixed(2) + "%");
+        item.sticky.style.setProperty("--destroy-scene-grid-opacity", (0.16 + item.progress * 0.16).toFixed(3));
+        item.sticky.style.setProperty("--destroy-scene-shade-y", (item.progress * -22).toFixed(2) + "%");
         var duration = Number.isFinite(item.video.duration) && item.video.duration > 0 ? item.video.duration : 6;
-        var progress = clamp((viewportHeight - rect.top) / (viewportHeight + rect.height), 0, 1);
-        var nextTime = progress * duration;
-        if (Number.isFinite(nextTime) && Math.abs(item.video.currentTime - nextTime) > 0.035) {
+        var nextTime = item.progress * duration;
+        if (item.ready && Number.isFinite(nextTime) && Math.abs(item.video.currentTime - nextTime) > 0.025) {
           try {
             item.video.currentTime = nextTime;
           } catch (error) {}
         }
+        drawScrollScene(item);
       });
+      if (scrollSceneItems.length) window.requestAnimationFrame(updateScrollScenes);
     }
 
-    function requestScrollVideoUpdate() {
-      if (scrollVideoFrame) return;
-      scrollVideoFrame = window.requestAnimationFrame(updateScrollVideos);
-    }
-
-    function initScrollVideoTarget(target) {
-      target = getScrollVideoSurface(target);
-      if (!shouldUseScrollVideo(target)) return;
-      target.classList.add("destroy-scroll-video-target");
+    function initScrollScene(target) {
+      target = getScrollSceneSurface(target);
+      if (!shouldUseScrollScene(target)) return;
+      var parent = target.parentNode;
+      if (!parent) return;
+      target.classList.add("destroy-scroll-scene__overlay");
+      var scene = document.createElement("section");
+      scene.className = "destroy-scroll-scene";
+      scene.setAttribute("aria-label", "Scroll animation scene");
+      var sticky = document.createElement("div");
+      sticky.className = "destroy-scroll-scene__sticky";
+      var canvas = document.createElement("canvas");
+      canvas.className = "destroy-scroll-scene__canvas";
+      canvas.setAttribute("aria-hidden", "true");
       var video = document.createElement("video");
-      video.className = "destroy-scroll-video";
+      video.className = "destroy-scroll-scene__video-source";
       video.src = "/videos/grunge-scroll.mp4";
       video.muted = true;
       video.playsInline = true;
       video.preload = "auto";
       video.setAttribute("aria-hidden", "true");
       video.setAttribute("tabindex", "-1");
-      target.prepend(video);
-      scrollVideoItems.push({ target: target, video: video });
-      video.addEventListener("loadedmetadata", requestScrollVideoUpdate, { once: true });
+      var shade = document.createElement("div");
+      shade.className = "destroy-scroll-scene__shade";
+      parent.insertBefore(scene, target);
+      sticky.appendChild(canvas);
+      sticky.appendChild(video);
+      sticky.appendChild(shade);
+      sticky.appendChild(target);
+      scene.appendChild(sticky);
+      var item = {
+        scene: scene,
+        sticky: sticky,
+        canvas: canvas,
+        context: canvas.getContext("2d"),
+        video: video,
+        ready: false,
+        progress: 0
+      };
+      scrollSceneItems.push(item);
+      video.addEventListener("loadedmetadata", function () {
+        item.ready = true;
+        resizeScrollScene(item);
+        drawScrollScene(item);
+      }, { once: true });
+      video.addEventListener("seeked", function () {
+        drawScrollScene(item);
+      });
       video.load();
     }
 
-    Array.prototype.slice.call(document.querySelectorAll(scrollVideoSelector + ", " + scrollVideoSurfaceSelector + ", .elementor-element")).forEach(initScrollVideoTarget);
-    if (scrollVideoItems.length) {
-      var runScrollVideoLoop = function () {
-        updateScrollVideos();
-        window.requestAnimationFrame(runScrollVideoLoop);
-      };
-      window.addEventListener("scroll", requestScrollVideoUpdate, { passive: true });
-      window.addEventListener("resize", requestScrollVideoUpdate);
-      runScrollVideoLoop();
+    Array.prototype.slice.call(document.querySelectorAll(scrollSceneSurfaceSelector + ", .elementor-element")).forEach(initScrollScene);
+    if (scrollSceneItems.length) {
+      window.addEventListener("resize", function () {
+        scrollSceneItems.forEach(resizeScrollScene);
+      });
+      updateScrollScenes();
     }
 
     var calcObject = document.getElementById("calc-object");
