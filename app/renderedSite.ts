@@ -268,8 +268,8 @@ const compatibilityLayer = String.raw`
     object-fit: cover;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.82;
-    filter: brightness(0.62) contrast(1.12) saturate(0.9);
+    opacity: 1;
+    filter: brightness(0.88) contrast(1.18) saturate(0.95);
   }
 
   .destroy-scroll-video-target::after {
@@ -278,7 +278,7 @@ const compatibilityLayer = String.raw`
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    background: linear-gradient(120deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.36) 48%, rgba(0, 0, 0, 0.68));
+    background: linear-gradient(120deg, rgba(0, 0, 0, 0.46), rgba(0, 0, 0, 0.12) 48%, rgba(0, 0, 0, 0.42));
   }
 
   .destroy-scroll-video-target > :not(.destroy-scroll-video) {
@@ -529,6 +529,12 @@ const compatibilityLayer = String.raw`
       ".elementor-element-4659",
       ".elementor-element-27cc395"
     ].join(",");
+    var scrollVideoSurfaceSelector = [
+      ".elementor-global-4659 > .wrapper",
+      ".elementor-global-5598 > .wrapper",
+      ".elementor-element-4659 > .wrapper",
+      ".elementor-element-27cc395 > .wrapper"
+    ].join(",");
 
     function clamp(value, min, max) {
       return Math.max(min, Math.min(max, value));
@@ -537,6 +543,7 @@ const compatibilityLayer = String.raw`
     function shouldUseScrollVideo(element) {
       if (!element || element.classList.contains("destroy-scroll-video-target")) return false;
       if (element.closest(".elementor-location-popup")) return false;
+      if (element.matches(scrollVideoSurfaceSelector)) return true;
       if (element.matches(scrollVideoSelector)) return true;
       if (!element.classList || !element.classList.contains("elementor-element")) return false;
       if ((element.offsetHeight || element.getBoundingClientRect().height) < 180) return false;
@@ -545,6 +552,13 @@ const compatibilityLayer = String.raw`
         background = window.getComputedStyle(element).backgroundImage || "";
       } catch (error) {}
       return /grunge|scratch|scratched/i.test(background);
+    }
+
+    function getScrollVideoSurface(element) {
+      if (element && element.matches(scrollVideoSelector)) {
+        return element.querySelector(":scope > .wrapper") || element;
+      }
+      return element;
     }
 
     function updateScrollVideos() {
@@ -569,6 +583,7 @@ const compatibilityLayer = String.raw`
     }
 
     function initScrollVideoTarget(target) {
+      target = getScrollVideoSurface(target);
       if (!shouldUseScrollVideo(target)) return;
       target.classList.add("destroy-scroll-video-target");
       var video = document.createElement("video");
@@ -585,7 +600,7 @@ const compatibilityLayer = String.raw`
       video.load();
     }
 
-    Array.prototype.slice.call(document.querySelectorAll(scrollVideoSelector + ", .elementor-element")).forEach(initScrollVideoTarget);
+    Array.prototype.slice.call(document.querySelectorAll(scrollVideoSelector + ", " + scrollVideoSurfaceSelector + ", .elementor-element")).forEach(initScrollVideoTarget);
     if (scrollVideoItems.length) {
       var runScrollVideoLoop = function () {
         updateScrollVideos();
