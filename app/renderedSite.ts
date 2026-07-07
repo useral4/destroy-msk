@@ -448,6 +448,24 @@ const compatibilityLayer = String.raw`
       });
     });
 
+    var extraMenuItems = [
+      ["\u041d\u043e\u0432\u044b\u0435 \u0443\u0441\u043b\u0443\u0433\u0438", "/novye-uslugi/"],
+      ["\u041d\u0430\u0448\u0438 \u043e\u0431\u044a\u0435\u043a\u0442\u044b", "/nashi-obekty/"],
+      ["\u0412\u0438\u0434\u0435\u043e", "/nashi-video/"],
+    ];
+    document.querySelectorAll(".menuItems").forEach(function (menu) {
+      extraMenuItems.forEach(function (item) {
+        if (menu.querySelector('a[href="' + item[1] + '"]')) return;
+        var wrapper = document.createElement("div");
+        wrapper.className = "menuItem";
+        var link = document.createElement("a");
+        link.href = item[1];
+        link.textContent = item[0];
+        wrapper.appendChild(link);
+        menu.appendChild(wrapper);
+      });
+    });
+
     document.addEventListener("click", function (event) {
       if (!event.target || !event.target.closest(".menuItems a")) return;
       document.body.classList.remove("destroy-menu-open");

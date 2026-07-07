@@ -114,6 +114,24 @@ const criticalCompatibilityJs = String.raw`
       });
     });
 
+    var extraMenuItems = [
+      ["\u041d\u043e\u0432\u044b\u0435 \u0443\u0441\u043b\u0443\u0433\u0438", "/novye-uslugi/"],
+      ["\u041d\u0430\u0448\u0438 \u043e\u0431\u044a\u0435\u043a\u0442\u044b", "/nashi-obekty/"],
+      ["\u0412\u0438\u0434\u0435\u043e", "/nashi-video/"],
+    ];
+    document.querySelectorAll(".menuItems").forEach(function (menu) {
+      extraMenuItems.forEach(function (item) {
+        if (menu.querySelector('a[href="' + item[1] + '"]')) return;
+        var wrapper = document.createElement("div");
+        wrapper.className = "menuItem";
+        var link = document.createElement("a");
+        link.href = item[1];
+        link.textContent = item[0];
+        wrapper.appendChild(link);
+        menu.appendChild(wrapper);
+      });
+    });
+
     document.addEventListener("click", function (event) {
       if (!event.target || !event.target.closest(".menuItems a")) return;
       document.body.classList.remove("destroy-menu-open");
@@ -130,6 +148,39 @@ const criticalCompatibilityJs = String.raw`
         source.setAttribute("srcset", source.getAttribute("data-srcset"));
       }
     });
+
+    var calcObject = document.getElementById("calc-object");
+    var calcArea = document.getElementById("calc-area");
+    var calcWork = document.getElementById("calc-work");
+    var calcTrash = document.getElementById("calc-trash");
+    var calcTotal = document.getElementById("calc-total");
+    var calcDetails = document.getElementById("calc-details");
+    var calcButton = document.getElementById("calc-button");
+    if (calcObject && calcArea && calcWork && calcTrash && calcTotal && calcDetails) {
+      var objectRate = { flat: 900, house: 1200, commercial: 1100, site: 750 };
+      var workRate = { light: 0.75, standard: 1, hard: 1.45, tech: 1.75 };
+      var formatter = new Intl.NumberFormat("ru-RU");
+      var calculateDemolition = function () {
+        var meters = Math.max(1, Number(calcArea.value || 1));
+        var base = (objectRate[calcObject.value] || 900) * meters * (workRate[calcWork.value] || 1);
+        if (calcTrash.checked) base += meters * 350;
+        calcTotal.textContent = "\u043e\u0442 " + formatter.format(Math.round(base / 100) * 100) + " \u20bd";
+        calcDetails.textContent =
+          "\u0420\u0430\u0441\u0447\u0435\u0442 \u043e\u0440\u0438\u0435\u043d\u0442\u0438\u0440\u043e\u0432\u043e\u0447\u043d\u044b\u0439: " +
+          meters +
+          " \u043c2, " +
+          calcObject.options[calcObject.selectedIndex].text.toLowerCase() +
+          ", " +
+          calcWork.options[calcWork.selectedIndex].text.toLowerCase() +
+          (calcTrash.checked ? ", \u0432\u044b\u0432\u043e\u0437 \u043c\u0443\u0441\u043e\u0440\u0430 \u0432\u043a\u043b\u044e\u0447\u0435\u043d." : ", \u0431\u0435\u0437 \u0432\u044b\u0432\u043e\u0437\u0430 \u043c\u0443\u0441\u043e\u0440\u0430.");
+      };
+      [calcObject, calcArea, calcWork, calcTrash].forEach(function (element) {
+        element.addEventListener("input", calculateDemolition);
+        element.addEventListener("change", calculateDemolition);
+      });
+      if (calcButton) calcButton.addEventListener("click", calculateDemolition);
+      calculateDemolition();
+    }
 
     document.addEventListener("submit", function (event) {
       var form = event.target && event.target.closest("form");
