@@ -248,6 +248,44 @@ const compatibilityLayer = String.raw`
     transform: translateY(-1px);
   }
 
+  .destroy-scroll-video-target {
+    position: relative !important;
+    overflow: hidden !important;
+    isolation: isolate;
+    background-image: none !important;
+    background-color: #2c2323 !important;
+  }
+
+  .destroy-scroll-video-target::before {
+    background-image: none !important;
+  }
+
+  .destroy-scroll-video-target > .destroy-scroll-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.82;
+    filter: brightness(0.62) contrast(1.12) saturate(0.9);
+  }
+
+  .destroy-scroll-video-target::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(120deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.36) 48%, rgba(0, 0, 0, 0.68));
+  }
+
+  .destroy-scroll-video-target > :not(.destroy-scroll-video) {
+    position: relative;
+    z-index: 2;
+  }
+
   @keyframes destroyFadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -482,6 +520,81 @@ const compatibilityLayer = String.raw`
         source.setAttribute("srcset", source.getAttribute("data-srcset"));
       }
     });
+
+    var scrollVideoItems = [];
+    var scrollVideoFrame = 0;
+    var scrollVideoSelector = [
+      ".elementor-global-4659",
+      ".elementor-global-5598",
+      ".elementor-element-4659",
+      ".elementor-element-27cc395"
+    ].join(",");
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
+
+    function shouldUseScrollVideo(element) {
+      if (!element || element.classList.contains("destroy-scroll-video-target")) return false;
+      if (element.closest(".elementor-location-popup")) return false;
+      if (element.matches(scrollVideoSelector)) return true;
+      if (!element.classList || !element.classList.contains("elementor-element")) return false;
+      if ((element.offsetHeight || element.getBoundingClientRect().height) < 180) return false;
+      var background = "";
+      try {
+        background = window.getComputedStyle(element).backgroundImage || "";
+      } catch (error) {}
+      return /grunge|scratch|scratched/i.test(background);
+    }
+
+    function updateScrollVideos() {
+      scrollVideoFrame = 0;
+      var viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+      scrollVideoItems.forEach(function (item) {
+        var rect = item.target.getBoundingClientRect();
+        var duration = Number.isFinite(item.video.duration) && item.video.duration > 0 ? item.video.duration : 6;
+        var progress = clamp((viewportHeight - rect.top) / (viewportHeight + rect.height), 0, 1);
+        var nextTime = progress * duration;
+        if (Number.isFinite(nextTime) && Math.abs(item.video.currentTime - nextTime) > 0.035) {
+          try {
+            item.video.currentTime = nextTime;
+          } catch (error) {}
+        }
+      });
+    }
+
+    function requestScrollVideoUpdate() {
+      if (scrollVideoFrame) return;
+      scrollVideoFrame = window.requestAnimationFrame(updateScrollVideos);
+    }
+
+    function initScrollVideoTarget(target) {
+      if (!shouldUseScrollVideo(target)) return;
+      target.classList.add("destroy-scroll-video-target");
+      var video = document.createElement("video");
+      video.className = "destroy-scroll-video";
+      video.src = "/videos/grunge-scroll.mp4";
+      video.muted = true;
+      video.playsInline = true;
+      video.preload = "auto";
+      video.setAttribute("aria-hidden", "true");
+      video.setAttribute("tabindex", "-1");
+      target.prepend(video);
+      scrollVideoItems.push({ target: target, video: video });
+      video.addEventListener("loadedmetadata", requestScrollVideoUpdate, { once: true });
+      video.load();
+    }
+
+    Array.prototype.slice.call(document.querySelectorAll(scrollVideoSelector + ", .elementor-element")).forEach(initScrollVideoTarget);
+    if (scrollVideoItems.length) {
+      var runScrollVideoLoop = function () {
+        updateScrollVideos();
+        window.requestAnimationFrame(runScrollVideoLoop);
+      };
+      window.addEventListener("scroll", requestScrollVideoUpdate, { passive: true });
+      window.addEventListener("resize", requestScrollVideoUpdate);
+      runScrollVideoLoop();
+    }
 
     document.addEventListener("submit", function (event) {
       var form = event.target && event.target.closest("form");
