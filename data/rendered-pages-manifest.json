@@ -766,6 +766,16 @@
       "slug": "author/bt-admin",
       "file": "author_bt-admin.html",
       "url": "/author/bt-admin/"
+    },
+    {
+      "slug": "nashi-video",
+      "file": "nashi-video.html",
+      "url": "/nashi-video/"
+    },
+    {
+      "slug": "nashi-obekty",
+      "file": "nashi-obekty.html",
+      "url": "/nashi-obekty/"
     }
   ]
 }
