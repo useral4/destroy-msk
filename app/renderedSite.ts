@@ -356,6 +356,42 @@ const compatibilityLayer = String.raw`
     z-index: 3;
   }
 
+  .destroy-scroll-scene .quizle-answers {
+    max-height: min(50vh, 430px) !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding-right: 12px !important;
+    margin-right: -12px !important;
+    scrollbar-width: thin;
+    scrollbar-color: #c91515 rgba(255, 255, 255, 0.22);
+    scrollbar-gutter: stable;
+    overscroll-behavior: contain;
+  }
+
+  .destroy-scroll-scene .quizle-answers::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .destroy-scroll-scene .quizle-answers::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+  }
+
+  .destroy-scroll-scene .quizle-answers::-webkit-scrollbar-thumb {
+    background: #c91515;
+    border-radius: 999px;
+  }
+
+  .destroy-scroll-scene .quizle-answer {
+    flex: 0 0 auto !important;
+  }
+
+  .destroy-scroll-scene .quizle-answer label {
+    min-height: 56px !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+  }
+
   @keyframes destroyFadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -450,6 +486,16 @@ const compatibilityLayer = String.raw`
     .destroy-scroll-scene__overlay {
       width: min(calc(var(--destroy-scene-vw, 100vw) - 20px), 100%);
       min-height: 100vh;
+    }
+
+    .destroy-scroll-scene .quizle-answers {
+      max-height: min(44vh, 340px) !important;
+      padding-right: 8px !important;
+      margin-right: -8px !important;
+    }
+
+    .destroy-scroll-scene .quizle-answer label {
+      min-height: 52px !important;
     }
 
     .elementor-location-popup.destroy-popup-open {
