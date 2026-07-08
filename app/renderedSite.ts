@@ -197,6 +197,132 @@ const compatibilityLayer = String.raw`
     background-color: transparent !important;
   }
 
+  .destroy-home-hero-scroll-scene {
+    min-height: 160vh !important;
+    background: #151010 !important;
+  }
+
+  .destroy-home-hero-scroll-scene .destroy-scroll-scene__sticky {
+    height: 100vh;
+    min-height: 100vh;
+    background: #151010;
+  }
+
+  .destroy-home-hero-scroll-scene .destroy-scroll-scene__canvas {
+    filter: blur(var(--destroy-hero-blur, 18px));
+    transform: scale(var(--destroy-hero-scale, 1.08));
+    transform-origin: center center;
+    opacity: 1;
+    will-change: filter, transform;
+  }
+
+  .destroy-home-hero-scroll-scene .destroy-scroll-scene__sticky::before {
+    background:
+      linear-gradient(90deg, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.46) 48%, rgba(0, 0, 0, 0.38)),
+      radial-gradient(circle at 48% 58%, rgba(196, 15, 15, var(--destroy-hero-red, 0.24)), transparent 42%) !important;
+    opacity: var(--destroy-hero-shade, 0.94);
+    transform: none;
+  }
+
+  .destroy-home-hero-scroll-scene .destroy-scroll-scene__sticky::after {
+    opacity: 0.06;
+  }
+
+  .destroy-home-hero-scroll-scene .destroy-scroll-scene__shade {
+    inset: auto -18% -32% -18%;
+    height: 48%;
+    background: radial-gradient(ellipse at center, rgba(190, 14, 14, 0.34), transparent 62%);
+    filter: blur(22px);
+  }
+
+  .destroy-home-hero-scroll__overlay {
+    width: min(1180px, calc(var(--destroy-scene-vw, 100vw) - 80px)) !important;
+    min-height: 100vh !important;
+    padding: 104px 0 68px !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 380px) !important;
+    gap: 38px !important;
+    align-items: center !important;
+    background: none !important;
+    background-image: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  .destroy-home-hero-scroll__overlay::before,
+  .destroy-home-hero-scroll__overlay::after,
+  .destroy-home-hero-scroll__overlay > .wrapperItem::before,
+  .destroy-home-hero-scroll__overlay > .wrapperItem::after {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+    background-image: none !important;
+  }
+
+  .destroy-home-hero-scroll__overlay,
+  .destroy-home-hero-scroll__overlay * {
+    color: #ffffff !important;
+  }
+
+  .destroy-home-hero-scroll__overlay input,
+  .destroy-home-hero-scroll__overlay select,
+  .destroy-home-hero-scroll__overlay textarea,
+  .destroy-home-hero-scroll__overlay option {
+    color: #111111 !important;
+    text-shadow: none !important;
+  }
+
+  .destroy-home-hero-scroll__overlay .wpcf7-submit {
+    color: #ffffff !important;
+  }
+
+  .destroy-home-hero-scroll__overlay .wpcf7-list-item-label,
+  .destroy-home-hero-scroll__overlay .wpcf7-list-item-label a {
+    color: #ffffff !important;
+  }
+
+  .destroy-home-hero-scroll__overlay > .wrapperItem {
+    position: relative !important;
+    z-index: 3 !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  .destroy-home-hero-scroll__overlay > .wrapperItem:first-child {
+    background: none !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  .destroy-home-hero-scroll__overlay > .wrapperItem:first-child .h1 {
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.85);
+    font-size: clamp(34px, 4vw, 58px) !important;
+    line-height: 0.98 !important;
+  }
+
+  .destroy-home-hero-scroll__overlay > .wrapperItem:first-child .listItem {
+    text-shadow: 0 3px 18px rgba(0, 0, 0, 0.85);
+  }
+
+  .destroy-home-hero-scroll__overlay > .wrapperItem:first-child .icon .content {
+    color: #111111 !important;
+    text-shadow: none !important;
+    background: rgba(255, 255, 255, 0.88) !important;
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22) !important;
+  }
+
+  .destroy-home-hero-scroll__overlay > .wrapperItem:nth-child(2) {
+    background: rgba(28, 28, 28, 0.78) !important;
+    background-image: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 26px 80px rgba(0, 0, 0, 0.36) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
   .destroy-form-success {
     display: block !important;
     margin-top: 10px;
@@ -591,7 +717,7 @@ const compatibilityLayer = String.raw`
     }
 
     .destroy-home-hero-scroll-scene {
-      min-height: 135vh !important;
+      min-height: 145vh !important;
     }
 
     .destroy-home-hero-scroll {
@@ -606,6 +732,22 @@ const compatibilityLayer = String.raw`
 
     .destroy-home-hero-scroll__canvas {
       transform: scale(var(--destroy-hero-scale, 1.08));
+    }
+
+    .destroy-home-hero-scroll__overlay {
+      width: min(calc(var(--destroy-scene-vw, 100vw) - 20px), 100%) !important;
+      grid-template-columns: 1fr !important;
+      align-content: center !important;
+      gap: 18px !important;
+      padding: 86px 0 36px !important;
+    }
+
+    .destroy-home-hero-scroll__overlay > .wrapperItem:first-child .h1 {
+      font-size: clamp(29px, 9vw, 42px) !important;
+    }
+
+    .destroy-home-hero-scroll__overlay > .wrapperItem:nth-child(2) {
+      border-radius: 18px !important;
     }
 
     .elementor-location-popup.destroy-popup-open {
@@ -1011,7 +1153,7 @@ const compatibilityLayer = String.raw`
     }
 
     var homeHeroFrameCount = 17;
-    var homeHeroFramePath = "/videos/hero-scroll-frames/frame_";
+    var homeHeroFramePath = "/videos/home-hero-frames/frame_";
 
     function getHomeHeroFrameUrl(index) {
       var number = String(index + 1).padStart(4, "0");
@@ -1021,36 +1163,38 @@ const compatibilityLayer = String.raw`
     function drawCoverImage(context, image, canvas) {
       var imageWidth = image.naturalWidth || image.width || 16;
       var imageHeight = image.naturalHeight || image.height || 9;
-      var scale = Math.max(canvas.width / imageWidth, canvas.height / imageHeight);
+      var cropX = imageWidth * 0.078;
+      var croppedWidth = imageWidth - cropX * 2;
+      var scale = Math.max(canvas.width / croppedWidth, canvas.height / imageHeight);
       var sourceWidth = canvas.width / scale;
       var sourceHeight = canvas.height / scale;
-      var sourceX = (imageWidth - sourceWidth) / 2;
+      var sourceX = cropX + (croppedWidth - sourceWidth) / 2;
       var sourceY = (imageHeight - sourceHeight) / 2;
       context.clearRect(0, 0, canvas.width, canvas.height);
       context.drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
     }
 
     function initHomeHeroScroll() {
-      var hero = document.querySelector(".elementor-2 .elementor-element-a6e09bc");
+      var hero = document.querySelector(".elementor-2 .elementor-element-4ac6fe3 > .wrapper");
       if (!hero || hero.classList.contains("destroy-home-hero-scroll-ready")) return;
       var parent = hero.parentNode;
       if (!parent) return;
       var scene = document.createElement("section");
-      scene.className = "destroy-home-hero-scroll-scene";
+      scene.className = "destroy-scroll-scene destroy-home-hero-scroll-scene";
       scene.setAttribute("aria-label", "Hero scroll animation scene");
       var sticky = document.createElement("div");
-      sticky.className = "destroy-home-hero-scroll__sticky";
+      sticky.className = "destroy-scroll-scene__sticky destroy-home-hero-scroll__sticky";
       var canvas = document.createElement("canvas");
-      canvas.className = "destroy-home-hero-scroll__canvas";
+      canvas.className = "destroy-scroll-scene__canvas destroy-home-hero-scroll__canvas";
       canvas.setAttribute("aria-hidden", "true");
       var shade = document.createElement("div");
-      shade.className = "destroy-home-hero-scroll__shade";
+      shade.className = "destroy-scroll-scene__shade destroy-home-hero-scroll__shade";
       parent.insertBefore(scene, hero);
       sticky.appendChild(canvas);
       sticky.appendChild(shade);
       sticky.appendChild(hero);
       scene.appendChild(sticky);
-      hero.classList.add("destroy-home-hero-scroll", "destroy-home-hero-scroll-ready");
+      hero.classList.add("destroy-scroll-scene__overlay", "destroy-home-hero-scroll__overlay", "destroy-home-hero-scroll-ready");
 
       var context = canvas.getContext("2d");
       if (!context) return;
@@ -1141,9 +1285,19 @@ const compatibilityLayer = String.raw`
         ticking = false;
         var rect = scene.getBoundingClientRect();
         var viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+        var stickyHeight = sticky.offsetHeight || viewportHeight;
+        sticky.classList.toggle("is-fixed", rect.top <= 0 && rect.bottom >= stickyHeight);
+        sticky.classList.toggle("is-after", rect.bottom < stickyHeight);
         var scrollable = Math.max(1, rect.height - viewportHeight);
         var progress = clamp(-rect.top / scrollable, 0, 1);
         var frameIndex = Math.round(progress * (homeHeroFrameCount - 1));
+        sticky.style.setProperty("--destroy-scene-progress", progress.toFixed(3));
+        sticky.style.setProperty("--destroy-scene-soft-opacity", (0.985 + clamp(Math.min(progress, 1 - progress) / 0.18, 0, 1) * 0.015).toFixed(3));
+        sticky.style.setProperty("--destroy-scene-glow-scale", (0.92 + progress * 0.34).toFixed(3));
+        sticky.style.setProperty("--destroy-scene-glow-alpha", (0.2 + progress * 0.2).toFixed(3));
+        sticky.style.setProperty("--destroy-scene-grid-opacity", (0.08 + progress * 0.12).toFixed(3));
+        sticky.style.setProperty("--destroy-scene-shade-scale", (0.82 + progress * 0.5).toFixed(3));
+        sticky.style.setProperty("--destroy-scene-shade-alpha", (0.14 + progress * 0.3).toFixed(3));
         sticky.style.setProperty("--destroy-hero-blur", (14 - progress * 14).toFixed(2) + "px");
         sticky.style.setProperty("--destroy-hero-scale", (1.055 - progress * 0.045).toFixed(3));
         sticky.style.setProperty("--destroy-hero-red", (0.18 + progress * 0.22).toFixed(3));
