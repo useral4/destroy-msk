@@ -251,7 +251,7 @@ const compatibilityLayer = String.raw`
   .destroy-scroll-scene {
     position: relative;
     width: 100vw;
-    min-height: 170vh;
+    min-height: 138vh;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
     isolation: isolate;
@@ -433,7 +433,7 @@ const compatibilityLayer = String.raw`
 
   @media (max-width: 700px) {
     .destroy-scroll-scene {
-      min-height: 155vh;
+      min-height: 132vh;
     }
 
     .destroy-scroll-scene__sticky {
