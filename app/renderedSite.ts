@@ -251,7 +251,7 @@ const compatibilityLayer = String.raw`
   .destroy-scroll-scene {
     position: relative;
     width: var(--destroy-scene-vw, 100vw);
-    min-height: 138vh;
+    min-height: 300vh;
     margin-left: calc(50% - var(--destroy-scene-half-vw, 50vw));
     margin-right: calc(50% - var(--destroy-scene-half-vw, 50vw));
     isolation: isolate;
@@ -303,9 +303,12 @@ const compatibilityLayer = String.raw`
     z-index: 1;
     pointer-events: none;
     background:
-      radial-gradient(circle at var(--destroy-scene-glow-x, 20%) var(--destroy-scene-glow-y, 15%), rgba(176, 18, 18, 0.35), transparent 34%),
+      radial-gradient(circle at 50% 58%, rgba(176, 18, 18, var(--destroy-scene-glow-alpha, 0.24)), transparent 32%),
       linear-gradient(120deg, rgba(0, 0, 0, 0.74), rgba(0, 0, 0, 0.22) 48%, rgba(0, 0, 0, 0.68));
     mix-blend-mode: normal;
+    transform: scale(var(--destroy-scene-glow-scale, 1));
+    transform-origin: center center;
+    will-change: transform, opacity;
   }
 
   .destroy-scroll-scene__sticky::after {
@@ -326,8 +329,9 @@ const compatibilityLayer = String.raw`
     height: 52%;
     z-index: 2;
     pointer-events: none;
-    background: radial-gradient(ellipse at center, rgba(176, 18, 18, 0.4), transparent 64%);
-    transform: translateY(var(--destroy-scene-shade-y, 0%));
+    background: radial-gradient(ellipse at center, rgba(176, 18, 18, var(--destroy-scene-shade-alpha, 0.22)), transparent 64%);
+    transform: scale(var(--destroy-scene-shade-scale, 1));
+    transform-origin: center bottom;
     filter: blur(18px);
   }
 
@@ -435,7 +439,7 @@ const compatibilityLayer = String.raw`
 
   @media (max-width: 700px) {
     .destroy-scroll-scene {
-      min-height: 132vh;
+      min-height: 280vh;
     }
 
     .destroy-scroll-scene__sticky {
@@ -762,10 +766,11 @@ const compatibilityLayer = String.raw`
         var edgeSoftness = clamp(Math.min(item.progress, 1 - item.progress) / 0.18, 0, 1);
         item.sticky.style.setProperty("--destroy-scene-progress", item.progress.toFixed(3));
         item.sticky.style.setProperty("--destroy-scene-soft-opacity", (0.985 + edgeSoftness * 0.015).toFixed(3));
-        item.sticky.style.setProperty("--destroy-scene-glow-x", (20 + item.progress * 55).toFixed(2) + "%");
-        item.sticky.style.setProperty("--destroy-scene-glow-y", (15 + item.progress * 42).toFixed(2) + "%");
+        item.sticky.style.setProperty("--destroy-scene-glow-scale", (0.92 + item.progress * 0.34).toFixed(3));
+        item.sticky.style.setProperty("--destroy-scene-glow-alpha", (0.2 + item.progress * 0.2).toFixed(3));
         item.sticky.style.setProperty("--destroy-scene-grid-opacity", (0.16 + item.progress * 0.16).toFixed(3));
-        item.sticky.style.setProperty("--destroy-scene-shade-y", (item.progress * -22).toFixed(2) + "%");
+        item.sticky.style.setProperty("--destroy-scene-shade-scale", (0.82 + item.progress * 0.5).toFixed(3));
+        item.sticky.style.setProperty("--destroy-scene-shade-alpha", (0.14 + item.progress * 0.3).toFixed(3));
         var frameIndex = Math.round(item.progress * (scrollSceneFrameCount - 1));
         drawScrollSceneFrame(item, frameIndex);
         preloadScrollSceneFrames(item, frameIndex);
