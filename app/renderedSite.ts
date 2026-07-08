@@ -160,11 +160,11 @@ const compatibilityLayer = String.raw`
     width: 100%;
     height: 100%;
     z-index: 0;
-    filter: blur(var(--destroy-hero-blur, 14px));
+    filter: none !important;
     transform: scale(var(--destroy-hero-scale, 1.055));
     transform-origin: center center;
     opacity: var(--destroy-hero-opacity, 0.96);
-    will-change: filter, transform;
+    will-change: transform;
   }
 
   .destroy-home-hero-scroll__shade {
@@ -209,11 +209,11 @@ const compatibilityLayer = String.raw`
   }
 
   .destroy-home-hero-scroll-scene .destroy-scroll-scene__canvas {
-    filter: blur(var(--destroy-hero-blur, 18px));
+    filter: none !important;
     transform: scale(var(--destroy-hero-scale, 1.08));
     transform-origin: center center;
     opacity: 1;
-    will-change: filter, transform;
+    will-change: transform;
   }
 
   .destroy-home-hero-scroll-scene .destroy-scroll-scene__sticky::before {
@@ -1298,7 +1298,7 @@ const compatibilityLayer = String.raw`
         sticky.style.setProperty("--destroy-scene-grid-opacity", (0.08 + progress * 0.12).toFixed(3));
         sticky.style.setProperty("--destroy-scene-shade-scale", (0.82 + progress * 0.5).toFixed(3));
         sticky.style.setProperty("--destroy-scene-shade-alpha", (0.14 + progress * 0.3).toFixed(3));
-        sticky.style.setProperty("--destroy-hero-blur", (14 - progress * 14).toFixed(2) + "px");
+        sticky.style.setProperty("--destroy-hero-blur", "0px");
         sticky.style.setProperty("--destroy-hero-scale", (1.055 - progress * 0.045).toFixed(3));
         sticky.style.setProperty("--destroy-hero-red", (0.18 + progress * 0.22).toFixed(3));
         sticky.style.setProperty("--destroy-hero-shade", (0.98 - progress * 0.18).toFixed(3));

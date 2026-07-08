@@ -18,14 +18,14 @@ body.destroy-menu-open{overflow:hidden}
 .destroy-home-hero-scroll-scene{position:relative!important;display:block!important;width:var(--destroy-scene-vw,100vw)!important;min-height:145vh!important;margin-left:calc(50% - var(--destroy-scene-half-vw,50vw))!important;margin-right:calc(50% - var(--destroy-scene-half-vw,50vw))!important;padding:0!important;overflow:visible!important;background:#171111!important;isolation:isolate}
 .destroy-home-hero-scroll{position:relative!important;display:block!important;width:100%!important;height:100vh!important;min-height:100vh!important;margin:0!important;padding:0!important;overflow:hidden!important;background:transparent!important;isolation:isolate}
 .destroy-home-hero-scroll__sticky{position:sticky;top:0;width:100%;height:100vh;min-height:100vh;display:block;overflow:hidden;background:#171111;isolation:isolate}
-.destroy-home-hero-scroll__canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;filter:blur(var(--destroy-hero-blur,14px));transform:scale(var(--destroy-hero-scale,1.055));transform-origin:center center;opacity:var(--destroy-hero-opacity,.96);will-change:filter,transform}
+.destroy-home-hero-scroll__canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;filter:none!important;transform:scale(var(--destroy-hero-scale,1.055));transform-origin:center center;opacity:var(--destroy-hero-opacity,.96);will-change:transform}
 .destroy-home-hero-scroll__shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.84),rgba(0,0,0,.54) 48%,rgba(0,0,0,.34)),radial-gradient(circle at 50% 58%,rgba(176,18,18,var(--destroy-hero-red,.22)),transparent 42%);opacity:var(--destroy-hero-shade,.96)}
 .destroy-home-hero-scroll>.e-con-inner{position:relative!important;z-index:2!important;width:min(1180px,calc(100% - 40px))!important;min-height:100vh;margin:0 auto!important;padding:120px 0 70px!important;display:flex!important;align-items:center!important}
 .destroy-home-hero-scroll .wrapper{position:relative;z-index:2;background-image:none!important;background-color:transparent!important}
 .destroy-home-hero-scroll .wrapperItem{position:relative;z-index:2;background-image:none!important;background-color:transparent!important}
 .destroy-home-hero-scroll-scene{min-height:160vh!important;background:#151010!important}
 .destroy-home-hero-scroll-scene .destroy-scroll-scene__sticky{height:100vh;min-height:100vh;background:#151010}
-.destroy-home-hero-scroll-scene .destroy-scroll-scene__canvas{filter:blur(var(--destroy-hero-blur,18px));transform:scale(var(--destroy-hero-scale,1.08));transform-origin:center center;opacity:1;will-change:filter,transform}
+.destroy-home-hero-scroll-scene .destroy-scroll-scene__canvas{filter:none!important;transform:scale(var(--destroy-hero-scale,1.08));transform-origin:center center;opacity:1;will-change:transform}
 .destroy-home-hero-scroll-scene .destroy-scroll-scene__sticky::before{background:linear-gradient(90deg,rgba(0,0,0,.78),rgba(0,0,0,.46) 48%,rgba(0,0,0,.38)),radial-gradient(circle at 48% 58%,rgba(196,15,15,var(--destroy-hero-red,.24)),transparent 42%)!important;opacity:var(--destroy-hero-shade,.94);transform:none}
 .destroy-home-hero-scroll-scene .destroy-scroll-scene__sticky::after{opacity:.06}
 .destroy-home-hero-scroll-scene .destroy-scroll-scene__shade{inset:auto -18% -32% -18%;height:48%;background:radial-gradient(ellipse at center,rgba(190,14,14,.34),transparent 62%);filter:blur(22px)}
@@ -589,7 +589,7 @@ const criticalCompatibilityJs = String.raw`
         sticky.style.setProperty("--destroy-scene-grid-opacity", (0.08 + progress * 0.12).toFixed(3));
         sticky.style.setProperty("--destroy-scene-shade-scale", (0.82 + progress * 0.5).toFixed(3));
         sticky.style.setProperty("--destroy-scene-shade-alpha", (0.14 + progress * 0.3).toFixed(3));
-        sticky.style.setProperty("--destroy-hero-blur", (14 - progress * 14).toFixed(2) + "px");
+        sticky.style.setProperty("--destroy-hero-blur", "0px");
         sticky.style.setProperty("--destroy-hero-scale", (1.055 - progress * 0.045).toFixed(3));
         sticky.style.setProperty("--destroy-hero-red", (0.18 + progress * 0.22).toFixed(3));
         sticky.style.setProperty("--destroy-hero-shade", (0.98 - progress * 0.18).toFixed(3));
