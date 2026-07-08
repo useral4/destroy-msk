@@ -251,7 +251,7 @@ const compatibilityLayer = String.raw`
   .destroy-scroll-scene {
     position: relative;
     width: var(--destroy-scene-vw, 100vw);
-    min-height: 180vh;
+    min-height: 150vh;
     margin-left: calc(50% - var(--destroy-scene-half-vw, 50vw));
     margin-right: calc(50% - var(--destroy-scene-half-vw, 50vw));
     isolation: isolate;
@@ -439,7 +439,7 @@ const compatibilityLayer = String.raw`
 
   @media (max-width: 700px) {
     .destroy-scroll-scene {
-      min-height: 165vh;
+      min-height: 140vh;
     }
 
     .destroy-scroll-scene__sticky {
@@ -606,7 +606,7 @@ const compatibilityLayer = String.raw`
     });
 
     var scrollSceneItems = [];
-    var scrollSceneFrameCount = 19;
+    var scrollSceneFrameCount = 21;
     var scrollSceneFramePath = "/videos/grunge-frames/frame_";
     var scrollSceneSelector = [
       ".elementor-global-4659",
