@@ -250,10 +250,10 @@ const compatibilityLayer = String.raw`
 
   .destroy-scroll-scene {
     position: relative;
-    width: 100vw;
+    width: var(--destroy-scene-vw, 100vw);
     min-height: 138vh;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
+    margin-left: calc(50% - var(--destroy-scene-half-vw, 50vw));
+    margin-right: calc(50% - var(--destroy-scene-half-vw, 50vw));
     isolation: isolate;
   }
 
@@ -274,7 +274,7 @@ const compatibilityLayer = String.raw`
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: var(--destroy-scene-vw, 100vw);
     z-index: 40;
   }
 
@@ -283,7 +283,7 @@ const compatibilityLayer = String.raw`
     top: auto;
     bottom: 0;
     left: 0;
-    width: 100vw;
+    width: var(--destroy-scene-vw, 100vw);
   }
 
   .destroy-scroll-scene__canvas {
@@ -334,7 +334,7 @@ const compatibilityLayer = String.raw`
   .destroy-scroll-scene__overlay {
     position: relative !important;
     z-index: 3 !important;
-    width: min(1120px, calc(100vw - 48px));
+    width: min(1120px, calc(var(--destroy-scene-vw, 100vw) - 48px));
     min-height: 100vh;
     height: auto;
     margin: 0 auto;
@@ -444,7 +444,7 @@ const compatibilityLayer = String.raw`
     }
 
     .destroy-scroll-scene__overlay {
-      width: min(100vw - 20px, 100%);
+      width: min(calc(var(--destroy-scene-vw, 100vw) - 20px), 100%);
       min-height: 100vh;
     }
 
@@ -619,6 +619,12 @@ const compatibilityLayer = String.raw`
 
     function clamp(value, min, max) {
       return Math.max(min, Math.min(max, value));
+    }
+
+    function updateScrollSceneViewportVars() {
+      var width = document.documentElement.clientWidth || window.innerWidth || 0;
+      document.documentElement.style.setProperty("--destroy-scene-vw", width + "px");
+      document.documentElement.style.setProperty("--destroy-scene-half-vw", (width / 2) + "px");
     }
 
     function shouldUseScrollScene(element) {
@@ -806,9 +812,11 @@ const compatibilityLayer = String.raw`
       preloadScrollSceneFrames(item, 0);
     }
 
+    updateScrollSceneViewportVars();
     Array.prototype.slice.call(document.querySelectorAll(scrollSceneSurfaceSelector + ", .elementor-element")).forEach(initScrollScene);
     if (scrollSceneItems.length) {
       window.addEventListener("resize", function () {
+        updateScrollSceneViewportVars();
         scrollSceneItems.forEach(function (item) {
           resizeScrollScene(item);
           drawScrollSceneFrame(item, item.wantedFrame || 0);
