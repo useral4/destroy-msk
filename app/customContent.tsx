@@ -77,6 +77,8 @@ export const customPages: CustomPage[] = [
       { title: "Разбор ветхих строений", href: "/razbor-vethih-stroenij/", image: img.objectAlt },
       { title: "Демонтаж тротуарной плитки и бордюров", href: "/demontazh-trotuarnoj-plitki-bordyurov/", image: img.concrete },
       { title: "Демонтаж заборов", href: "/demontazh-zabora/", image: img.object },
+      { title: "Демонтаж штукатурки", href: "/demontazh-shtukaturki/", image: img.wall },
+      { title: "Демонтаж стяжки", href: "/demontazh-styazhki/", image: img.concrete },
       { title: "Вывоз и утилизация мебели", href: "/vyvoz-i-utilizacziya-mebeli/", image: img.furniture },
     ],
   },
@@ -176,6 +178,106 @@ export const customPages: CustomPage[] = [
     related: [
       { title: "Демонтаж пола и стяжки", href: "/demontazh-pola-i-styazhki/" },
       { title: "Погрузка и вывоз мусора", href: "/pogruzka-i-vyvoz-musora/" },
+      { title: "Калькулятор стоимости", href: "/calc/" },
+    ],
+    faq: commonFaq,
+  },
+  {
+    slug: "demontazh-zabora",
+    title: "Демонтаж заборов",
+    description:
+      "Демонтаж металлических, деревянных, бетонных и кирпичных заборов в Москве и Московской области с погрузкой и вывозом мусора.",
+    kind: "service",
+    eyebrow: "Новая услуга",
+    heroImage: img.object,
+    intro:
+      "Аккуратно разбираем старые заборы на участках, промышленных территориях и коммерческих объектах. Сохраняем подъездные пути, сортируем металл и строительный бой, при необходимости привлекаем технику.",
+    points: [
+      "Демонтаж профлиста, сетки, деревянных секций и ворот",
+      "Разбор бетонных и кирпичных столбов",
+      "Срезка металлоконструкций и погрузка лома",
+      "Вывоз мусора контейнерами или самосвалом",
+      "Подготовка линии участка под новый забор",
+    ],
+    gallery: [img.object, img.site, img.concrete],
+    related: [
+      { title: "Расчистка участков", href: "/raschistka-uchastkov/" },
+      { title: "Спил и удаление деревьев", href: "/spil-i-udalenie-derevev/" },
+      { title: "Калькулятор стоимости", href: "/calc/" },
+    ],
+    faq: commonFaq,
+  },
+  {
+    slug: "demontazh-shtukaturki",
+    title: "Демонтаж штукатурки",
+    description:
+      "Снятие старой штукатурки со стен и потолков, подготовка оснований под ремонт, погрузка и вывоз строительного мусора.",
+    kind: "service",
+    eyebrow: "Новая услуга",
+    heroImage: img.wall,
+    intro:
+      "Снимаем штукатурку в квартирах, офисах, коммерческих помещениях и домах. Работаем ручным инструментом и перфораторами, защищаем сохранившиеся зоны и вывозим весь строительный мусор после демонтажа.",
+    points: [
+      "Демонтаж штукатурки со стен и потолков",
+      "Очистка кирпича, бетона и перегородок",
+      "Подготовка поверхности под новую отделку",
+      "Пылезащита, упаковка и погрузка мусора",
+      "Расчет по площади, толщине слоя и сложности доступа",
+    ],
+    gallery: [img.wall, img.apartment, img.concrete],
+    related: [
+      { title: "Демонтаж стен и перегородок", href: "/demontazh-sten-i-peregorodok/" },
+      { title: "Демонтаж пола и стяжки", href: "/demontazh-pola-i-styazhki/" },
+      { title: "Погрузка и вывоз мусора", href: "/pogruzka-i-vyvoz-musora/" },
+    ],
+    faq: commonFaq,
+  },
+  {
+    slug: "demontazh-styazhki",
+    title: "Демонтаж стяжки",
+    description:
+      "Демонтаж цементной, бетонной и армированной стяжки пола с выносом, погрузкой и вывозом строительного мусора.",
+    kind: "service",
+    eyebrow: "Новая услуга",
+    heroImage: img.concrete,
+    intro:
+      "Разбираем старую стяжку в квартирах, офисах, торговых и производственных помещениях. Подбираем инструмент под толщину слоя, контролируем шумные работы и подготавливаем основание под новый пол.",
+    points: [
+      "Демонтаж стяжки любой толщины",
+      "Работа с армированными и бетонными основаниями",
+      "Сбор, вынос и погрузка боя в контейнер",
+      "Алмазная резка и локальный демонтаж при необходимости",
+      "Предварительная цена по площади и толщине стяжки",
+    ],
+    gallery: [img.concrete, img.apartment, img.wall],
+    related: [
+      { title: "Демонтаж пола и стяжки", href: "/demontazh-pola-i-styazhki/" },
+      { title: "Демонтаж тротуарной плитки", href: "/demontazh-trotuarnoj-plitki-bordyurov/" },
+      { title: "Калькулятор стоимости", href: "/calc/" },
+    ],
+    faq: commonFaq,
+  },
+  {
+    slug: "vyvoz-i-utilizacziya-mebeli",
+    title: "Вывоз и утилизация мебели",
+    description:
+      "Разбор, вынос, погрузка и утилизация старой мебели после демонтажа, ремонта, переезда или освобождения помещения.",
+    kind: "service",
+    eyebrow: "Новая услуга",
+    heroImage: img.furniture,
+    intro:
+      "Освобождаем квартиры, офисы, магазины и коммерческие помещения от старой мебели. При необходимости разбираем крупные шкафы, кухни и перегородки, затем выносим, грузим и отправляем на утилизацию.",
+    points: [
+      "Разбор шкафов, кухонь, диванов и офисной мебели",
+      "Вынос с этажей и погрузка в транспорт",
+      "Утилизация мебели и сопутствующего мусора",
+      "Работа после ремонта, демонтажа или переезда",
+      "Расчет по объему, этажности и наличию лифта",
+    ],
+    gallery: [img.furniture, img.apartment, img.objectAlt],
+    related: [
+      { title: "Погрузка и вывоз мусора", href: "/pogruzka-i-vyvoz-musora/" },
+      { title: "Демонтаж квартир", href: "/demontazh-kvartir-pod-klyuch/" },
       { title: "Калькулятор стоимости", href: "/calc/" },
     ],
     faq: commonFaq,
