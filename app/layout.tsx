@@ -276,7 +276,7 @@ const criticalCompatibilityJs = String.raw`
       video.src = "/videos/grunge-scroll.mp4";
       video.muted = true;
       video.playsInline = true;
-      video.preload = "auto";
+      video.preload = "metadata";
       video.setAttribute("aria-hidden", "true");
       video.setAttribute("tabindex", "-1");
       var shade = document.createElement("div");
