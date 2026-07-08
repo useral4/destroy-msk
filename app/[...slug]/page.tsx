@@ -6,7 +6,7 @@ type Props = {
   params: Promise<{ slug: string[] }>;
 };
 
-const renderedFirstSlugs = new Set(["nashi-video", "nashi-obekty"]);
+const renderedFirstSlugs = new Set(["nashi-video", "nashi-obekty", "novye-uslugi"]);
 
 export function generateStaticParams() {
   const params = [
