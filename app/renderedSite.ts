@@ -602,7 +602,7 @@ const compatibilityLayer = String.raw`
     });
 
     var scrollSceneItems = [];
-    var scrollSceneFrameCount = 51;
+    var scrollSceneFrameCount = 31;
     var scrollSceneFramePath = "/videos/grunge-frames/frame_";
     var scrollSceneSelector = [
       ".elementor-global-4659",
