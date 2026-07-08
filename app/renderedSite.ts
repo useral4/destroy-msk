@@ -254,8 +254,6 @@ const compatibilityLayer = String.raw`
     min-height: 138vh;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
-    background: #201818;
-    overflow: hidden;
     isolation: isolate;
   }
 
@@ -269,9 +267,23 @@ const compatibilityLayer = String.raw`
     isolation: isolate;
     box-shadow: none;
     opacity: var(--destroy-scene-soft-opacity, 1);
-    transform: translateY(var(--destroy-scene-soft-y, 0px)) scale(var(--destroy-scene-soft-scale, 1));
-    transform-origin: center center;
-    will-change: transform, opacity;
+    will-change: opacity;
+  }
+
+  .destroy-scroll-scene__sticky.is-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 40;
+  }
+
+  .destroy-scroll-scene__sticky.is-after {
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
   }
 
   .destroy-scroll-scene__canvas {
@@ -735,14 +747,15 @@ const compatibilityLayer = String.raw`
       scrollSceneItems.forEach(function (item) {
         var sceneRect = item.scene.getBoundingClientRect();
         var viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+        var stickyHeight = item.sticky.offsetHeight || viewportHeight;
+        item.sticky.classList.toggle("is-fixed", sceneRect.top <= 0 && sceneRect.bottom >= stickyHeight);
+        item.sticky.classList.toggle("is-after", sceneRect.bottom < stickyHeight);
         var scrollable = Math.max(1, sceneRect.height - viewportHeight);
         var targetProgress = clamp(-sceneRect.top / scrollable, 0, 1);
         item.progress = targetProgress;
         var edgeSoftness = clamp(Math.min(item.progress, 1 - item.progress) / 0.18, 0, 1);
         item.sticky.style.setProperty("--destroy-scene-progress", item.progress.toFixed(3));
-        item.sticky.style.setProperty("--destroy-scene-soft-opacity", (0.97 + edgeSoftness * 0.03).toFixed(3));
-        item.sticky.style.setProperty("--destroy-scene-soft-scale", (0.994 + edgeSoftness * 0.006).toFixed(4));
-        item.sticky.style.setProperty("--destroy-scene-soft-y", ((1 - edgeSoftness) * 6).toFixed(2) + "px");
+        item.sticky.style.setProperty("--destroy-scene-soft-opacity", (0.985 + edgeSoftness * 0.015).toFixed(3));
         item.sticky.style.setProperty("--destroy-scene-glow-x", (20 + item.progress * 55).toFixed(2) + "%");
         item.sticky.style.setProperty("--destroy-scene-glow-y", (15 + item.progress * 42).toFixed(2) + "%");
         item.sticky.style.setProperty("--destroy-scene-grid-opacity", (0.16 + item.progress * 0.16).toFixed(3));

@@ -29,8 +29,10 @@ body.destroy-menu-open{overflow:hidden}
 .elementor-6457 input[type=file]{width:100%;min-height:38px;border:0!important;border-radius:999px!important;background:rgba(255,255,255,.1)!important;color:#fff!important;font:500 14px/1.2 Manrope,Arial,sans-serif!important}
 .elementor-6457 input[type=file]::file-selector-button{margin-right:12px;padding:11px 20px;border:0;border-radius:999px;background:#c91515;color:#fff;font:700 14px/1 Manrope,Arial,sans-serif;cursor:pointer;transition:background 160ms ease,transform 160ms ease}
 .elementor-6457 input[type=file]::file-selector-button:hover{background:#e11a1a;transform:translateY(-1px)}
-.destroy-scroll-scene{position:relative;width:100vw;min-height:138vh;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);background:#201818;overflow:hidden;isolation:isolate}
-.destroy-scroll-scene__sticky{position:sticky;top:0;min-height:100vh;overflow:hidden;border-radius:0;background:#201818;isolation:isolate;box-shadow:none;opacity:var(--destroy-scene-soft-opacity,1);transform:translateY(var(--destroy-scene-soft-y,0px)) scale(var(--destroy-scene-soft-scale,1));transform-origin:center center;will-change:transform,opacity}
+.destroy-scroll-scene{position:relative;width:100vw;min-height:138vh;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);isolation:isolate}
+.destroy-scroll-scene__sticky{position:sticky;top:0;min-height:100vh;overflow:hidden;border-radius:0;background:#201818;isolation:isolate;box-shadow:none;opacity:var(--destroy-scene-soft-opacity,1);will-change:opacity}
+.destroy-scroll-scene__sticky.is-fixed{position:fixed;top:0;left:0;width:100vw;z-index:40}
+.destroy-scroll-scene__sticky.is-after{position:absolute;top:auto;bottom:0;left:0;width:100vw}
 .destroy-scroll-scene__canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
 .destroy-scroll-scene__sticky::before{content:"";position:absolute;inset:-20%;z-index:1;pointer-events:none;background:radial-gradient(circle at var(--destroy-scene-glow-x,20%) var(--destroy-scene-glow-y,15%),rgba(176,18,18,.35),transparent 34%),linear-gradient(120deg,rgba(0,0,0,.74),rgba(0,0,0,.22) 48%,rgba(0,0,0,.68));mix-blend-mode:normal}
 .destroy-scroll-scene__sticky::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 88px),repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0 1px,transparent 1px 88px);opacity:var(--destroy-scene-grid-opacity,.16)}
@@ -305,14 +307,15 @@ const criticalCompatibilityJs = String.raw`
       scrollSceneItems.forEach(function (item) {
         var sceneRect = item.scene.getBoundingClientRect();
         var viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+        var stickyHeight = item.sticky.offsetHeight || viewportHeight;
+        item.sticky.classList.toggle("is-fixed", sceneRect.top <= 0 && sceneRect.bottom >= stickyHeight);
+        item.sticky.classList.toggle("is-after", sceneRect.bottom < stickyHeight);
         var scrollable = Math.max(1, sceneRect.height - viewportHeight);
         var targetProgress = clamp(-sceneRect.top / scrollable, 0, 1);
         item.progress = targetProgress;
         var edgeSoftness = clamp(Math.min(item.progress, 1 - item.progress) / 0.18, 0, 1);
         item.sticky.style.setProperty("--destroy-scene-progress", item.progress.toFixed(3));
-        item.sticky.style.setProperty("--destroy-scene-soft-opacity", (0.97 + edgeSoftness * 0.03).toFixed(3));
-        item.sticky.style.setProperty("--destroy-scene-soft-scale", (0.994 + edgeSoftness * 0.006).toFixed(4));
-        item.sticky.style.setProperty("--destroy-scene-soft-y", ((1 - edgeSoftness) * 6).toFixed(2) + "px");
+        item.sticky.style.setProperty("--destroy-scene-soft-opacity", (0.985 + edgeSoftness * 0.015).toFixed(3));
         item.sticky.style.setProperty("--destroy-scene-glow-x", (20 + item.progress * 55).toFixed(2) + "%");
         item.sticky.style.setProperty("--destroy-scene-glow-y", (15 + item.progress * 42).toFixed(2) + "%");
         item.sticky.style.setProperty("--destroy-scene-grid-opacity", (0.16 + item.progress * 0.16).toFixed(3));
