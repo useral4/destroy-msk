@@ -251,7 +251,7 @@ const compatibilityLayer = String.raw`
   .destroy-scroll-scene {
     position: relative;
     width: 100vw;
-    min-height: 280vh;
+    min-height: 170vh;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
     isolation: isolate;
@@ -438,7 +438,7 @@ const compatibilityLayer = String.raw`
 
   @media (max-width: 700px) {
     .destroy-scroll-scene {
-      min-height: 220vh;
+      min-height: 155vh;
     }
 
     .destroy-scroll-scene__sticky {
@@ -689,12 +689,16 @@ const compatibilityLayer = String.raw`
         item.sticky.style.setProperty("--destroy-scene-shade-y", (item.progress * -22).toFixed(2) + "%");
         var duration = Number.isFinite(item.video.duration) && item.video.duration > 0 ? item.video.duration : 6;
         var nextTime = item.progress * duration;
-        if (item.ready && Number.isFinite(nextTime) && Math.abs(item.video.currentTime - nextTime) > 0.025) {
+        var delta = Math.abs(item.video.currentTime - nextTime);
+        if (item.ready && Number.isFinite(nextTime) && delta > 0.012) {
           try {
-            item.video.currentTime = nextTime;
+            if (delta > 0.08 && item.video.fastSeek) {
+              item.video.fastSeek(nextTime);
+            } else {
+              item.video.currentTime = nextTime;
+            }
           } catch (error) {}
         }
-        drawScrollScene(item);
       });
       if (scrollSceneItems.length) window.requestAnimationFrame(updateScrollScenes);
     }
@@ -741,6 +745,7 @@ const compatibilityLayer = String.raw`
       scrollSceneItems.push(item);
       video.addEventListener("loadedmetadata", function () {
         item.ready = true;
+        item.video.pause();
         resizeScrollScene(item);
         drawScrollScene(item);
       }, { once: true });
