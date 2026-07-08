@@ -251,7 +251,7 @@ const compatibilityLayer = String.raw`
   .destroy-scroll-scene {
     position: relative;
     width: 100vw;
-    min-height: 220vh;
+    min-height: 280vh;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
     isolation: isolate;
@@ -296,7 +296,7 @@ const compatibilityLayer = String.raw`
   }
 
   .destroy-scroll-scene__video-source {
-    opacity: 0;
+    opacity: 1;
   }
 
   .destroy-scroll-scene__sticky::before {
@@ -438,7 +438,7 @@ const compatibilityLayer = String.raw`
 
   @media (max-width: 700px) {
     .destroy-scroll-scene {
-      min-height: 175vh;
+      min-height: 220vh;
     }
 
     .destroy-scroll-scene__sticky {
@@ -718,7 +718,7 @@ const compatibilityLayer = String.raw`
       video.src = "/videos/grunge-scroll.mp4";
       video.muted = true;
       video.playsInline = true;
-      video.preload = "metadata";
+      video.preload = "auto";
       video.setAttribute("aria-hidden", "true");
       video.setAttribute("tabindex", "-1");
       var shade = document.createElement("div");
