@@ -13,6 +13,31 @@ type RenderedPage = {
 
 const pages = manifest.pages as RenderedPage[];
 
+const renderedWorksGalleries: Record<string, { title: string; images: string[] }> = {
+  "demontazh-zabora": {
+    title: "Наши работы демонтажа забора",
+    images: [
+      "/wp-content/uploads/2025/11/photo_2025-11-01_13-59-39-1.jpg",
+      "/wp-content/uploads/2025/11/photo_2025-11-01_13-59-42.jpg",
+      "/wp-content/uploads/2025/11/photo_2025-11-01_13-59-44.jpg",
+      "/wp-content/uploads/2025/11/photo_2025-11-01_13-59-46.jpg",
+      "/wp-content/uploads/2025/11/photo_2025-11-01_13-59-48.jpg",
+      "/wp-content/uploads/2025/11/photo_2025-11-01_13-59-50.jpg",
+    ],
+  },
+  "demontazh-shtukaturki": {
+    title: "Наши работы демонтажа штукатурки",
+    images: [
+      "/wp-content/uploads/2025/11/photo_2025-11-01_13-49-50.jpg",
+      "/wp-content/uploads/2025/11/photo_2025-11-01_13-49-53.jpg",
+      "/wp-content/uploads/2025/11/photo_2025-11-01_13-49-53-1.jpg",
+      "/wp-content/uploads/2025/11/photo_2025-11-01_13-49-56.jpg",
+      "/wp-content/uploads/2025/11/photo_2025-11-01_13-49-58.jpg",
+      "/wp-content/uploads/2025/11/photo_2025-11-01_13-50-00.jpg",
+    ],
+  },
+};
+
 const compatibilityLayer = String.raw`
 <style id="destroy-static-compatibility">
   html {
@@ -306,11 +331,49 @@ const compatibilityLayer = String.raw`
     text-shadow: 0 3px 18px rgba(0, 0, 0, 0.85);
   }
 
+  .destroy-home-hero-scroll__overlay > .wrapperItem:first-child .icon {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 18px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
   .destroy-home-hero-scroll__overlay > .wrapperItem:first-child .icon .content {
     color: #111111 !important;
     text-shadow: none !important;
     background: rgba(255, 255, 255, 0.88) !important;
     box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22) !important;
+    box-sizing: border-box !important;
+    min-height: 125px !important;
+    height: 125px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 24px 20px 24px 94px !important;
+    text-align: center !important;
+    font-size: 14px !important;
+    line-height: 1.22 !important;
+    overflow: hidden !important;
+  }
+
+  .destroy-home-hero-scroll__overlay > .wrapperItem:first-child .icon .content::before {
+    left: -58px !important;
+    width: 126px !important;
+    border-radius: 999px !important;
+  }
+
+  .destroy-home-hero-scroll__overlay > .wrapperItem:first-child .icon .content::after {
+    left: 19px !important;
+    width: 42px !important;
+    height: 42px !important;
+    z-index: 1 !important;
+  }
+
+  .destroy-home-hero-scroll__overlay > .wrapperItem:first-child .icon .content:nth-child(3)::after {
+    left: 17px !important;
+    width: 45px !important;
+    height: 45px !important;
+    bottom: 50% !important;
   }
 
   .destroy-home-hero-scroll__overlay > .wrapperItem:nth-child(2) {
@@ -610,6 +673,67 @@ const compatibilityLayer = String.raw`
     padding-bottom: 12px !important;
   }
 
+  .destroy-rendered-works {
+    width: min(1070px, calc(100% - 32px));
+    margin: 48px auto;
+    padding: 8px 0 44px;
+    overflow: hidden;
+  }
+
+  .destroy-rendered-works .h2 {
+    margin: 0 0 26px;
+    color: #111111;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(26px, 3.2vw, 38px);
+    line-height: 1.12;
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .destroy-rendered-works .swiper-wrapper {
+    display: grid !important;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(280px, 31%);
+    gap: 40px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0 2px 18px;
+    transform: none !important;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: #c91515 #f2f2f2;
+  }
+
+  .destroy-rendered-works .swiper-wrapper::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  .destroy-rendered-works .swiper-wrapper::-webkit-scrollbar-thumb {
+    background: #c91515;
+    border-radius: 999px;
+  }
+
+  .destroy-rendered-works .swiper-slide {
+    width: auto !important;
+    min-width: 0;
+    margin: 0 !important;
+    scroll-snap-align: center;
+  }
+
+  .destroy-rendered-works .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 360px;
+    object-fit: cover;
+    border-radius: 20px;
+    background: #f2f2f2;
+  }
+
+  .destroy-rendered-works .swiper-nav-wrapper {
+    display: none;
+  }
+
   @keyframes destroyFadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -716,6 +840,16 @@ const compatibilityLayer = String.raw`
       min-height: 52px !important;
     }
 
+    .destroy-rendered-works .swiper-wrapper {
+      grid-auto-columns: minmax(240px, 84%);
+      gap: 18px;
+    }
+
+    .destroy-rendered-works .swiper-slide img {
+      height: 300px;
+      border-radius: 18px;
+    }
+
     .destroy-home-hero-scroll-scene {
       min-height: 145vh !important;
     }
@@ -748,6 +882,10 @@ const compatibilityLayer = String.raw`
 
     .destroy-home-hero-scroll__overlay > .wrapperItem:nth-child(2) {
       border-radius: 18px !important;
+    }
+
+    .destroy-home-hero-scroll__overlay > .wrapperItem:first-child .icon {
+      display: none !important;
     }
 
     .elementor-location-popup.destroy-popup-open {
@@ -1352,10 +1490,44 @@ export function findRenderedPage(slug: string) {
   return pages.find((page) => page.slug === slug);
 }
 
+function renderWorksBlock(works: { title: string; images: string[] }) {
+  const slides = works.images
+    .map(
+      (src) =>
+        `<div class="swiper-slide"><img src="${src}" alt="${works.title}" loading="lazy" decoding="async"></div>`,
+    )
+    .join("");
+
+  return `<div class="elementor-element elementor-element-fc35a16 elementor-widget elementor-widget-html destroy-rendered-works" data-id="fc35a16" data-element_type="widget" data-e-type="widget" data-widget_type="html.default"><h2 class="h2">${works.title}</h2><div class="swiper mySwiper destroy-rendered-works__slider" aria-label="${works.title}"><div class="swiper-wrapper">${slides}</div><div class="swiper-nav-wrapper" aria-hidden="true"><div class="swiper-button-next"></div><div class="swiper-button-prev"></div></div></div></div>`;
+}
+
+function insertBeforeFooter(body: string, block: string) {
+  const footerIndex = body.search(/<footer\b/i);
+
+  if (footerIndex < 0) {
+    return `${body}${block}`;
+  }
+
+  return `${body.slice(0, footerIndex)}${block}${body.slice(footerIndex)}`;
+}
+
 export function readRenderedHtml(page: RenderedPage) {
   const html = readFileSync(join(process.cwd(), "data", "rendered-pages", page.file), "utf8");
   const head = html.match(/<head[^>]*>([\s\S]*?)<\/head>/i)?.[1] ?? "";
-  const body = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i)?.[1] ?? html;
+  let body = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i)?.[1] ?? html;
+
+  if (page.slug === "nashi-obekty") {
+    body = body.replace(
+      /<div class="elementor-element destroy-rendered-intro[\s\S]*?<\/div><\/div><\/div>/,
+      '<div class="elementor-element destroy-rendered-intro elementor-widget elementor-widget-html" data-id="destroy-intro" data-element_type="widget" data-e-type="widget" data-widget_type="html.default"><div class="elementor-widget-container"><p class="destroy-rendered-lead">Реальные выполненные объекты DESTROY: крупные демонтажные работы, помещения после пожара, школы, квартиры и коммерческие объекты.</p></div></div>',
+    );
+  }
+
+  const works = renderedWorksGalleries[page.slug];
+
+  if (works && !body.includes("elementor-element-fc35a16")) {
+    body = insertBeforeFooter(body, renderWorksBlock(works));
+  }
 
   return `${head}\n${body}\n${compatibilityLayer}`;
 }

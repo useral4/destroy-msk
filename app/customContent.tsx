@@ -38,6 +38,42 @@ const img = {
   letter2: "/wp-content/uploads/2025/09/uvazhaemyj-aleksej-nikolaevich.jpg",
 };
 
+const workPhotos = {
+  territory: [
+    "/wp-content/uploads/2025/10/28_16.jpeg",
+    "/wp-content/uploads/2025/10/28_12-1.jpeg",
+    "/wp-content/uploads/2025/10/25_8.jpeg",
+    "/wp-content/uploads/2025/10/24_10.jpeg",
+  ],
+  houses: [
+    "/wp-content/uploads/2025/10/demontazh-bani-65-s-vyvozom-musora_3.jpeg",
+    "/wp-content/uploads/2025/10/18_7.jpeg",
+    "/wp-content/uploads/2025/10/fvfyvfvfyvyf.jpg",
+    "/wp-content/uploads/2025/10/yfvfyvfyv.jpg",
+    "/wp-content/uploads/2025/10/yfvyfvfyvfy.jpg",
+  ],
+  floors: [
+    "/wp-content/uploads/2025/10/25_3-1.jpeg",
+    "/wp-content/uploads/2025/10/25_6-2.jpeg",
+    "/wp-content/uploads/2025/10/24_12-2.jpeg",
+    "/wp-content/uploads/2025/10/25_11-2.jpeg",
+    "/wp-content/uploads/2025/10/25_10-2.jpeg",
+  ],
+  screed: [
+    "/wp-content/uploads/2026/01/photo_10_2026-01-30_13-57-41.jpg",
+    "/wp-content/uploads/2025/11/photo_2025-09-30_21-56-07.jpg",
+    "/wp-content/uploads/2025/10/1.jpg",
+    "/wp-content/uploads/2025/10/demontazh-betonnoj-styazhki-30sm_4.jpeg",
+    "/wp-content/uploads/2025/10/photo_1_2025-10-02_14-12-19-2.jpg",
+  ],
+  plaster: [
+    "/wp-content/uploads/2026/01/photo_10_2026-01-30_13-56-49.jpg",
+    "/wp-content/uploads/2025/11/photo_2025-11-01_13-49-53.jpg",
+    "/wp-content/uploads/2025/10/demontazh-shtukaturki-180m2-_3.jpeg",
+    img.wall,
+  ],
+};
+
 const commonFaq: Faq[] = [
   {
     q: "Вывоз мусора можно включить в заявку?",
@@ -99,7 +135,7 @@ export const customPages: CustomPage[] = [
       "Работа мини-погрузчиком, экскаватором и другой техникой",
       "Вывоз мусора контейнерами 8, 20 и 27 кубов",
     ],
-    gallery: [img.site, img.object, img.objectAlt],
+    gallery: workPhotos.territory,
     related: [
       { title: "Погрузка и вывоз мусора", href: "/pogruzka-i-vyvoz-musora/" },
       { title: "Контейнер 20 кубов", href: "/kontejner-dlya-musora-20-kubov/" },
@@ -124,7 +160,7 @@ export const customPages: CustomPage[] = [
       "Вывоз порубочных остатков",
       "Работа рядом с заборами, домами и коммуникациями",
     ],
-    gallery: [img.house, img.site, img.object],
+    gallery: [img.house, img.site, ...workPhotos.houses.slice(0, 3)],
     related: [
       { title: "Расчистка участков", href: "/raschistka-uchastkov/" },
       { title: "Разбор ветхих строений", href: "/razbor-vethih-stroenij/" },
@@ -149,7 +185,7 @@ export const customPages: CustomPage[] = [
       "Ручной демонтаж или техника по условиям объекта",
       "Погрузка, вывоз и уборка территории",
     ],
-    gallery: [img.house, img.objectAlt, img.site],
+    gallery: workPhotos.houses,
     related: [
       { title: "Демонтаж дома", href: "/demontazh-doma/" },
       { title: "Демонтаж сарая", href: "/demontazh-saraya/" },
@@ -174,7 +210,7 @@ export const customPages: CustomPage[] = [
       "Погрузка боя, песка и строительного мусора",
       "Расчет по площади, толщине основания и доступу техники",
     ],
-    gallery: [img.concrete, img.wall, img.object],
+    gallery: [img.concrete, ...workPhotos.floors.slice(0, 4)],
     related: [
       { title: "Демонтаж пола и стяжки", href: "/demontazh-pola-i-styazhki/" },
       { title: "Погрузка и вывоз мусора", href: "/pogruzka-i-vyvoz-musora/" },
@@ -199,7 +235,7 @@ export const customPages: CustomPage[] = [
       "Вывоз мусора контейнерами или самосвалом",
       "Подготовка линии участка под новый забор",
     ],
-    gallery: [img.object, img.site, img.concrete],
+    gallery: [img.object, img.site, img.concrete, ...workPhotos.territory.slice(0, 2)],
     related: [
       { title: "Расчистка участков", href: "/raschistka-uchastkov/" },
       { title: "Спил и удаление деревьев", href: "/spil-i-udalenie-derevev/" },
@@ -224,7 +260,7 @@ export const customPages: CustomPage[] = [
       "Пылезащита, упаковка и погрузка мусора",
       "Расчет по площади, толщине слоя и сложности доступа",
     ],
-    gallery: [img.wall, img.apartment, img.concrete],
+    gallery: workPhotos.plaster,
     related: [
       { title: "Демонтаж стен и перегородок", href: "/demontazh-sten-i-peregorodok/" },
       { title: "Демонтаж пола и стяжки", href: "/demontazh-pola-i-styazhki/" },
@@ -249,7 +285,7 @@ export const customPages: CustomPage[] = [
       "Алмазная резка и локальный демонтаж при необходимости",
       "Предварительная цена по площади и толщине стяжки",
     ],
-    gallery: [img.concrete, img.apartment, img.wall],
+    gallery: workPhotos.screed,
     related: [
       { title: "Демонтаж пола и стяжки", href: "/demontazh-pola-i-styazhki/" },
       { title: "Демонтаж тротуарной плитки", href: "/demontazh-trotuarnoj-plitki-bordyurov/" },
@@ -335,15 +371,16 @@ export const customPages: CustomPage[] = [
     description:
       "Ключевые проекты DESTROY: демонтаж школы, ТЦ после пожара, сталинки, сантехнической кабины и кирпичного здания.",
     kind: "hub",
-    eyebrow: "SEO-раздел",
+    eyebrow: "Портфолио",
     heroImage: img.object,
     intro:
-      "Отдельный раздел под крупные и показательные проекты. Такие страницы помогают клиентам быстро найти похожий опыт и дают дополнительные точки входа из поиска.",
+      "Реальные выполненные объекты DESTROY: крупные демонтажные работы, помещения после пожара, школы, квартиры и коммерческие объекты.",
     points: [
-      "Фото до и после",
-      "Площадь, сроки и состав работ",
-      "Перелинковка с услугами и портфолио",
-      "Форма заявки на каждом объекте",
+      "Демонтаж школы",
+      "Демонтаж ТЦ после пожара",
+      "Демонтаж сталинки",
+      "Демонтаж сантехнической кабины",
+      "Разбор кирпичного здания",
     ],
     gallery: [img.object, img.objectAlt, img.fire],
     related: [
@@ -545,14 +582,18 @@ function MarketingPage({ page }: { page: CustomPage }) {
           </section>
         ) : null}
 
-        <section className="custom-section">
-          <h2>Фото и примеры работ</h2>
-          <div className="custom-gallery">
-            {page.gallery.map((src) => (
-              <img key={src} src={src} alt="" loading="lazy" />
-            ))}
-          </div>
-        </section>
+        {page.kind === "service" || page.kind === "object" ? (
+          <WorksSlider page={page} />
+        ) : (
+          <section className="custom-section">
+            <h2>Фото и примеры работ</h2>
+            <div className="custom-gallery">
+              {page.gallery.map((src) => (
+                <img key={src} src={src} alt="" loading="lazy" />
+              ))}
+            </div>
+          </section>
+        )}
 
         <section className="custom-section custom-grid-3">
           <div>
@@ -636,6 +677,36 @@ function VideoCategories() {
   );
 }
 
+function WorksSlider({ page }: { page: CustomPage }) {
+  const title =
+    page.kind === "object" ? `Фото объекта: ${page.title}` : `Наши работы: ${page.title.toLowerCase()}`;
+
+  return (
+    <section
+      className="elementor-element elementor-element-fc35a16 elementor-widget elementor-widget-html custom-section custom-works"
+      data-id="fc35a16"
+      data-element_type="widget"
+      data-e-type="widget"
+      data-widget_type="html.default"
+    >
+      <h2 className="h2">{title}</h2>
+      <div className="swiper mySwiper custom-works__slider" aria-label={title}>
+        <div className="swiper-wrapper">
+          {page.gallery.map((src) => (
+            <div className="swiper-slide" key={src}>
+              <img src={src} alt={page.title} loading="lazy" />
+            </div>
+          ))}
+        </div>
+        <div className="swiper-nav-wrapper" aria-hidden="true">
+          <div className="swiper-button-prev" />
+          <div className="swiper-button-next" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function CalculatorPage({ page }: { page: CustomPage }) {
   return (
     <>
@@ -706,7 +777,7 @@ function CustomStyles() {
       .custom-header{width:min(1070px,calc(100% - 32px));margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0 14px;background:#fff;color:#111}
       .custom-logo img{width:145px;height:auto;display:block}.custom-header nav{display:flex;gap:24px;align-items:center;justify-content:center;flex-wrap:wrap}.custom-header a{color:#111;text-decoration:none;font:600 11px/1.2 Arial,Helvetica,sans-serif;text-transform:uppercase;letter-spacing:0}.custom-phone{color:#c91515!important;font-weight:800!important;white-space:nowrap}
       .custom-page{width:min(1070px,calc(100% - 32px));margin:0 auto;font-family:Arial,Helvetica,sans-serif;color:#222;background:#fff}.custom-hero{position:relative;min-height:360px;display:flex;align-items:flex-end;overflow:hidden;border-radius:8px;background:#211b1b}.custom-hero--compact{min-height:330px}.custom-hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.custom-hero__shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.82),rgba(0,0,0,.45) 55%,rgba(0,0,0,.18)),linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.7))}.custom-hero__content{position:relative;max-width:720px;padding:44px 38px;color:#fff}.custom-hero span,.custom-request span{display:block;margin:0 0 12px;color:#c91515;background:transparent;border-radius:0;padding:0;font-size:12px;line-height:1.2;font-weight:800;text-transform:uppercase}.custom-hero h1{margin:0 0 14px;color:#fff;font-family:Georgia,"Times New Roman",serif;font-size:clamp(28px,4vw,46px);line-height:1.06;font-weight:800;text-transform:uppercase;letter-spacing:0}.custom-hero p{max-width:660px;margin:0;font-size:16px;line-height:1.45;color:rgba(255,255,255,.88)}.custom-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.custom-actions a,.custom-calc-result a,.custom-request button{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:8px;background:#c91515;color:#fff!important;text-decoration:none;padding:13px 22px;font:800 13px/1 Arial,Helvetica,sans-serif;text-transform:uppercase}.custom-actions a:nth-child(2){background:#fff;color:#111!important}
-      .custom-section{padding:46px 0}.custom-section+.custom-section{border-top:1px solid #ececec}.custom-section h2{margin:0 0 22px;color:#222;font-family:Georgia,"Times New Roman",serif;font-size:clamp(26px,3.2vw,36px);line-height:1.12;font-weight:800;text-transform:uppercase;text-align:center}.custom-section p{font-size:16px;line-height:1.55;color:#333}.custom-grid-2{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:34px;align-items:start}.custom-grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.custom-checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0;padding:0;list-style:none}.custom-checks li{position:relative;padding:13px 14px 13px 38px;border:1px solid #eeeeee;border-radius:8px;background:#fff;font-size:13px;font-weight:600;line-height:1.3}.custom-checks li:before{content:"";position:absolute;left:14px;top:15px;width:13px;height:13px;border:1px solid #c91515;border-radius:3px;background:#fff}.custom-checks li:after{content:"";position:absolute;left:18px;top:18px;width:5px;height:5px;border-radius:50%;background:#c91515}.custom-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.custom-gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px}.custom-facts{width:min(1070px,calc(100% - 32px));margin:32px auto 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:#2f2727;color:#fff}.custom-facts div{padding:24px;background:#382f2f}.custom-facts span{display:block;opacity:.68;margin-bottom:8px;font-size:13px}.custom-facts strong{font-size:18px}.custom-step{border:1px solid #ececec;border-radius:8px;padding:22px;background:#fff;box-shadow:none}.custom-step span{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#c91515;color:#fff;font-weight:900}.custom-step h3{margin:16px 0 8px;color:#222;font-size:18px;line-height:1.2;font-weight:800}.custom-step p{font-size:14px}.custom-related,.custom-video-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.custom-related a,.custom-video-grid article{position:relative;min-height:255px;border-radius:8px;background:#f2f2f2;color:#111;text-decoration:none;padding:20px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background-size:cover;background-position:center}.custom-video-grid article:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 25%,rgba(0,0,0,.55) 67%,rgba(0,0,0,.9));z-index:0}.custom-video-grid article>*{position:relative;z-index:1}.custom-video-grid h3,.custom-video-grid p{color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.75)}.custom-video-grid h3{margin:0 0 8px;font-size:22px;line-height:1.2}.custom-video-grid p{margin:0;font-size:14px;color:rgba(255,255,255,.82)}.custom-related img{width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:14px}.custom-related strong{font-size:17px}.custom-faq{display:grid;gap:10px}.custom-faq details{border:1px solid #ececec;border-radius:8px;padding:16px;background:#fff}.custom-faq summary{font-weight:800;cursor:pointer}.custom-play{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#c91515;color:#fff;margin-bottom:16px;font-size:14px}
+      .custom-section{padding:46px 0}.custom-section+.custom-section{border-top:1px solid #ececec}.custom-section h2,.custom-page .h2{margin:0 0 22px;color:#222;font-family:Georgia,"Times New Roman",serif;font-size:clamp(26px,3.2vw,36px);line-height:1.12;font-weight:800;text-transform:uppercase;text-align:center}.custom-section p{font-size:16px;line-height:1.55;color:#333}.custom-grid-2{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:34px;align-items:start}.custom-grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.custom-checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0;padding:0;list-style:none}.custom-checks li{position:relative;padding:13px 14px 13px 38px;border:1px solid #eeeeee;border-radius:8px;background:#fff;font-size:13px;font-weight:600;line-height:1.3}.custom-checks li:before{content:"";position:absolute;left:14px;top:15px;width:13px;height:13px;border:1px solid #c91515;border-radius:3px;background:#fff}.custom-checks li:after{content:"";position:absolute;left:18px;top:18px;width:5px;height:5px;border-radius:50%;background:#c91515}.custom-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.custom-gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px}.custom-works{overflow:hidden}.custom-works__slider{position:relative;width:100%;overflow:visible}.custom-works .swiper-wrapper{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(280px,31%);gap:40px;overflow-x:auto;overflow-y:hidden;padding:0 2px 16px;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#b01212 #f2f2f2}.custom-works .swiper-wrapper::-webkit-scrollbar{height:10px}.custom-works .swiper-wrapper::-webkit-scrollbar-thumb{background:#b01212;border-radius:999px}.custom-works .swiper-slide{scroll-snap-align:center;min-width:0}.custom-works .swiper-slide img{display:block;width:100%;height:360px;object-fit:cover;border-radius:20px;background:#f2f2f2}.custom-works .swiper-nav-wrapper{display:none}.custom-facts{width:min(1070px,calc(100% - 32px));margin:32px auto 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:#2f2727;color:#fff}.custom-facts div{padding:24px;background:#382f2f}.custom-facts span{display:block;opacity:.68;margin-bottom:8px;font-size:13px}.custom-facts strong{font-size:18px}.custom-step{border:1px solid #ececec;border-radius:8px;padding:22px;background:#fff;box-shadow:none}.custom-step span{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#c91515;color:#fff;font-weight:900}.custom-step h3{margin:16px 0 8px;color:#222;font-size:18px;line-height:1.2;font-weight:800}.custom-step p{font-size:14px}.custom-related,.custom-video-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.custom-related a,.custom-video-grid article{position:relative;min-height:255px;border-radius:8px;background:#f2f2f2;color:#111;text-decoration:none;padding:20px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background-size:cover;background-position:center}.custom-video-grid article:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 25%,rgba(0,0,0,.55) 67%,rgba(0,0,0,.9));z-index:0}.custom-video-grid article>*{position:relative;z-index:1}.custom-video-grid h3,.custom-video-grid p{color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.75)}.custom-video-grid h3{margin:0 0 8px;font-size:22px;line-height:1.2}.custom-video-grid p{margin:0;font-size:14px;color:rgba(255,255,255,.82)}.custom-related img{width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:14px}.custom-related strong{font-size:17px}.custom-faq{display:grid;gap:10px}.custom-faq details{border:1px solid #ececec;border-radius:8px;padding:16px;background:#fff}.custom-faq summary{font-weight:800;cursor:pointer}.custom-play{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#c91515;color:#fff;margin-bottom:16px;font-size:14px}
       .custom-request{margin:46px 0 58px;padding:34px;border-radius:8px;background:#362d2d;color:#fff;display:grid;grid-template-columns:1fr 1.1fr;gap:30px}.custom-request h2{margin:0 0 12px;color:#fff;font-size:32px;line-height:1.12;font-family:Georgia,"Times New Roman",serif;text-transform:uppercase}.custom-request p{color:rgba(255,255,255,.75);line-height:1.55}.custom-request form{display:grid;gap:12px}.custom-request input,.custom-request textarea,.custom-calculator input,.custom-calculator select{width:100%;box-sizing:border-box;border:0;border-radius:8px;background:#fff;color:#111;padding:14px 18px;font:500 15px/1.2 Arial,Helvetica,sans-serif}.custom-request textarea{border-radius:8px}
       .custom-calculator{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;margin:44px 0;padding:34px;border-radius:8px;background:#362d2d;color:#fff}.custom-calc-panel{display:grid;gap:16px}.custom-calc-panel label{display:grid;gap:8px;color:rgba(255,255,255,.78);font-weight:700}.custom-checkline{display:flex!important;align-items:center;gap:12px}.custom-checkline input{width:18px!important;height:18px}.custom-calc-panel button{border:0;border-radius:8px;background:#c91515;color:#fff;padding:15px 22px;font-weight:900;font-size:14px;text-transform:uppercase}.custom-calc-result{border-radius:8px;background:#fff;color:#111;padding:30px;display:flex;flex-direction:column;justify-content:center}.custom-calc-result span{color:#777;font-weight:800}.custom-calc-result strong{font-size:42px;line-height:1.1;margin:10px 0}.custom-footer{display:flex;align-items:center;justify-content:space-between;gap:24px;background:#171313;color:#fff;padding:28px max(16px,calc((100% - 1070px)/2));margin-top:0}.custom-footer img{width:145px}.custom-footer div{display:flex;gap:20px;flex-wrap:wrap}.custom-footer a{color:#fff;text-decoration:none;font:600 12px/1.3 Arial,Helvetica,sans-serif}
       @media(max-width:900px){.custom-header{align-items:flex-start;flex-direction:column}.custom-header nav{gap:12px}.custom-grid-2,.custom-grid-3,.custom-gallery,.custom-related,.custom-video-grid,.custom-request,.custom-calculator,.custom-facts,.custom-checks{grid-template-columns:1fr}.custom-hero{min-height:420px}.custom-hero__content{padding:34px 22px}.custom-hero p{font-size:15px}.custom-section{padding:38px 0}.custom-request{margin:38px 0;padding:24px}.custom-calculator{padding:24px}.custom-calc-result strong{font-size:34px}.custom-footer{align-items:flex-start;flex-direction:column;padding:28px 16px}.custom-video-grid article{min-height:230px}}

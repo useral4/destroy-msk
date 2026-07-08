@@ -6,8 +6,6 @@ type Props = {
   params: Promise<{ slug: string[] }>;
 };
 
-const renderedFirstSlugs = new Set(["uslugi", "nashi-video", "nashi-obekty", "novye-uslugi"]);
-
 export function generateStaticParams() {
   const params = [
     ...getRenderedPages().filter((page) => page.slug).map((page) => page.slug),
@@ -21,10 +19,10 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props) {
   const path = (await params).slug.join("/");
-  const renderedFirstPage = renderedFirstSlugs.has(path) ? findRenderedPage(path) : undefined;
+  const page = findRenderedPage(path);
 
-  if (renderedFirstPage) {
-    return metadataFromHtml(readRenderedHtml(renderedFirstPage), "DESTROY");
+  if (page) {
+    return metadataFromHtml(readRenderedHtml(page), "DESTROY");
   }
 
   const customPage = findCustomPage(path);
@@ -33,21 +31,15 @@ export async function generateMetadata({ params }: Props) {
     return metadataFromCustomPage(customPage);
   }
 
-  const page = findRenderedPage(path);
-
-  if (!page) {
-    return metadataFromHtml("", "DESTROY");
-  }
-
-  return metadataFromHtml(readRenderedHtml(page), "DESTROY");
+  return metadataFromHtml("", "DESTROY");
 }
 
 export default async function RenderedContentPage({ params }: Props) {
   const path = (await params).slug.join("/");
-  const renderedFirstPage = renderedFirstSlugs.has(path) ? findRenderedPage(path) : undefined;
+  const page = findRenderedPage(path);
 
-  if (renderedFirstPage) {
-    return <div dangerouslySetInnerHTML={{ __html: readRenderedHtml(renderedFirstPage) }} />;
+  if (page) {
+    return <div dangerouslySetInnerHTML={{ __html: readRenderedHtml(page) }} />;
   }
 
   const customPage = findCustomPage(path);
@@ -56,11 +48,5 @@ export default async function RenderedContentPage({ params }: Props) {
     return <CustomContentPage page={customPage} />;
   }
 
-  const page = findRenderedPage(path);
-
-  if (!page) {
-    notFound();
-  }
-
-  return <div dangerouslySetInnerHTML={{ __html: readRenderedHtml(page) }} />;
+  notFound();
 }
