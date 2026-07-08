@@ -781,6 +781,11 @@
       "slug": "novye-uslugi",
       "file": "novye-uslugi.html",
       "url": "/novye-uslugi/"
+    },
+    {
+      "slug": "uslugi",
+      "file": "uslugi.html",
+      "url": "/uslugi/"
     }
   ]
 }

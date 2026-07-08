@@ -84,15 +84,20 @@ const compatibilityLayer = String.raw`
     position: absolute;
     top: 12px;
     right: 12px;
-    display: grid;
-    place-items: center;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     width: 38px;
     height: 38px;
+    padding: 0 !important;
     border: 0;
     border-radius: 999px;
     background: #ffffff;
     color: #111111;
-    font: 28px/1 Arial, sans-serif;
+    font: 32px/1 Arial, sans-serif !important;
+    text-align: center;
+    appearance: none;
+    -webkit-appearance: none;
     cursor: pointer;
     z-index: 1000000;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
@@ -103,6 +108,12 @@ const compatibilityLayer = String.raw`
     background: #d61313;
     color: #ffffff;
     transform: translateY(-1px);
+  }
+
+  .wpcf7 select.wpcf7-select,
+  .wpcf7-form-control.wpcf7-select {
+    padding-right: 44px !important;
+    background-position: right 18px center !important;
   }
 
   .destroy-form-success {
@@ -617,7 +628,7 @@ const compatibilityLayer = String.raw`
     });
 
     var extraMenuItems = [
-      ["\u041d\u043e\u0432\u044b\u0435 \u0443\u0441\u043b\u0443\u0433\u0438", "/novye-uslugi/"],
+      ["\u0423\u0441\u043b\u0443\u0433\u0438", "/uslugi/"],
       ["\u041d\u0430\u0448\u0438 \u043e\u0431\u044a\u0435\u043a\u0442\u044b", "/nashi-obekty/"],
       ["\u0412\u0438\u0434\u0435\u043e", "/nashi-video/"],
     ];

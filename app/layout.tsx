@@ -12,8 +12,9 @@ body.destroy-menu-open{overflow:hidden}
 .elementor-location-popup.destroy-popup-open{position:fixed!important;inset:0!important;display:flex!important;align-items:center!important;justify-content:center!important;width:100vw!important;height:100vh!important;padding:20px!important;background:rgba(0,0,0,.8)!important;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:999999!important;opacity:1!important;pointer-events:all!important}
 .elementor-location-popup.destroy-popup-open>.e-con,.elementor-location-popup.destroy-popup-open>.elementor-element{width:min(650px,92vw)!important;max-height:90vh!important;overflow:visible!important;position:relative!important}
 .elementor-location-popup.destroy-popup-open>.e-con>.elementor-element,.elementor-location-popup.destroy-popup-open>.elementor-element>.elementor-element{max-height:90vh;overflow:auto}
-.destroy-popup-close{position:absolute;top:12px;right:12px;display:grid;place-items:center;width:38px;height:38px;border:0;border-radius:999px;background:#fff;color:#111;font:28px/1 Arial,sans-serif;cursor:pointer;z-index:1000000;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:background 160ms ease,color 160ms ease,transform 160ms ease}
+.destroy-popup-close{position:absolute;top:12px;right:12px;display:flex!important;align-items:center!important;justify-content:center!important;width:38px;height:38px;padding:0!important;border:0;border-radius:999px;background:#fff;color:#111;font:32px/1 Arial,sans-serif!important;text-align:center;appearance:none;-webkit-appearance:none;cursor:pointer;z-index:1000000;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:background 160ms ease,color 160ms ease,transform 160ms ease}
 .destroy-popup-close:hover{background:#d61313;color:#fff;transform:translateY(-1px)}
+.wpcf7 select.wpcf7-select,.wpcf7-form-control.wpcf7-select{padding-right:44px!important;background-position:right 18px center!important}
 .elementor-4938 .elementor-element.elementor-element-a1da801,.destroy-article-card{position:relative!important;overflow:hidden!important;border-radius:20px!important;min-height:425px;display:flex!important;align-items:flex-end!important;text-decoration:none!important;background-size:cover!important;background-position:center!important;box-shadow:none!important}
 .elementor-4938 .elementor-element.elementor-element-a1da801::before,a.destroy-article-card::before{content:""!important;position:absolute;inset:0;z-index:0;display:block!important;opacity:1!important;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.05) 28%,rgba(0,0,0,.44) 62%,rgba(0,0,0,.92) 100%)!important}
 .elementor-4938 .elementor-element.elementor-element-a1da801>.e-con-inner,.destroy-article-card>.e-con-inner{position:relative!important;z-index:1!important;width:100%;min-height:inherit;margin-top:auto!important;padding:0 30px 30px!important;display:flex!important;flex-direction:column!important;justify-content:flex-end!important;align-items:flex-start!important}
@@ -133,7 +134,7 @@ const criticalCompatibilityJs = String.raw`
     });
 
     var extraMenuItems = [
-      ["\u041d\u043e\u0432\u044b\u0435 \u0443\u0441\u043b\u0443\u0433\u0438", "/novye-uslugi/"],
+      ["\u0423\u0441\u043b\u0443\u0433\u0438", "/uslugi/"],
       ["\u041d\u0430\u0448\u0438 \u043e\u0431\u044a\u0435\u043a\u0442\u044b", "/nashi-obekty/"],
       ["\u0412\u0438\u0434\u0435\u043e", "/nashi-video/"],
     ];
