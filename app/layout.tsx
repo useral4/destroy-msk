@@ -33,8 +33,7 @@ body.destroy-menu-open{overflow:hidden}
 .destroy-scroll-scene__sticky{position:sticky;top:0;min-height:100vh;overflow:hidden;border-radius:0;background:#201818;isolation:isolate;box-shadow:none}
 .destroy-scroll-scene__sticky.is-fixed{position:fixed;top:0;left:0;width:100vw;z-index:40}
 .destroy-scroll-scene__sticky.is-after{position:absolute;top:auto;bottom:0;left:0;width:100vw}
-.destroy-scroll-scene__canvas,.destroy-scroll-scene__video-source{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
-.destroy-scroll-scene__video-source{opacity:1}
+.destroy-scroll-scene__canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
 .destroy-scroll-scene__sticky::before{content:"";position:absolute;inset:-20%;z-index:1;pointer-events:none;background:radial-gradient(circle at var(--destroy-scene-glow-x,20%) var(--destroy-scene-glow-y,15%),rgba(176,18,18,.35),transparent 34%),linear-gradient(120deg,rgba(0,0,0,.74),rgba(0,0,0,.22) 48%,rgba(0,0,0,.68));mix-blend-mode:normal}
 .destroy-scroll-scene__sticky::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 88px),repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0 1px,transparent 1px 88px);opacity:var(--destroy-scene-grid-opacity,.16)}
 .destroy-scroll-scene__shade{position:absolute;inset:auto -18% -35% -18%;height:52%;z-index:2;pointer-events:none;background:radial-gradient(ellipse at center,rgba(176,18,18,.4),transparent 64%);transform:translateY(var(--destroy-scene-shade-y,0%));filter:blur(18px)}
@@ -163,6 +162,8 @@ const criticalCompatibilityJs = String.raw`
     });
 
     var scrollSceneItems = [];
+    var scrollSceneFrameCount = 51;
+    var scrollSceneFramePath = "/videos/grunge-frames/frame_";
     var scrollSceneSelector = [
       ".elementor-global-4659",
       ".elementor-global-5598",
@@ -201,6 +202,11 @@ const criticalCompatibilityJs = String.raw`
       return element;
     }
 
+    function getScrollSceneFrameUrl(index) {
+      var number = String(index + 1).padStart(4, "0");
+      return scrollSceneFramePath + number + ".jpg";
+    }
+
     function resizeScrollScene(item) {
       var rect = item.sticky.getBoundingClientRect();
       var ratio = Math.min(window.devicePixelRatio || 1, 1.6);
@@ -209,24 +215,91 @@ const criticalCompatibilityJs = String.raw`
       if (item.canvas.width !== width || item.canvas.height !== height) {
         item.canvas.width = width;
         item.canvas.height = height;
+        return true;
       }
+      return false;
     }
 
-    function drawScrollScene(item) {
-      if (!item.context || !item.ready || item.video.readyState < 2) return;
-      resizeScrollScene(item);
+    function findNearestLoadedFrame(item, index) {
+      if (item.frames[index]) return index;
+      for (var distance = 1; distance < scrollSceneFrameCount; distance += 1) {
+        var before = index - distance;
+        var after = index + distance;
+        if (before >= 0 && item.frames[before]) return before;
+        if (after < scrollSceneFrameCount && item.frames[after]) return after;
+      }
+      return -1;
+    }
+
+    function loadScrollSceneFrame(item, index) {
+      index = Math.round(clamp(index, 0, scrollSceneFrameCount - 1));
+      if (item.frames[index] || item.loading[index]) return;
+      item.loading[index] = true;
+      var image = new Image();
+      image.decoding = "async";
+      image.onload = function () {
+        item.frames[index] = image;
+        item.loading[index] = false;
+        if (index === item.wantedFrame || item.currentFrame < 0) {
+          drawScrollSceneFrame(item, index);
+        }
+      };
+      image.onerror = function () {
+        item.loading[index] = false;
+      };
+      image.src = getScrollSceneFrameUrl(index);
+    }
+
+    function preloadScrollSceneFrames(item, centerIndex) {
+      for (var offset = -4; offset <= 4; offset += 1) {
+        loadScrollSceneFrame(item, centerIndex + offset);
+      }
+      if (item.preloadStarted) return;
+      item.preloadStarted = true;
+      var loadIndex = 0;
+      var run = function () {
+        var loadedThisPass = 0;
+        while (loadIndex < scrollSceneFrameCount && loadedThisPass < 4) {
+          loadScrollSceneFrame(item, loadIndex);
+          loadIndex += 1;
+          loadedThisPass += 1;
+        }
+        if (loadIndex < scrollSceneFrameCount) {
+          if ("requestIdleCallback" in window) {
+            window.requestIdleCallback(run, { timeout: 600 });
+          } else {
+            window.setTimeout(run, 80);
+          }
+        }
+      };
+      run();
+    }
+
+    function drawScrollSceneFrame(item, index) {
+      if (!item.context) return;
+      item.wantedFrame = Math.round(clamp(index, 0, scrollSceneFrameCount - 1));
+      var frameIndex = findNearestLoadedFrame(item, item.wantedFrame);
+      if (frameIndex < 0) {
+        loadScrollSceneFrame(item, item.wantedFrame);
+        return;
+      }
+      var resized = resizeScrollScene(item);
+      var image = item.frames[frameIndex];
       var canvas = item.canvas;
       var context = item.context;
-      var videoWidth = item.video.videoWidth || 16;
-      var videoHeight = item.video.videoHeight || 9;
-      var scale = Math.max(canvas.width / videoWidth, canvas.height / videoHeight);
+      if (item.currentFrame === frameIndex && !resized) return;
+      var imageWidth = image.naturalWidth || image.width || 16;
+      var imageHeight = image.naturalHeight || image.height || 9;
+      var scale = Math.max(canvas.width / imageWidth, canvas.height / imageHeight);
       var sourceWidth = canvas.width / scale;
       var sourceHeight = canvas.height / scale;
-      var sourceX = (videoWidth - sourceWidth) / 2;
-      var sourceY = (videoHeight - sourceHeight) / 2;
+      var sourceX = (imageWidth - sourceWidth) / 2;
+      var sourceY = (imageHeight - sourceHeight) / 2;
       try {
         context.clearRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(item.video, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
+        context.drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
+        item.currentFrame = frameIndex;
+        item.sticky.setAttribute("data-frame", String(frameIndex + 1));
       } catch (error) {}
     }
 
@@ -245,18 +318,9 @@ const criticalCompatibilityJs = String.raw`
         item.sticky.style.setProperty("--destroy-scene-glow-y", (15 + item.progress * 42).toFixed(2) + "%");
         item.sticky.style.setProperty("--destroy-scene-grid-opacity", (0.16 + item.progress * 0.16).toFixed(3));
         item.sticky.style.setProperty("--destroy-scene-shade-y", (item.progress * -22).toFixed(2) + "%");
-        var duration = Number.isFinite(item.video.duration) && item.video.duration > 0 ? item.video.duration : 6;
-        var nextTime = item.progress * duration;
-        var delta = Math.abs(item.video.currentTime - nextTime);
-        if (item.ready && Number.isFinite(nextTime) && delta > 0.012) {
-          try {
-            if (delta > 0.08 && item.video.fastSeek) {
-              item.video.fastSeek(nextTime);
-            } else {
-              item.video.currentTime = nextTime;
-            }
-          } catch (error) {}
-        }
+        var frameIndex = Math.round(item.progress * (scrollSceneFrameCount - 1));
+        drawScrollSceneFrame(item, frameIndex);
+        preloadScrollSceneFrames(item, frameIndex);
       });
       if (scrollSceneItems.length) window.requestAnimationFrame(updateScrollScenes);
     }
@@ -275,19 +339,10 @@ const criticalCompatibilityJs = String.raw`
       var canvas = document.createElement("canvas");
       canvas.className = "destroy-scroll-scene__canvas";
       canvas.setAttribute("aria-hidden", "true");
-      var video = document.createElement("video");
-      video.className = "destroy-scroll-scene__video-source";
-      video.src = "/videos/grunge-scroll.mp4";
-      video.muted = true;
-      video.playsInline = true;
-      video.preload = "auto";
-      video.setAttribute("aria-hidden", "true");
-      video.setAttribute("tabindex", "-1");
       var shade = document.createElement("div");
       shade.className = "destroy-scroll-scene__shade";
       parent.insertBefore(scene, target);
       sticky.appendChild(canvas);
-      sticky.appendChild(video);
       sticky.appendChild(shade);
       sticky.appendChild(target);
       scene.appendChild(sticky);
@@ -296,27 +351,26 @@ const criticalCompatibilityJs = String.raw`
         sticky: sticky,
         canvas: canvas,
         context: canvas.getContext("2d"),
-        video: video,
-        ready: false,
+        frames: [],
+        loading: {},
+        currentFrame: -1,
+        wantedFrame: 0,
+        preloadStarted: false,
         progress: 0
       };
       scrollSceneItems.push(item);
-      video.addEventListener("loadedmetadata", function () {
-        item.ready = true;
-        item.video.pause();
-        resizeScrollScene(item);
-        drawScrollScene(item);
-      }, { once: true });
-      video.addEventListener("seeked", function () {
-        drawScrollScene(item);
-      });
-      video.load();
+      resizeScrollScene(item);
+      loadScrollSceneFrame(item, 0);
+      preloadScrollSceneFrames(item, 0);
     }
 
     Array.prototype.slice.call(document.querySelectorAll(scrollSceneSurfaceSelector + ", .elementor-element")).forEach(initScrollScene);
     if (scrollSceneItems.length) {
       window.addEventListener("resize", function () {
-        scrollSceneItems.forEach(resizeScrollScene);
+        scrollSceneItems.forEach(function (item) {
+          resizeScrollScene(item);
+          drawScrollSceneFrame(item, item.wantedFrame || 0);
+        });
       });
       updateScrollScenes();
     }
