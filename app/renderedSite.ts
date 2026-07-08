@@ -141,6 +141,176 @@ const compatibilityLayer = String.raw`
     background-position: right 18px center !important;
   }
 
+  .elementor-2 .elementor-element.elementor-element-a6e09bc {
+    position: relative !important;
+    width: var(--destroy-scene-vw, 100vw) !important;
+    min-height: 100vh !important;
+    margin-left: calc(50% - var(--destroy-scene-half-vw, 50vw)) !important;
+    margin-right: calc(50% - var(--destroy-scene-half-vw, 50vw)) !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #151010 !important;
+  }
+
+  .elementor-2 .elementor-element.elementor-element-a6e09bc > .e-con-inner {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+  }
+
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    min-height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    border-radius: 0 !important;
+    background: #151010 url("/videos/home-hero-frames/frame_0001.jpg") center center / cover no-repeat !important;
+    isolation: isolate;
+  }
+
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.46) 48%, rgba(0, 0, 0, 0.38)),
+      radial-gradient(circle at 48% 58%, rgba(196, 15, 15, 0.24), transparent 42%);
+  }
+
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3.destroy-home-hero-parent-ready::before {
+    content: none !important;
+    display: none !important;
+  }
+
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper {
+    position: relative !important;
+    z-index: 2 !important;
+    width: min(1180px, calc(var(--destroy-scene-vw, 100vw) - 80px)) !important;
+    min-height: 100vh !important;
+    margin: 0 auto !important;
+    padding: 104px 0 68px !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 380px) !important;
+    gap: 38px !important;
+    align-items: center !important;
+    overflow: visible !important;
+    background: none !important;
+    background-image: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper::before,
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper::after,
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper > .wrapperItem::before,
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper > .wrapperItem::after {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+    background-image: none !important;
+  }
+
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper,
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper * {
+    color: #ffffff !important;
+  }
+
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper input,
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper select,
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper textarea,
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper option {
+    color: #111111 !important;
+    text-shadow: none !important;
+  }
+
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper .wpcf7-submit {
+    color: #ffffff !important;
+  }
+
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper > .wrapperItem {
+    position: relative !important;
+    z-index: 3 !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper > .wrapperItem:first-child {
+    background: none !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper > .wrapperItem:first-child .h1 {
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.85);
+    font-size: clamp(34px, 4vw, 58px) !important;
+    line-height: 0.98 !important;
+  }
+
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper > .wrapperItem:first-child .listItem {
+    text-shadow: 0 3px 18px rgba(0, 0, 0, 0.85);
+  }
+
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper > .wrapperItem:first-child .icon {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 18px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper > .wrapperItem:first-child .icon .content {
+    color: #111111 !important;
+    text-shadow: none !important;
+    background: rgba(255, 255, 255, 0.88) !important;
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22) !important;
+    box-sizing: border-box !important;
+    min-height: 125px !important;
+    height: 125px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 24px 20px 24px 94px !important;
+    text-align: center !important;
+    font-size: 14px !important;
+    line-height: 1.22 !important;
+    overflow: hidden !important;
+  }
+
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper > .wrapperItem:first-child .icon .content::before {
+    left: -58px !important;
+    width: 126px !important;
+    border-radius: 999px !important;
+  }
+
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper > .wrapperItem:first-child .icon .content::after {
+    left: 19px !important;
+    width: 42px !important;
+    height: 42px !important;
+    z-index: 1 !important;
+  }
+
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper > .wrapperItem:first-child .icon .content:nth-child(3)::after {
+    left: 17px !important;
+    width: 45px !important;
+    height: 45px !important;
+    bottom: 50% !important;
+  }
+
+  .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper > .wrapperItem:nth-child(2) {
+    background: rgba(28, 28, 28, 0.78) !important;
+    background-image: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 26px 80px rgba(0, 0, 0, 0.36) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
   .destroy-home-hero-scroll-scene {
     position: relative !important;
     display: block !important;
@@ -840,6 +1010,22 @@ const compatibilityLayer = String.raw`
       min-height: 52px !important;
     }
 
+    .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper {
+      width: min(calc(var(--destroy-scene-vw, 100vw) - 20px), 100%) !important;
+      grid-template-columns: 1fr !important;
+      align-content: center !important;
+      gap: 18px !important;
+      padding: 86px 0 36px !important;
+    }
+
+    .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper > .wrapperItem:first-child .h1 {
+      font-size: clamp(29px, 9vw, 42px) !important;
+    }
+
+    .elementor-2 .elementor-element.elementor-element-4ac6fe3 > .wrapper > .wrapperItem:first-child .icon {
+      display: none !important;
+    }
+
     .destroy-rendered-works .swiper-wrapper {
       grid-auto-columns: minmax(240px, 84%);
       gap: 18px;
@@ -1328,6 +1514,7 @@ const compatibilityLayer = String.raw`
       var shade = document.createElement("div");
       shade.className = "destroy-scroll-scene__shade destroy-home-hero-scroll__shade";
       parent.insertBefore(scene, hero);
+      parent.classList.add("destroy-home-hero-parent-ready");
       sticky.appendChild(canvas);
       sticky.appendChild(shade);
       sticky.appendChild(hero);
@@ -1513,7 +1700,7 @@ function insertBeforeFooter(body: string, block: string) {
 
 export function readRenderedHtml(page: RenderedPage) {
   const html = readFileSync(join(process.cwd(), "data", "rendered-pages", page.file), "utf8");
-  const head = html.match(/<head[^>]*>([\s\S]*?)<\/head>/i)?.[1] ?? "";
+  let head = html.match(/<head[^>]*>([\s\S]*?)<\/head>/i)?.[1] ?? "";
   let body = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i)?.[1] ?? html;
 
   if (page.slug === "nashi-obekty") {
@@ -1521,6 +1708,11 @@ export function readRenderedHtml(page: RenderedPage) {
       /<div class="elementor-element destroy-rendered-intro[\s\S]*?<\/div><\/div><\/div>/,
       '<div class="elementor-element destroy-rendered-intro elementor-widget elementor-widget-html" data-id="destroy-intro" data-element_type="widget" data-e-type="widget" data-widget_type="html.default"><div class="elementor-widget-container"><p class="destroy-rendered-lead">Реальные выполненные объекты DESTROY: крупные демонтажные работы, помещения после пожара, школы, квартиры и коммерческие объекты.</p></div></div>',
     );
+  }
+
+  if (page.slug === "uslugi") {
+    head = head.replaceAll("\u0423\u0441\u043b\u0443\u0433\u0438 DESTROY", "\u0423\u0441\u043b\u0443\u0433\u0438");
+    body = body.replaceAll("\u0423\u0441\u043b\u0443\u0433\u0438 DESTROY", "\u0423\u0441\u043b\u0443\u0433\u0438");
   }
 
   const works = renderedWorksGalleries[page.slug];
