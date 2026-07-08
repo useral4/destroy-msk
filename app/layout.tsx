@@ -133,8 +133,32 @@ const criticalCompatibilityJs = String.raw`
       });
     });
 
+    function appendMenuLink(list, title, href) {
+      if (!list || list.querySelector('a[href="' + href + '"]')) return;
+      var item = document.createElement("li");
+      var link = document.createElement("a");
+      link.href = href;
+      link.textContent = title;
+      item.appendChild(link);
+      list.appendChild(item);
+    }
+
+    document.querySelectorAll(".menuItems").forEach(function (menu) {
+      var servicesLink = Array.prototype.find.call(menu.querySelectorAll(".menuItem > a.menuLink"), function (link) {
+        return (link.textContent || "").trim() === "\u041d\u0430\u0448\u0438 \u0443\u0441\u043b\u0443\u0433\u0438";
+      });
+      if (servicesLink) servicesLink.href = "/uslugi/";
+
+      appendMenuLink(menu.querySelector("#private ul"), "\u0420\u0430\u0441\u0447\u0438\u0441\u0442\u043a\u0430 \u0443\u0447\u0430\u0441\u0442\u043a\u043e\u0432", "/raschistka-uchastkov/");
+      appendMenuLink(menu.querySelector("#private ul"), "\u0421\u043f\u0438\u043b \u0438 \u0443\u0434\u0430\u043b\u0435\u043d\u0438\u0435 \u0434\u0435\u0440\u0435\u0432\u044c\u0435\u0432", "/spil-i-udalenie-derevev/");
+      appendMenuLink(menu.querySelector("#private ul"), "\u0420\u0430\u0437\u0431\u043e\u0440 \u0432\u0435\u0442\u0445\u0438\u0445 \u0441\u0442\u0440\u043e\u0435\u043d\u0438\u0439", "/razbor-vethih-stroenij/");
+      appendMenuLink(menu.querySelector("#private ul"), "\u0414\u0435\u043c\u043e\u043d\u0442\u0430\u0436 \u0437\u0430\u0431\u043e\u0440\u043e\u0432", "/demontazh-zabora/");
+      appendMenuLink(menu.querySelector("#internal ul"), "\u0414\u0435\u043c\u043e\u043d\u0442\u0430\u0436 \u0448\u0442\u0443\u043a\u0430\u0442\u0443\u0440\u043a\u0438", "/demontazh-shtukaturki/");
+      appendMenuLink(menu.querySelector("#internal ul"), "\u0414\u0435\u043c\u043e\u043d\u0442\u0430\u0436 \u0441\u0442\u044f\u0436\u043a\u0438", "/demontazh-styazhki/");
+      appendMenuLink(menu.querySelector("#large ul"), "\u0414\u0435\u043c\u043e\u043d\u0442\u0430\u0436 \u0442\u0440\u043e\u0442\u0443\u0430\u0440\u043d\u043e\u0439 \u043f\u043b\u0438\u0442\u043a\u0438 \u0438 \u0431\u043e\u0440\u0434\u044e\u0440\u043e\u0432", "/demontazh-trotuarnoj-plitki-bordyurov/");
+    });
+
     var extraMenuItems = [
-      ["\u0423\u0441\u043b\u0443\u0433\u0438", "/uslugi/"],
       ["\u041d\u0430\u0448\u0438 \u043e\u0431\u044a\u0435\u043a\u0442\u044b", "/nashi-obekty/"],
       ["\u0412\u0438\u0434\u0435\u043e", "/nashi-video/"],
     ];
