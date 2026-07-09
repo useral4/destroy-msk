@@ -15,6 +15,12 @@ body.destroy-menu-open{overflow:hidden}
 .destroy-popup-close{position:absolute;top:12px;right:12px;display:flex!important;align-items:center!important;justify-content:center!important;width:38px;height:38px;padding:0!important;border:0;border-radius:999px;background:#fff;color:#111;font:32px/1 Arial,sans-serif!important;text-align:center;appearance:none;-webkit-appearance:none;cursor:pointer;z-index:1000000;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:background 160ms ease,color 160ms ease,transform 160ms ease}
 .destroy-popup-close:hover{background:#d61313;color:#fff;transform:translateY(-1px)}
 .wpcf7 select.wpcf7-select,.wpcf7-form-control.wpcf7-select{padding-right:44px!important;background-position:right 18px center!important}
+.elementor-2 .elementor-element.elementor-element-4ac6fe3 .wrapper{position:relative!important;overflow:hidden!important;isolation:isolate;background-image:linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.34) 50%,rgba(0,0,0,.58))!important}
+.elementor-2 .elementor-element.elementor-element-4ac6fe3 .wrapper::before{z-index:1!important;background:linear-gradient(90deg,rgba(0,0,0,.62),rgba(0,0,0,.22) 52%,rgba(0,0,0,.5))!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;pointer-events:none!important}
+.elementor-2 .elementor-element.elementor-element-4ac6fe3 .wrapper::after{display:none!important;background-image:none!important}
+.elementor-2 .elementor-element.elementor-element-4ac6fe3 .wrapper>.destroy-home-hero-inline-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;object-fit:cover;opacity:1;transform:scale(var(--destroy-home-hero-scale,1.035));transform-origin:center center;will-change:transform}
+.elementor-2 .elementor-element.elementor-element-4ac6fe3 .wrapper>.destroy-home-hero-inline-glow{position:absolute;inset:auto -12% -24% -12%;height:58%;z-index:1;pointer-events:none;background:radial-gradient(ellipse at center,rgba(198,13,13,var(--destroy-home-hero-red,.24)),transparent 68%);filter:blur(20px);opacity:var(--destroy-home-hero-glow,.9);transform:scale(var(--destroy-home-hero-glow-scale,1));transform-origin:center bottom}
+.elementor-2 .elementor-element.elementor-element-4ac6fe3 .wrapper>.wrapperItem{position:relative!important;z-index:2!important}
 .elementor-2 .elementor-element.elementor-element-4ac6fe3>.wrapper>.wrapperItem:first-child .icon .content{box-sizing:border-box!important;padding-left:94px!important;overflow:hidden!important}
 .elementor-2 .elementor-element.elementor-element-4ac6fe3>.wrapper>.wrapperItem:first-child .icon .content::before{left:-58px!important;width:126px!important;border-radius:999px!important}
 .elementor-2 .elementor-element.elementor-element-4ac6fe3>.wrapper>.wrapperItem:first-child .icon .content::after{left:19px!important;width:42px!important;height:42px!important;z-index:1!important}
@@ -443,28 +449,17 @@ const criticalCompatibilityJs = String.raw`
       context.drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
     }
 
-    function initHomeHeroScroll() {
+    function initHomeHeroInlineAnimation() {
       var hero = document.querySelector(".elementor-2 .elementor-element-4ac6fe3 > .wrapper");
-      if (!hero || hero.classList.contains("destroy-home-hero-scroll-ready")) return;
-      var parent = hero.parentNode;
-      if (!parent) return;
-      var scene = document.createElement("section");
-      scene.className = "destroy-scroll-scene destroy-home-hero-scroll-scene";
-      scene.setAttribute("aria-label", "Hero scroll animation scene");
-      var sticky = document.createElement("div");
-      sticky.className = "destroy-scroll-scene__sticky destroy-home-hero-scroll__sticky";
+      if (!hero || hero.classList.contains("destroy-home-hero-inline-ready")) return;
+      hero.classList.add("destroy-home-hero-inline-ready");
       var canvas = document.createElement("canvas");
-      canvas.className = "destroy-scroll-scene__canvas destroy-home-hero-scroll__canvas";
+      canvas.className = "destroy-home-hero-inline-canvas";
       canvas.setAttribute("aria-hidden", "true");
-      var shade = document.createElement("div");
-      shade.className = "destroy-scroll-scene__shade destroy-home-hero-scroll__shade";
-      parent.insertBefore(scene, hero);
-      parent.classList.add("destroy-home-hero-parent-ready");
-      sticky.appendChild(canvas);
-      sticky.appendChild(shade);
-      sticky.appendChild(hero);
-      scene.appendChild(sticky);
-      hero.classList.add("destroy-scroll-scene__overlay", "destroy-home-hero-scroll__overlay", "destroy-home-hero-scroll-ready");
+      var glow = document.createElement("div");
+      glow.className = "destroy-home-hero-inline-glow";
+      hero.insertBefore(glow, hero.firstChild);
+      hero.insertBefore(canvas, glow);
 
       var context = canvas.getContext("2d");
       if (!context) return;
@@ -476,8 +471,8 @@ const criticalCompatibilityJs = String.raw`
       var ticking = false;
 
       function resize() {
-        var rect = sticky.getBoundingClientRect();
-        var ratio = Math.min(window.devicePixelRatio || 1, 1.6);
+        var rect = hero.getBoundingClientRect();
+        var ratio = Math.min(window.devicePixelRatio || 1, 1.45);
         var width = Math.max(1, Math.round(rect.width * ratio));
         var height = Math.max(1, Math.round(rect.height * ratio));
         if (canvas.width !== width || canvas.height !== height) {
@@ -516,20 +511,20 @@ const criticalCompatibilityJs = String.raw`
       }
 
       function preload(center) {
-        for (var offset = -3; offset <= 3; offset += 1) loadFrame(center + offset);
+        for (var offset = -2; offset <= 2; offset += 1) loadFrame(center + offset);
         if (preloadStarted) return;
         preloadStarted = true;
         var next = 0;
         var run = function () {
           var loaded = 0;
-          while (next < homeHeroFrameCount && loaded < 3) {
+          while (next < homeHeroFrameCount && loaded < 2) {
             loadFrame(next);
             next += 1;
             loaded += 1;
           }
           if (next < homeHeroFrameCount) {
-            if ("requestIdleCallback" in window) window.requestIdleCallback(run, { timeout: 600 });
-            else window.setTimeout(run, 90);
+            if ("requestIdleCallback" in window) window.requestIdleCallback(run, { timeout: 500 });
+            else window.setTimeout(run, 80);
           }
         };
         run();
@@ -547,31 +542,24 @@ const criticalCompatibilityJs = String.raw`
         try {
           drawCoverImage(context, frames[frameIndex], canvas);
           currentFrame = frameIndex;
-          sticky.setAttribute("data-frame", String(frameIndex + 1));
+          hero.setAttribute("data-hero-frame", String(frameIndex + 1));
         } catch (error) {}
       }
 
       function update() {
         ticking = false;
-        var rect = scene.getBoundingClientRect();
+        var scrollY = window.scrollY || window.pageYOffset || 0;
+        var rect = hero.getBoundingClientRect();
+        var heroTop = scrollY + rect.top;
         var viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
-        var stickyHeight = sticky.offsetHeight || viewportHeight;
-        sticky.classList.toggle("is-fixed", rect.top <= 0 && rect.bottom >= stickyHeight);
-        sticky.classList.toggle("is-after", rect.bottom < stickyHeight);
-        var scrollable = Math.max(1, rect.height - viewportHeight);
-        var progress = clamp(-rect.top / scrollable, 0, 1);
+        var start = Math.max(0, heroTop - viewportHeight * 0.24);
+        var range = Math.max(280, Math.min(520, hero.offsetHeight || 420));
+        var progress = clamp((scrollY - start) / range, 0, 1);
         var frameIndex = Math.round(progress * (homeHeroFrameCount - 1));
-        sticky.style.setProperty("--destroy-scene-progress", progress.toFixed(3));
-        sticky.style.setProperty("--destroy-scene-soft-opacity", (0.985 + clamp(Math.min(progress, 1 - progress) / 0.18, 0, 1) * 0.015).toFixed(3));
-        sticky.style.setProperty("--destroy-scene-glow-scale", (0.92 + progress * 0.34).toFixed(3));
-        sticky.style.setProperty("--destroy-scene-glow-alpha", (0.2 + progress * 0.2).toFixed(3));
-        sticky.style.setProperty("--destroy-scene-grid-opacity", (0.08 + progress * 0.12).toFixed(3));
-        sticky.style.setProperty("--destroy-scene-shade-scale", (0.82 + progress * 0.5).toFixed(3));
-        sticky.style.setProperty("--destroy-scene-shade-alpha", (0.14 + progress * 0.3).toFixed(3));
-        sticky.style.setProperty("--destroy-hero-blur", "0px");
-        sticky.style.setProperty("--destroy-hero-scale", (1.055 - progress * 0.045).toFixed(3));
-        sticky.style.setProperty("--destroy-hero-red", (0.18 + progress * 0.22).toFixed(3));
-        sticky.style.setProperty("--destroy-hero-shade", (0.98 - progress * 0.18).toFixed(3));
+        hero.style.setProperty("--destroy-home-hero-scale", (1.04 - progress * 0.024).toFixed(3));
+        hero.style.setProperty("--destroy-home-hero-red", (0.18 + progress * 0.18).toFixed(3));
+        hero.style.setProperty("--destroy-home-hero-glow", (0.78 + progress * 0.2).toFixed(3));
+        hero.style.setProperty("--destroy-home-hero-glow-scale", (0.92 + progress * 0.22).toFixed(3));
         drawFrame(frameIndex);
         preload(frameIndex);
       }
@@ -592,6 +580,8 @@ const criticalCompatibilityJs = String.raw`
         requestUpdate();
       });
     }
+
+    initHomeHeroInlineAnimation();
 
     var calcObject = document.getElementById("calc-object");
     var calcArea = document.getElementById("calc-area");
@@ -657,6 +647,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="ru" suppressHydrationWarning>
       <head>
+        <link rel="preload" as="image" href="/videos/home-hero-frames/frame_0001.jpg" fetchPriority="high" />
         <style id="destroy-static-critical" dangerouslySetInnerHTML={{ __html: criticalCompatibilityCss }} />
       </head>
       <body suppressHydrationWarning>
