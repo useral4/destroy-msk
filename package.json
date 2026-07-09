@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/clean-build-output.mjs && next build",
     "start": "next start -p ${PORT:-3000}",
     "sync:content": "node scripts/sync-destroy-content.mjs",
     "lint": "next lint"

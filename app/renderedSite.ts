@@ -11,7 +11,8 @@ type RenderedPage = {
   url: string;
 };
 
-const pages = manifest.pages as RenderedPage[];
+const hiddenRenderedSlugs = new Set(["novye-uslugi"]);
+const pages = (manifest.pages as RenderedPage[]).filter((page) => !hiddenRenderedSlugs.has(page.slug));
 
 const renderedWorksGalleries: Record<string, { title: string; images: string[] }> = {
   "demontazh-zabora": {
