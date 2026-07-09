@@ -15,6 +15,10 @@ body.destroy-menu-open{overflow:hidden}
 .destroy-popup-close{position:absolute;top:12px;right:12px;display:flex!important;align-items:center!important;justify-content:center!important;width:38px;height:38px;padding:0!important;border:0;border-radius:999px;background:#fff;color:#111;font:32px/1 Arial,sans-serif!important;text-align:center;appearance:none;-webkit-appearance:none;cursor:pointer;z-index:1000000;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:background 160ms ease,color 160ms ease,transform 160ms ease}
 .destroy-popup-close:hover{background:#d61313;color:#fff;transform:translateY(-1px)}
 .wpcf7 select.wpcf7-select,.wpcf7-form-control.wpcf7-select{padding-right:44px!important;background-position:right 18px center!important}
+.elementor-2 .elementor-element.elementor-element-4ac6fe3.destroy-home-hero-pin-ready{position:relative!important;height:var(--destroy-home-hero-pin-height,980px)!important;max-width:100%!important;overflow:visible!important}
+.elementor-2 .elementor-element.elementor-element-4ac6fe3.destroy-home-hero-pin-ready>.wrapper{position:relative!important;top:auto!important;z-index:5!important}
+.elementor-2 .elementor-element.elementor-element-4ac6fe3.destroy-home-hero-pin-ready>.wrapper.destroy-home-hero-fixed{position:fixed!important;top:var(--destroy-home-hero-pin-top,18px)!important;left:var(--destroy-home-hero-pin-left,50px)!important;width:var(--destroy-home-hero-pin-width,1160px)!important;z-index:70!important}
+.elementor-2 .elementor-element.elementor-element-4ac6fe3.destroy-home-hero-pin-ready>.wrapper.destroy-home-hero-after{position:absolute!important;top:auto!important;bottom:0!important;left:0!important;width:100%!important;z-index:5!important}
 .elementor-2 .elementor-element.elementor-element-4ac6fe3 .wrapper{position:relative!important;overflow:hidden!important;isolation:isolate;background-image:linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.34) 50%,rgba(0,0,0,.58))!important}
 .elementor-2 .elementor-element.elementor-element-4ac6fe3 .wrapper::before{z-index:1!important;background:linear-gradient(90deg,rgba(0,0,0,.62),rgba(0,0,0,.22) 52%,rgba(0,0,0,.5))!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;pointer-events:none!important}
 .elementor-2 .elementor-element.elementor-element-4ac6fe3 .wrapper::after{display:none!important;background-image:none!important}
@@ -453,6 +457,8 @@ const criticalCompatibilityJs = String.raw`
       var hero = document.querySelector(".elementor-2 .elementor-element-4ac6fe3 > .wrapper");
       if (!hero || hero.classList.contains("destroy-home-hero-inline-ready")) return;
       hero.classList.add("destroy-home-hero-inline-ready");
+      var pinContainer = hero.closest(".elementor-2 .elementor-element-4ac6fe3");
+      if (pinContainer) pinContainer.classList.add("destroy-home-hero-pin-ready");
       var canvas = document.createElement("canvas");
       canvas.className = "destroy-home-hero-inline-canvas";
       canvas.setAttribute("aria-hidden", "true");
@@ -469,6 +475,8 @@ const criticalCompatibilityJs = String.raw`
       var currentFrame = -1;
       var preloadStarted = false;
       var ticking = false;
+      var pinRange = 440;
+      var pinOffset = 18;
 
       function resize() {
         var rect = hero.getBoundingClientRect();
@@ -480,6 +488,27 @@ const criticalCompatibilityJs = String.raw`
           canvas.height = height;
           currentFrame = -1;
         }
+      }
+
+      function updatePinGeometry() {
+        if (!pinContainer) return;
+        var viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+        var heroHeight = hero.offsetHeight || hero.getBoundingClientRect().height || 420;
+        pinRange = Math.round(Math.max(340, Math.min(520, viewportHeight * 0.62)));
+        pinOffset = Math.round(Math.max(10, Math.min(28, viewportHeight * 0.03)));
+        pinContainer.style.setProperty("--destroy-home-hero-pin-height", Math.ceil(heroHeight + pinRange) + "px");
+        pinContainer.style.setProperty("--destroy-home-hero-pin-top", pinOffset + "px");
+      }
+
+      function setPinMode(mode) {
+        if (!pinContainer) return;
+        if (mode === "fixed") {
+          var rect = pinContainer.getBoundingClientRect();
+          hero.style.setProperty("--destroy-home-hero-pin-left", Math.round(rect.left) + "px");
+          hero.style.setProperty("--destroy-home-hero-pin-width", Math.round(rect.width) + "px");
+        }
+        hero.classList.toggle("destroy-home-hero-fixed", mode === "fixed");
+        hero.classList.toggle("destroy-home-hero-after", mode === "after");
       }
 
       function nearest(index) {
@@ -548,13 +577,14 @@ const criticalCompatibilityJs = String.raw`
 
       function update() {
         ticking = false;
-        var scrollY = window.scrollY || window.pageYOffset || 0;
-        var rect = hero.getBoundingClientRect();
-        var heroTop = scrollY + rect.top;
-        var viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
-        var start = Math.max(0, heroTop - viewportHeight * 0.24);
-        var range = Math.max(280, Math.min(520, hero.offsetHeight || 420));
-        var progress = clamp((scrollY - start) / range, 0, 1);
+        var rect = pinContainer ? pinContainer.getBoundingClientRect() : hero.getBoundingClientRect();
+        if (pinContainer) {
+          var heroHeight = hero.offsetHeight || hero.getBoundingClientRect().height || 420;
+          if (rect.top <= pinOffset && rect.bottom > pinOffset + heroHeight) setPinMode("fixed");
+          else if (rect.bottom <= pinOffset + heroHeight) setPinMode("after");
+          else setPinMode("normal");
+        }
+        var progress = pinContainer ? clamp((pinOffset - rect.top) / Math.max(1, pinRange), 0, 1) : 0;
         var frameIndex = Math.round(progress * (homeHeroFrameCount - 1));
         hero.style.setProperty("--destroy-home-hero-scale", (1.04 - progress * 0.024).toFixed(3));
         hero.style.setProperty("--destroy-home-hero-red", (0.18 + progress * 0.18).toFixed(3));
@@ -572,9 +602,12 @@ const criticalCompatibilityJs = String.raw`
 
       loadFrame(0);
       preload(0);
+      updatePinGeometry();
+      window.setTimeout(updatePinGeometry, 600);
       update();
       window.addEventListener("scroll", requestUpdate, { passive: true });
       window.addEventListener("resize", function () {
+        updatePinGeometry();
         resize();
         drawFrame(wantedFrame);
         requestUpdate();
