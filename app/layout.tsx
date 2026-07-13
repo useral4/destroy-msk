@@ -752,12 +752,13 @@ const criticalCompatibilityJs = String.raw`
 const destroyWorkflowBootJs = String.raw`
 (function(){
   window.__destroyWorkflowEnabled = location.pathname === "/";
-  if (window.__destroyWorkflowEnabled) document.documentElement.classList.add("destroy-workflow-enabled");
+  if (window.__destroyWorkflowEnabled) document.documentElement.classList.add("destroy-workflow-enabled","destroy-workflow-booting");
 })();
 `;
 
 const destroyWorkflowCss = String.raw`
 html.destroy-workflow-enabled{overflow-x:clip!important;overflow-y:auto!important;scroll-behavior:auto!important}
+html.destroy-workflow-booting .elementor-2 .elementor-element-4ac6fe3{visibility:hidden!important}
 body.destroy-workflow-page{overflow-x:clip!important;overflow-y:visible!important}
 body.destroy-workflow-page .elementor-location-header{position:relative!important;top:auto!important;z-index:100!important;margin:0 0 8px!important;background:transparent!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;transform:none!important;transition:none!important}
 body.destroy-workflow-page .elementor-location-header .headerWrapper{transition:.1s ease-in-out!important;padding:0!important;background:transparent!important;border-radius:0!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
@@ -812,7 +813,7 @@ body.destroy-workflow-page .elementor-location-header .headerWrapper.destroy-hea
 @keyframes destroy-workflow-camera{0%{transform:scale(1.035) translate3d(4px,2px,0)}100%{transform:scale(1.01) translate3d(0,0,0)}}
 @keyframes destroy-workflow-cut{0%{opacity:0;transform:translateX(-105%)}18%{opacity:.8}100%{opacity:0;transform:translateX(105%)}}
 @media (max-width:900px){.destroy-workflow-scroll__inner,.destroy-workflow-scroll__footer{width:calc(100% - 56px)}.destroy-workflow-scroll__slides{width:min(680px,82vw)}.destroy-workflow-scroll__rail{right:12px}.destroy-workflow-scroll__details{gap:24px}.destroy-workflow-scroll__overlay{background:linear-gradient(90deg,rgba(8,8,8,.84),rgba(8,8,8,.54) 62%,rgba(8,8,8,.48)),linear-gradient(0deg,rgba(0,0,0,.54),transparent 42%)}}
-@media (max-width:700px){.destroy-workflow-scroll__sticky{background-size:auto 100%}.destroy-workflow-scroll__inner{width:calc(100% - 34px);margin:0 0 0 16px}.destroy-workflow-scroll__slides{width:calc(100vw - 70px)}.destroy-workflow-scroll__step{top:40%;bottom:auto;transform:translate3d(0,calc(-50% + 34px),0)}.destroy-workflow-scroll__step.is-before{transform:translate3d(0,calc(-50% - 34px),0)}.destroy-workflow-scroll__step.is-active{transform:translate3d(0,-50%,0)}.destroy-workflow-scroll__meta{gap:10px;margin-bottom:14px;font-size:10px}.destroy-workflow-scroll__meta::before{width:28px;height:2px}.destroy-workflow-scroll__title{font-size:clamp(31px,9.2vw,42px);line-height:1.08}.destroy-workflow-scroll__text{margin-top:16px;font-size:14px;line-height:1.45}.destroy-workflow-scroll__details{display:block;margin-top:18px}.destroy-workflow-scroll__points{min-width:0;gap:8px}.destroy-workflow-scroll__points li{font-size:12px}.destroy-workflow-scroll__fact{display:none}.destroy-workflow-scroll__actions{gap:14px;margin-top:20px}.destroy-workflow-scroll__button{min-height:44px;padding:0 17px;font-size:11px}.destroy-workflow-scroll__phone{font-size:12px}.destroy-workflow-scroll__rail{right:4px;gap:9px}.destroy-workflow-scroll__rail button{width:42px;grid-template-columns:16px 1fr;gap:4px;font-size:9px}.destroy-workflow-scroll__rail button i{width:10px}.destroy-workflow-scroll__rail button.is-active i{width:18px}.destroy-workflow-scroll__footer{left:16px;right:auto;bottom:18px;width:calc(100% - 74px);margin:0}.destroy-workflow-scroll__progress{width:92px}.destroy-workflow-scroll__overlay{background:linear-gradient(90deg,rgba(8,8,8,.78),rgba(8,8,8,.43)),linear-gradient(0deg,rgba(0,0,0,.8),rgba(0,0,0,.08) 72%)}}
+@media (max-width:700px){.destroy-workflow-scroll{height:280vh}.destroy-workflow-scroll__sticky{background-size:auto 100%}.destroy-workflow-scroll__inner{width:calc(100% - 34px);margin:0 0 0 16px}.destroy-workflow-scroll__slides{width:calc(100vw - 70px)}.destroy-workflow-scroll__step{top:40%;bottom:auto;transform:translate3d(0,calc(-50% + 34px),0)}.destroy-workflow-scroll__step.is-before{transform:translate3d(0,calc(-50% - 34px),0)}.destroy-workflow-scroll__step.is-active{transform:translate3d(0,-50%,0)}.destroy-workflow-scroll__meta{gap:10px;margin-bottom:14px;font-size:10px}.destroy-workflow-scroll__meta::before{width:28px;height:2px}.destroy-workflow-scroll__title{font-size:clamp(31px,9.2vw,42px);line-height:1.08}.destroy-workflow-scroll__text{margin-top:16px;font-size:14px;line-height:1.45}.destroy-workflow-scroll__details{display:block;margin-top:18px}.destroy-workflow-scroll__points{min-width:0;gap:8px}.destroy-workflow-scroll__points li{font-size:12px}.destroy-workflow-scroll__fact{display:none}.destroy-workflow-scroll__actions{gap:14px;margin-top:20px}.destroy-workflow-scroll__button{min-height:44px;padding:0 17px;font-size:11px}.destroy-workflow-scroll__phone{font-size:12px}.destroy-workflow-scroll__rail{right:4px;gap:9px}.destroy-workflow-scroll__rail button{width:42px;grid-template-columns:16px 1fr;gap:4px;font-size:9px}.destroy-workflow-scroll__rail button i{width:10px}.destroy-workflow-scroll__rail button.is-active i{width:18px}.destroy-workflow-scroll__footer{left:16px;right:auto;bottom:18px;width:calc(100% - 74px);margin:0}.destroy-workflow-scroll__progress{width:92px}.destroy-workflow-scroll__overlay{background:linear-gradient(90deg,rgba(8,8,8,.78),rgba(8,8,8,.43)),linear-gradient(0deg,rgba(0,0,0,.8),rgba(0,0,0,.08) 72%)}}
 @media (max-width:380px) and (max-height:650px){.destroy-workflow-scroll__step{bottom:44px}.destroy-workflow-scroll__meta{margin-bottom:8px}.destroy-workflow-scroll__title{font-size:28px}.destroy-workflow-scroll__text{margin-top:10px;font-size:12px;line-height:1.35}.destroy-workflow-scroll__details{margin-top:10px}.destroy-workflow-scroll__points{gap:4px}.destroy-workflow-scroll__points li{font-size:11px}.destroy-workflow-scroll__actions{margin-top:12px}.destroy-workflow-scroll__button{min-height:40px;padding:0 12px;font-size:10px}.destroy-workflow-scroll__phone{font-size:11px}.destroy-workflow-scroll__rail{gap:5px}.destroy-workflow-scroll__footer{bottom:14px}}
 @media (max-width:380px) and (max-height:520px){.destroy-workflow-scroll__title{font-size:26px}.destroy-workflow-scroll__text{display:none}}
 @media (max-height:690px) and (min-width:701px){.destroy-workflow-scroll__title{font-size:clamp(34px,4vw,50px)}.destroy-workflow-scroll__text{margin-top:16px}.destroy-workflow-scroll__details{margin-top:18px}.destroy-workflow-scroll__actions{margin-top:22px}.destroy-workflow-scroll__footer{bottom:20px}}
@@ -864,6 +865,7 @@ const destroyWorkflowJs = String.raw`
     var insertionTarget=pageRoot && pageRoot.parentNode ? pageRoot : originalHero;
     insertionParent.insertBefore(section,insertionTarget);
     originalHero.classList.add("destroy-workflow-original-hidden");
+    document.documentElement.classList.remove("destroy-workflow-booting");
     var headerLayoutHeight=siteHeader ? Math.ceil(siteHeader.getBoundingClientRect().height) : 0;
     if(siteHeader && headerLayoutHeight){
       siteHeader.style.height=(headerLayoutHeight+20)+"px";
@@ -956,6 +958,8 @@ const destroyWorkflowJs = String.raw`
       framePromises[index]=new Promise(function(resolve){
         var image=new Image();
         image.decoding="async";
+        image.loading="eager";
+        if("fetchPriority" in image) image.fetchPriority=index<2?"high":"low";
         image.onload=function(){frames[index]=image;resolve(image);};
         image.onerror=function(){resolve(null);};
         image.src=frameUrl(index);
@@ -1005,6 +1009,25 @@ const destroyWorkflowJs = String.raw`
         });
         return;
       }
+      if((window.innerWidth||0)<=700){
+        loadFrame(first).then(function(){
+          if(token!==animationToken || !frames[first]) return;
+          drawFrame(first,true);
+        });
+        loadFrame(second).then(function(){
+          if(token!==animationToken || !frames[first] || !frames[second]) return;
+          nextContext.clearRect(0,0,nextCanvas.width,nextCanvas.height);
+          drawCoverImage(nextContext,nextCanvas,frames[second]);
+          void nextCanvas.offsetWidth;
+          nextCanvas.classList.add("is-visible");
+          window.setTimeout(function(){
+            if(token!==animationToken) return;
+            drawFrame(second,true);
+            nextCanvas.classList.remove("is-visible");
+          },240);
+        });
+        return;
+      }
       Promise.all([loadFrame(first),loadFrame(second)]).then(function(){
         if(token!==animationToken || !frames[first] || !frames[second]) return;
         restartClass("is-playing",520);
@@ -1036,9 +1059,10 @@ const destroyWorkflowJs = String.raw`
       var rect=section.getBoundingClientRect();
       updateHeaderState(rect);
       var vh=window.innerHeight||1;
-      var stageOffset=clamp(-rect.top,0,(steps.length-1)*vh);
-      var progress=clamp(stageOffset/Math.max(1,(steps.length-1)*vh),0,1);
-      var stepIndex=snapStep===null?clamp(Math.round(stageOffset/vh),0,steps.length-1):snapStep;
+      var stepDistance=vh*((window.innerWidth||0)<=700?.62:1);
+      var stageOffset=clamp(-rect.top,0,(steps.length-1)*stepDistance);
+      var progress=clamp(stageOffset/Math.max(1,(steps.length-1)*stepDistance),0,1);
+      var stepIndex=snapStep===null?clamp(Math.round(stageOffset/stepDistance),0,steps.length-1):snapStep;
       section.style.setProperty("--destroy-workflow-progress",progress.toFixed(3));
       updateStickyMode(rect);
       setStep(stepIndex);
@@ -1081,19 +1105,21 @@ const destroyWorkflowJs = String.raw`
 
     function moveTo(index){
       index=clamp(index,0,steps.length);
-      animateScrollTo(sectionTop()+index*(window.innerHeight||1),index);
+      var stepDistance=(window.innerHeight||1)*((window.innerWidth||0)<=700?.62:1);
+      animateScrollTo(sectionTop()+index*stepDistance,index);
     }
 
     function handleWheel(event){
       if(Math.abs(event.deltaY)<14) return;
       var top=sectionTop();
       var vh=window.innerHeight||1;
+      var stepDistance=vh*((window.innerWidth||0)<=700?.62:1);
       var y=window.scrollY;
       var rect=section.getBoundingClientRect();
-      var engaged=rect.top<vh && rect.bottom>0 && y<top+steps.length*vh+4;
+      var engaged=rect.top<vh && rect.bottom>0 && y<top+steps.length*stepDistance+4;
       if(!engaged) return;
       if(wheelLock){event.preventDefault();return;}
-      var current=clamp(Math.round((y-top)/vh),0,steps.length);
+      var current=clamp(Math.round((y-top)/stepDistance),0,steps.length);
       if(event.deltaY<0 && current===0 && y<=top+4) return;
       if(event.deltaY>0 && current===steps.length) return;
       var next=current+(event.deltaY>0?1:-1);
