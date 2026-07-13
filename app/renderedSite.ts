@@ -1139,6 +1139,7 @@ const compatibilityLayer = String.raw`
     }
 
     function initHomeHeroInlineAnimation() {
+      if (window.__destroyWorkflowEnabled || document.querySelector(".destroy-workflow-scroll")) return;
       var hero = document.querySelector(".elementor-2 .elementor-element-4ac6fe3 > .wrapper");
       if (!hero || hero.classList.contains("destroy-home-hero-inline-ready")) return;
       hero.classList.add("destroy-home-hero-inline-ready");
