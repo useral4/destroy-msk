@@ -685,7 +685,7 @@ const criticalCompatibilityJs = String.raw`
       calculateDemolition();
     }
 
-    var motionTargets = Array.prototype.slice.call(document.querySelectorAll(".elementor-section, .elementor-location-footer, .destroy-rendered-works > *"));
+    var motionTargets = Array.prototype.slice.call(document.querySelectorAll(".elementor-section, .destroy-rendered-works > *"));
     var motionObserver = "IntersectionObserver" in window ? new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) entry.target.classList.add("is-visible");
