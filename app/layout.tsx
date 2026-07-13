@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 
 const siteUrl = "https://destroy-msk.ru";
 const criticalCompatibilityCss = String.raw`
-html{scroll-behavior:smooth;max-width:100%;overflow-x:hidden}
-body{max-width:100%;overflow-x:hidden}
+html{scroll-behavior:smooth;max-width:100%;overflow-x:hidden;overflow-y:auto}
+body{max-width:100%;overflow-x:hidden;overflow-y:visible}
 body.destroy-menu-open{overflow:hidden}
 .reviews{overflow:hidden}
 .reviews .prev-button{left:0!important}
