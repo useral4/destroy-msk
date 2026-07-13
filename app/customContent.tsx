@@ -698,7 +698,8 @@ function renderElementorCustomPage(page: CustomPage) {
 function renderElementorCustomStyles() {
   return `<style id="destroy-elementor-custom-css">
     html:has(.destroy-elementor-custom){overflow-x:hidden!important;overflow-y:auto!important}
-    body:has(.destroy-elementor-custom){overflow-x:hidden!important;overflow-y:visible!important}
+    body:has(.destroy-elementor-custom){height:auto!important;min-height:100%!important;overflow-x:hidden!important;overflow-y:visible!important}
+    body:has(.destroy-elementor-custom)>div:not([hidden]){height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important}
     .destroy-elementor-custom{width:100%!important;max-width:none!important;overflow:visible!important;background:#fff;color:#111}
     .destroy-service-container{width:min(1180px,calc(100% - 64px));max-width:1180px;margin:0 auto;padding:0;box-sizing:border-box}
     .destroy-service-hero{position:relative;min-height:430px;display:flex;align-items:flex-end;overflow:hidden;border-radius:20px;background:#211b1b;margin:0 0 50px;isolation:isolate}
