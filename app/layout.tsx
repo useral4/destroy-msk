@@ -41,9 +41,10 @@ body.destroy-menu-open{overflow:hidden}
 .elementor-element-a8749f1,.elementor-element-a8749f1 .elementor-heading-title,.elementor-element-a8749f1 .elementor-post-info,.elementor-element-a8749f1 .elementor-post-info__item,.elementor-element-a8749f1 a,.elementor-element-a8749f1 span{color:#fff!important;text-shadow:0 2px 14px rgba(0,0,0,.75)}
 .destroy-site-reveal{opacity:0;transform:translate3d(0,28px,0);transition:opacity 720ms cubic-bezier(.2,.75,.2,1) var(--destroy-reveal-delay,0ms),transform 720ms cubic-bezier(.2,.75,.2,1) var(--destroy-reveal-delay,0ms);will-change:opacity,transform}
 .destroy-site-reveal.is-visible{opacity:1;transform:translate3d(0,0,0)}
-.destroy-site-parallax{--destroy-parallax-y:0px;transform:translate3d(0,var(--destroy-parallax-y),0);transition:transform 180ms ease-out;will-change:transform}
+.destroy-site-parallax{--destroy-parallax-y:0px;transform:translate3d(0,var(--destroy-parallax-y),0)!important;transition:transform 180ms ease-out;will-change:transform}
 .destroy-article-card{transform-style:preserve-3d;transition:transform 420ms cubic-bezier(.2,.75,.2,1),box-shadow 420ms ease}
 .destroy-article-card:hover{transform:perspective(900px) rotateX(2deg) rotateY(-2deg) translateY(-6px);box-shadow:0 24px 55px rgba(0,0,0,.24)}
+.destroy-article-card.destroy-site-parallax:hover{transform:perspective(900px) rotateX(2deg) rotateY(-2deg) translateY(calc(var(--destroy-parallax-y) - 6px))!important}
 @media (prefers-reduced-motion:reduce){.destroy-site-reveal,.destroy-site-parallax,.destroy-article-card{transition:none!important;transform:none!important}.destroy-site-reveal{opacity:1!important}}
 .elementor-6457 .elementor-element.elementor-element-d308b40,.elementor-6457 .elementor-element.elementor-element-d308b40 .elementor-heading-title,.elementor-6457 .elementor-element.elementor-element-d308b40 .elementor-field-label,.elementor-6457 .elementor-element.elementor-element-d308b40 label,.elementor-6457 .elementor-element.elementor-element-d308b40 .elementor-field-option,.elementor-6457 .elementor-element.elementor-element-d308b40 .elementor-field-subgroup label{color:#fff!important}
 .elementor-6457 .elementor-element.elementor-element-c92da57 .elementor-field-group>label{color:rgba(255,255,255,.72)!important}
@@ -699,10 +700,22 @@ const criticalCompatibilityJs = String.raw`
       else element.classList.add("is-visible");
     });
 
-    var parallaxTargets = Array.prototype.slice.call(document.querySelectorAll("img, .destroy-article-card")).filter(function (element) {
-      var rect = element.getBoundingClientRect();
-      return element.classList.contains("destroy-article-card") || (element.naturalWidth > 500 || rect.height > 160);
+    Array.prototype.slice.call(document.querySelectorAll(".destroy-site-parallax")).forEach(function (element) {
+      element.classList.remove("destroy-site-parallax");
+      element.style.removeProperty("--destroy-parallax-y");
     });
+    var parallaxAllowed = window.matchMedia("(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)").matches;
+    var parallaxTargets = parallaxAllowed
+      ? Array.prototype.slice.call(document.querySelectorAll([
+          "[data-destroy-parallax]",
+          ".destroy-site-parallax-target",
+          ".destroy-article-card",
+          ".serviceWrapper > .service:nth-child(3n + 2)",
+          ".elementor-element-b943fd7 img",
+          ".destroy-related-card:nth-child(even)",
+          ".custom-video-grid article:nth-child(even)"
+        ].join(",")))
+      : [];
     parallaxTargets.forEach(function (element) {
       if (element.closest(".elementor-location-header, .destroy-workflow-scroll, .destroy-scroll-scene")) return;
       element.classList.add("destroy-site-parallax");
@@ -715,7 +728,8 @@ const criticalCompatibilityJs = String.raw`
         if (!element.classList.contains("destroy-site-parallax")) return;
         var rect = element.getBoundingClientRect();
         if (rect.bottom < -80 || rect.top > viewportHeight + 80) return;
-        var offset = ((viewportHeight * 0.5 - (rect.top + rect.height * 0.5)) / viewportHeight) * 18;
+        var strength = parseFloat(element.getAttribute("data-destroy-parallax-strength") || "12");
+        var offset = ((viewportHeight * 0.5 - (rect.top + rect.height * 0.5)) / viewportHeight) * strength;
         element.style.setProperty("--destroy-parallax-y", offset.toFixed(2) + "px");
       });
     }
