@@ -531,7 +531,11 @@ function getElementorShell() {
   const footerIndex = source.search(/<footer\b[^>]*elementor-location-footer/i);
   const header = hydrateShellImages(headerIndex >= 0 ? source.slice(headerIndex).match(/<header\b[\s\S]*?<\/header>/i)?.[0] ?? "" : "");
   const footer = hydrateShellImages(footerIndex >= 0 ? source.slice(footerIndex).match(/<footer\b[\s\S]*?<\/footer>/i)?.[0] ?? "" : "");
-  const assets = source.match(/<link\b[^>]*rel=[\"']stylesheet[\"'][^>]*>|<style\b[^>]*>[\s\S]*?<\/style>/gi)?.join("") ?? "";
+  const assets =
+    source
+      .match(/<link\b[^>]*rel=[\"']stylesheet[\"'][^>]*>|<style\b[^>]*>[\s\S]*?<\/style>/gi)
+      ?.filter((asset) => !/::-webkit-scrollbar|scrollbar-color|scrollbar-width/i.test(asset))
+      .join("") ?? "";
 
   return {
     assets,
@@ -639,8 +643,7 @@ function renderElementorCustomPage(page: CustomPage) {
 
   const content = `
     <main class="elementor elementor-destroy-custom destroy-elementor-custom" data-elementor-type="wp-page">
-      <div class="elementor-element w1 e-flex e-con-boxed e-con e-parent">
-        <div class="e-con-inner">
+      <div class="destroy-service-container">
           <section class="elementor-element elementor-widget elementor-widget-html destroy-service-hero" data-element_type="widget" data-widget_type="html.default">
             <div class="destroy-service-hero__image" style="background-image:url('${escapeHtml(page.heroImage)}')"></div>
             <div class="destroy-service-hero__shade"></div>
@@ -686,7 +689,6 @@ function renderElementorCustomPage(page: CustomPage) {
           ${renderRelated(page)}
           ${renderFaq(page)}
           ${renderRequestForm()}
-        </div>
       </div>
     </main>`;
 
@@ -698,8 +700,7 @@ function renderElementorCustomStyles() {
     html:has(.destroy-elementor-custom){overflow-x:hidden!important;overflow-y:auto!important}
     body:has(.destroy-elementor-custom){overflow-x:hidden!important;overflow-y:visible!important}
     .destroy-elementor-custom{width:100%!important;max-width:none!important;overflow:visible!important;background:#fff;color:#111}
-    .destroy-elementor-custom .w1{width:100%!important;max-width:none!important;margin:0!important;padding:0!important}
-    .destroy-elementor-custom .w1 .e-con-inner{width:min(1180px,calc(100% - 64px))!important;max-width:1180px!important;margin:0 auto!important;padding:0!important;box-sizing:border-box!important}
+    .destroy-service-container{width:min(1180px,calc(100% - 64px));max-width:1180px;margin:0 auto;padding:0;box-sizing:border-box}
     .destroy-service-hero{position:relative;min-height:430px;display:flex;align-items:flex-end;overflow:hidden;border-radius:20px;background:#211b1b;margin:0 0 50px;isolation:isolate}
     .destroy-service-hero__image{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
     .destroy-service-hero__shade{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(0,0,0,.82),rgba(0,0,0,.44) 54%,rgba(0,0,0,.28)),linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.72))}
@@ -727,7 +728,7 @@ function renderElementorCustomStyles() {
     .destroy-related-card{display:flex;min-height:250px;flex-direction:column;justify-content:flex-end;border-radius:8px;background:#f4f4f4;color:#111;text-decoration:none;overflow:hidden;padding:20px}.destroy-related-card img{width:calc(100% + 40px);height:170px;object-fit:cover;margin:-20px -20px 16px}.destroy-related-card span{font:800 17px/1.25 Arial,Helvetica,sans-serif}
     .destroy-faq{display:grid;gap:10px}.destroy-faq details{border:1px solid #ececec;border-radius:8px;background:#fff;padding:16px}.destroy-faq summary{font:800 16px/1.3 Arial,Helvetica,sans-serif;cursor:pointer}
     .destroy-service-request{display:grid;grid-template-columns:1fr 1.05fr;gap:30px;margin:0 0 58px;padding:36px;border-radius:8px;background:#362d2d;color:#fff}.destroy-service-request .h2{color:#fff;text-align:left}.destroy-request-text p{color:rgba(255,255,255,.75)}.destroy-service-request form{display:grid;gap:12px}.destroy-service-request input,.destroy-service-request textarea{width:100%;box-sizing:border-box;border:0;border-radius:8px;background:#fff;color:#111;padding:14px 18px;font:500 15px/1.2 Arial,Helvetica,sans-serif}
-    @media(max-width:900px){.destroy-elementor-custom .w1 .e-con-inner{width:calc(100% - 32px)!important;max-width:none!important}.destroy-service-hero{min-height:420px;margin-bottom:36px}.destroy-service-hero__content{padding:34px 22px}.destroy-service-hero h1{font-size:32px}.destroy-service-intro,.destroy-check-list,.destroy-facts,.destroy-steps,.destroy-related-grid,.destroy-service-request{grid-template-columns:1fr}.destroy-elementor-section{padding-bottom:38px}.destroy-service-works .swiper-wrapper{grid-auto-columns:minmax(250px,86%);gap:18px}.destroy-service-works img{height:300px}.destroy-service-request{padding:24px}}
+    @media(max-width:900px){.destroy-service-container{width:calc(100% - 32px);max-width:none}.destroy-service-hero{min-height:420px;margin-bottom:36px}.destroy-service-hero__content{padding:34px 22px}.destroy-service-hero h1{font-size:32px}.destroy-service-intro,.destroy-check-list,.destroy-facts,.destroy-steps,.destroy-related-grid,.destroy-service-request{grid-template-columns:1fr}.destroy-elementor-section{padding-bottom:38px}.destroy-service-works .swiper-wrapper{grid-auto-columns:minmax(250px,86%);gap:18px}.destroy-service-works img{height:300px}.destroy-service-request{padding:24px}}
   </style>`;
 }
 
