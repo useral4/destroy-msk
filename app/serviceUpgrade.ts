@@ -482,7 +482,8 @@ export function renderRenderedServiceUpgrade(slug: string, body: string) {
   if (!renderedServiceSlugs.has(slug)) return "";
 
   const title = extractTitle(body);
-  const description = `Выполняем ${title.toLowerCase()} в Москве и Московской области. До начала работ согласуем точный объем, сроки, стоимость, порядок вывоза и требования к объекту.`;
+  const description =
+    "Организуем работы под ключ: до начала согласуем точный объем, сроки, стоимость, порядок вывоза и требования к объекту.";
 
   return renderServiceUpgrade({
     slug,
@@ -490,6 +491,25 @@ export function renderRenderedServiceUpgrade(slug: string, body: string) {
     description,
     gallery: extractImages(body),
   });
+}
+
+export function renderRenderedServiceHero(slug: string, body: string) {
+  if (!renderedServiceSlugs.has(slug)) return "";
+
+  const title = extractTitle(body);
+  const group = groups[serviceGroupBySlug[slug] || "interior"];
+  const image = unique([...extractImages(body), ...group.gallery, ...universalGallery])[0];
+
+  return `<section class="destroy-rendered-service-hero">
+    <img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" decoding="async">
+    <div class="destroy-rendered-service-hero__shade"></div>
+    <div class="destroy-rendered-service-hero__content">
+      <span>Услуги DESTROY</span>
+      <h1>${escapeHtml(title)}</h1>
+      <p>Профессиональный демонтаж с фиксированной сметой, фотоотчетами, погрузкой и вывозом строительного мусора.</p>
+      <div><a href="#заявка">Оставить заявку</a><a href="/calc/">Рассчитать стоимость</a></div>
+    </div>
+  </section>`;
 }
 
 export function renderReviewsUpgrade() {
@@ -528,6 +548,16 @@ export function renderServiceUpgradeStyles() {
     .destroy-service-upgrade{width:min(1180px,calc(100% - 100px));max-width:1180px;margin:0 auto;padding:28px 0 70px;color:#111;font-family:Manrope,Arial,sans-serif;box-sizing:border-box}
     .elementor .destroy-service-upgrade{width:100%;max-width:1180px}
     .destroy-service-upgrade *{box-sizing:border-box}
+    .destroy-rendered-service-hero{position:relative;width:min(1180px,calc(100% - 100px));min-height:430px;margin:24px auto 42px;display:flex;align-items:flex-end;overflow:hidden;border-radius:20px;background:#211b1b;color:#fff;isolation:isolate}
+    .destroy-rendered-service-hero>img{position:absolute;inset:0;z-index:0;display:block;width:100%;height:100%;object-fit:cover}
+    .destroy-rendered-service-hero__shade{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(0,0,0,.84),rgba(0,0,0,.48) 58%,rgba(0,0,0,.18)),linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.7))}
+    .destroy-rendered-service-hero__content{position:relative;z-index:2;max-width:790px;padding:52px 50px;font-family:Manrope,Arial,sans-serif}
+    .destroy-rendered-service-hero__content>span{display:block;margin:0 0 12px;color:#e11c1c;font:800 12px/1.2 Manrope,Arial,sans-serif;text-transform:uppercase}
+    .destroy-rendered-service-hero h1{max-width:760px;margin:0 0 18px;color:#fff!important;font:700 32px/1.25 Merriweather,Georgia,serif!important;text-transform:uppercase;letter-spacing:0}
+    .destroy-rendered-service-hero p{max-width:700px;margin:0;color:rgba(255,255,255,.9)!important;font:500 16px/1.5 Manrope,Arial,sans-serif!important}
+    .destroy-rendered-service-hero__content>div{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+    .destroy-rendered-service-hero a{display:inline-flex;min-height:46px;align-items:center;justify-content:center;padding:12px 22px;border-radius:8px;background:#c91515;color:#fff!important;font:800 13px/1.2 Manrope,Arial,sans-serif;text-decoration:none;text-transform:uppercase}
+    .destroy-rendered-service-hero a:last-child{background:#fff;color:#111!important}
     .destroy-upgrade-section{padding:64px 0;border-top:1px solid #e8e8e8}
     .destroy-upgrade-heading{max-width:820px;margin:0 auto 30px;text-align:center}
     .destroy-upgrade-heading>span,.destroy-upgrade-video span,.destroy-upgrade-disposal span,.destroy-upgrade-request span{display:block;margin:0 0 10px;color:#c91515;font:800 12px/1.2 Manrope,Arial,sans-serif;text-transform:uppercase}
@@ -581,6 +611,9 @@ export function renderServiceUpgradeStyles() {
     .destroy-review-letters img{display:block;width:100%;height:480px;object-fit:cover;object-position:top}
     @media(max-width:900px){
       .destroy-service-upgrade{width:calc(100% - 40px)}
+      .destroy-rendered-service-hero{width:calc(100% - 40px);min-height:400px}
+      .destroy-rendered-service-hero__content{padding:38px 28px}
+      .destroy-rendered-service-hero h1{font-size:28px!important}
       .destroy-upgrade-section{padding:48px 0}
       .destroy-upgrade-overview,.destroy-upgrade-video,.destroy-upgrade-disposal,.destroy-upgrade-request{grid-template-columns:1fr}
       .destroy-upgrade-points,.destroy-upgrade-faq{grid-template-columns:1fr}
@@ -594,6 +627,10 @@ export function renderServiceUpgradeStyles() {
     }
     @media(max-width:600px){
       .destroy-service-upgrade{width:calc(100% - 20px);padding-bottom:40px}
+      .destroy-rendered-service-hero{width:calc(100% - 20px);min-height:390px;margin-top:10px;border-radius:18px}
+      .destroy-rendered-service-hero__content{padding:30px 22px}
+      .destroy-rendered-service-hero h1{font-size:27px!important;overflow-wrap:anywhere}
+      .destroy-rendered-service-hero__content>div{display:grid}
       .destroy-upgrade-heading h1,.destroy-upgrade-heading h2,.destroy-upgrade-disposal h2,.destroy-upgrade-request h2{font-size:24px}
       .destroy-upgrade-gallery{grid-auto-rows:145px}
       .destroy-upgrade-gallery__item.is-large{grid-column:span 2;grid-row:span 2}

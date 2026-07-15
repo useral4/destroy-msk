@@ -5,6 +5,7 @@ import { join } from "node:path";
 import type { Metadata } from "next";
 import manifest from "../data/rendered-pages-manifest.json";
 import {
+  renderRenderedServiceHero,
   renderRenderedServiceUpgrade,
   renderReviewsUpgrade,
   renderServiceUpgradeStyles,
@@ -1415,9 +1416,16 @@ export function readRenderedHtml(page: RenderedPage) {
   }
 
   const serviceUpgrade = renderRenderedServiceUpgrade(page.slug, body);
+  const serviceHero = renderRenderedServiceHero(page.slug, body);
 
   if (serviceUpgrade && !body.includes("destroy-service-upgrade")) {
     body = insertServicePresentation(body, serviceUpgrade);
+    presentationStyles = renderServiceUpgradeStyles();
+  }
+
+  if (serviceHero && !body.includes("destroy-rendered-service-hero")) {
+    body = body.replace(/<h1\b([^>]*)>[\s\S]*?<\/h1>/i, '<h2$1>Подробно об услуге</h2>');
+    body = insertAfterHeader(body, serviceHero);
     presentationStyles = renderServiceUpgradeStyles();
   }
 
