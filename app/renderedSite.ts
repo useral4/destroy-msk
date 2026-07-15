@@ -4,6 +4,11 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Metadata } from "next";
 import manifest from "../data/rendered-pages-manifest.json";
+import {
+  renderRenderedServiceUpgrade,
+  renderReviewsUpgrade,
+  renderServiceUpgradeStyles,
+} from "./serviceUpgrade";
 
 type RenderedPage = {
   slug: string;
@@ -1350,10 +1355,46 @@ function insertBeforeFooter(body: string, block: string) {
   return `${body.slice(0, footerIndex)}${block}${body.slice(footerIndex)}`;
 }
 
+function insertAfterHeader(body: string, block: string) {
+  const headerEnd = body.search(/<\/header>/i);
+
+  if (headerEnd < 0) {
+    return `${block}${body}`;
+  }
+
+  const insertAt = headerEnd + "</header>".length;
+  return `${body.slice(0, insertAt)}${block}${body.slice(insertAt)}`;
+}
+
+function insertServicePresentation(body: string, block: string) {
+  for (const marker of ['data-id="5598"', 'data-id="4653"', 'data-id="4659"']) {
+    const markerIndex = body.indexOf(marker);
+
+    if (markerIndex >= 0) {
+      const elementIndex = body.lastIndexOf("<div", markerIndex);
+
+      if (elementIndex >= 0) {
+        return `${body.slice(0, elementIndex)}${block}${body.slice(elementIndex)}`;
+      }
+    }
+  }
+
+  const worksIndex = body.search(/<div\b[^>]*elementor-element-fc35a16/i);
+
+  if (worksIndex < 0) {
+    return insertBeforeFooter(body, block);
+  }
+
+  return `${body.slice(0, worksIndex)}${block}${body.slice(worksIndex)}`;
+}
+
 export function readRenderedHtml(page: RenderedPage) {
   const html = readFileSync(join(process.cwd(), "data", "rendered-pages", page.file), "utf8");
   let head = html.match(/<head[^>]*>([\s\S]*?)<\/head>/i)?.[1] ?? "";
   let body = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i)?.[1] ?? html;
+  let presentationStyles = "";
+
+  body = body.replaceAll('href="/blagodarnosti/">Благодарности</a>', 'href="/blagodarnosti/">Отзывы</a>');
 
   if (page.slug === "nashi-obekty") {
     body = body.replace(
@@ -1373,7 +1414,24 @@ export function readRenderedHtml(page: RenderedPage) {
     body = insertBeforeFooter(body, renderWorksBlock(works));
   }
 
-  return `${head}\n${body}\n${compatibilityLayer}`;
+  const serviceUpgrade = renderRenderedServiceUpgrade(page.slug, body);
+
+  if (serviceUpgrade && !body.includes("destroy-service-upgrade")) {
+    body = insertServicePresentation(body, serviceUpgrade);
+    presentationStyles = renderServiceUpgradeStyles();
+  }
+
+  if (page.slug === "blagodarnosti") {
+    head = head.replaceAll("Благодарности", "Отзывы и благодарности");
+    body = body.replace(/<h1\b([^>]*)>[\s\S]*?<\/h1>/i, '<h2$1>Все благодарственные письма</h2>');
+
+    if (!body.includes("destroy-reviews-upgrade")) {
+      body = insertAfterHeader(body, renderReviewsUpgrade());
+      presentationStyles = renderServiceUpgradeStyles();
+    }
+  }
+
+  return `${head}\n${body}\n${presentationStyles}\n${compatibilityLayer}`;
 }
 
 export function metadataFromHtml(html: string, fallbackTitle = "DESTROY"): Metadata {

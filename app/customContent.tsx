@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import CustomCalculator from "./CustomCalculator";
 import { findRenderedPage, readRenderedHtml } from "./renderedSite";
+import { renderReviewsUpgrade, renderServiceUpgrade, renderServiceUpgradeStyles } from "./serviceUpgrade";
 
 type CustomKind = "service" | "hub" | "object" | "video" | "reviews" | "calculator";
 
@@ -151,7 +152,7 @@ export const customPages: CustomPage[] = [
       "Спил аварийных деревьев, валка деревьев на участке, корчевание пней и вывоз порубочных остатков в Москве и Московской области.",
     kind: "service",
     eyebrow: "Новая услуга",
-    heroImage: img.house,
+    heroImage: "/media/tree-removal-poster.jpg",
     intro:
       "Удаляем деревья на участках и рядом со строениями. Организуем безопасный спил, распил, погрузку, вывоз веток и корчевание пней.",
     points: [
@@ -161,7 +162,7 @@ export const customPages: CustomPage[] = [
       "Вывоз порубочных остатков",
       "Работа рядом с заборами, домами и коммуникациями",
     ],
-    gallery: [img.house, img.site, ...workPhotos.houses.slice(0, 3)],
+    gallery: ["/media/tree-removal-poster.jpg", img.site, ...workPhotos.territory],
     related: [
       { title: "Расчистка участков", href: "/raschistka-uchastkov/" },
       { title: "Разбор ветхих строений", href: "/razbor-vethih-stroenij/" },
@@ -498,7 +499,7 @@ export const customPages: CustomPage[] = [
 ];
 
 export function getCustomPages() {
-  return customPages.filter((page) => page.slug !== "novye-uslugi");
+  return customPages.filter((page) => !["novye-uslugi", "otzyvy-i-blagodarnosti"].includes(page.slug));
 }
 
 export function findCustomPage(slug: string) {
@@ -640,6 +641,17 @@ function renderElementorCustomPage(page: CustomPage) {
   const shell = getElementorShell();
   const eyebrow = page.kind === "service" ? "Услуги" : page.eyebrow;
   const steps = ["Осмотр и расчет", "Демонтаж", "Погрузка и вывоз"];
+  const serviceUpgrade =
+    page.kind === "service"
+      ? renderServiceUpgrade({
+          slug: page.slug,
+          title: page.title,
+          description: page.description,
+          points: page.points,
+          gallery: page.gallery,
+          faq: page.faq,
+        })
+      : "";
 
   const content = `
     <main class="elementor elementor-destroy-custom destroy-elementor-custom" data-elementor-type="wp-page">
@@ -658,41 +670,40 @@ function renderElementorCustomPage(page: CustomPage) {
             </div>
           </section>
 
-          <section class="elementor-element elementor-widget elementor-widget-html destroy-elementor-section destroy-service-intro">
-            <div>
-              <h2 class="h2">Что входит в работу</h2>
-              <p>${escapeHtml(page.description)}</p>
-            </div>
-            ${renderList(page.points, "destroy-check-list")}
-          </section>
-
-          ${renderFacts(page)}
-          ${renderGallery(page)}
-
-          <section class="elementor-element elementor-widget elementor-widget-html destroy-elementor-section">
-            <h2 class="h2">Этапы работ</h2>
-            <div class="destroy-steps">
-              ${steps
-                .map(
-                  (step, index) => `<article><span>${index + 1}</span><h3>${step}</h3><p>${
-                    index === 0
-                      ? "Уточняем объем, доступ, сроки, необходимость техники и контейнера."
-                      : index === 1
-                        ? "Выполняем работы аккуратно, с учетом конструкций, коммуникаций и соседних помещений."
-                        : "Собираем мусор, грузим в контейнер и оставляем объект готовым к следующему этапу."
-                  }</p></article>`,
-                )
-                .join("")}
-            </div>
-          </section>
-
-          ${renderRelated(page)}
-          ${renderFaq(page)}
+          ${
+            page.kind === "service"
+              ? serviceUpgrade
+              : page.kind === "reviews"
+                ? renderReviewsUpgrade()
+              : `<section class="elementor-element elementor-widget elementor-widget-html destroy-elementor-section destroy-service-intro">
+                  <div><h2 class="h2">Что входит в работу</h2><p>${escapeHtml(page.description)}</p></div>
+                  ${renderList(page.points, "destroy-check-list")}
+                </section>
+                ${renderFacts(page)}
+                ${renderGallery(page)}
+                <section class="elementor-element elementor-widget elementor-widget-html destroy-elementor-section">
+                  <h2 class="h2">Этапы работ</h2>
+                  <div class="destroy-steps">${steps
+                    .map(
+                      (step, index) => `<article><span>${index + 1}</span><h3>${step}</h3><p>${
+                        index === 0
+                          ? "Уточняем объем, доступ, сроки, необходимость техники и контейнера."
+                          : index === 1
+                            ? "Выполняем работы аккуратно, с учетом конструкций, коммуникаций и соседних помещений."
+                            : "Собираем мусор, грузим в контейнер и оставляем объект готовым к следующему этапу."
+                      }</p></article>`,
+                    )
+                    .join("")}</div>
+                </section>
+                ${renderRelated(page)}
+                ${renderFaq(page)}`
+          }
+          ${page.kind === "service" ? renderRelated(page) : ""}
           ${renderRequestForm()}
       </div>
     </main>`;
 
-  return `${shell.assets}${renderElementorCustomStyles()}${shell.header}${content}${shell.footer}`;
+  return `${shell.assets}${renderElementorCustomStyles()}${renderServiceUpgradeStyles()}${shell.header}${content}${shell.footer}`;
 }
 
 function renderElementorCustomStyles() {
@@ -702,19 +713,20 @@ function renderElementorCustomStyles() {
     body:has(.destroy-elementor-custom)>div:not([hidden]){height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important}
     body:has(.destroy-elementor-custom) .elementor-location-footer{opacity:1!important;transform:none!important}
     .destroy-elementor-custom{width:100%!important;max-width:none!important;overflow:visible!important;background:#fff;color:#111}
-    .destroy-service-container{width:min(1400px,calc(100% - 100px));max-width:1400px;margin:0 auto;padding:24px 0 80px;box-sizing:border-box}
-    .destroy-service-hero{position:relative;min-height:500px;display:flex;align-items:flex-end;overflow:hidden;border-radius:20px;background:#211b1b;margin:0!important;isolation:isolate}
+    .destroy-service-container{width:min(1180px,calc(100% - 100px));max-width:1180px;margin:0 auto;padding:24px 0 80px;box-sizing:border-box}
+    .destroy-service-container>.destroy-service-upgrade{width:100%;max-width:none;padding-left:0;padding-right:0}
+    .destroy-service-hero{position:relative;min-height:430px;display:flex;align-items:flex-end;overflow:hidden;border-radius:20px;background:#211b1b;margin:0!important;isolation:isolate}
     .destroy-service-hero__image{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
     .destroy-service-hero__shade{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(0,0,0,.82),rgba(0,0,0,.44) 54%,rgba(0,0,0,.28)),linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.72))}
-    .destroy-service-hero__content{position:relative;z-index:2;max-width:820px;padding:64px 58px;color:#fff}
-    .destroy-service-hero span{display:block;margin:0 0 14px;color:#c91515;font:800 13px/1.2 Arial,Helvetica,sans-serif;text-transform:uppercase}
-    .destroy-service-hero h1{margin:0 0 20px;color:#fff;font-family:Georgia,"Times New Roman",serif;font-size:52px;line-height:1.05;font-weight:800;text-transform:uppercase;letter-spacing:0}
-    .destroy-service-hero p{max-width:720px;margin:0;color:rgba(255,255,255,.88);font:500 17px/1.5 Arial,Helvetica,sans-serif}
+    .destroy-service-hero__content{position:relative;z-index:2;max-width:780px;padding:52px 50px;color:#fff}
+    .destroy-service-hero span{display:block;margin:0 0 12px;color:#d41b1b;font:800 12px/1.2 Manrope,Arial,sans-serif;text-transform:uppercase}
+    .destroy-service-hero h1{margin:0 0 18px;color:#fff;font-family:Merriweather,Georgia,serif;font-size:32px;line-height:1.25;font-weight:700;text-transform:uppercase;letter-spacing:0}
+    .destroy-service-hero p{max-width:720px;margin:0;color:rgba(255,255,255,.9);font:500 16px/1.5 Manrope,Arial,sans-serif}
     .destroy-service-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px}
     .destroy-service-actions a,.destroy-service-request .wpcf7-submit{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:8px;background:#c91515;color:#fff!important;text-decoration:none;padding:14px 24px;font:800 13px/1 Arial,Helvetica,sans-serif;text-transform:uppercase}
     .destroy-service-actions a:nth-child(2){background:#fff;color:#111!important}
     .destroy-elementor-section{box-sizing:border-box;padding:72px 0!important;margin:0!important;border-top:1px solid #ededed}
-    .destroy-elementor-section .h2{margin:0 0 28px;color:#111;font-family:Georgia,"Times New Roman",serif;font-size:36px;line-height:1.15;font-weight:800;text-align:center;text-transform:uppercase}
+    .destroy-elementor-section .h2{margin:0 0 28px;color:#111;font-family:Merriweather,Georgia,serif;font-size:28px;line-height:1.25;font-weight:700;text-align:center;text-transform:uppercase}
     .destroy-service-intro{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:72px;align-items:start;border-top:0}
     .destroy-service-intro .h2{max-width:590px;margin-bottom:26px;text-align:left}
     .destroy-service-intro>div>p{max-width:620px;margin:0}
@@ -733,7 +745,7 @@ function renderElementorCustomStyles() {
     .destroy-faq{display:grid;gap:10px}.destroy-faq details{border:1px solid #ececec;border-radius:8px;background:#fff;padding:16px}.destroy-faq summary{font:800 16px/1.3 Arial,Helvetica,sans-serif;cursor:pointer}
     .destroy-elementor-section.destroy-service-request{display:grid;grid-template-columns:1fr 1.05fr;gap:30px;margin:0 0 58px!important;padding:36px!important;border-top:0;border-radius:8px;background:#362d2d;color:#fff}.destroy-service-request .h2{color:#fff;text-align:left}.destroy-request-text p{color:rgba(255,255,255,.75)}.destroy-service-request form{display:grid;gap:12px}.destroy-service-request input,.destroy-service-request textarea{width:100%;box-sizing:border-box;border:0;border-radius:8px;background:#fff;color:#111;padding:14px 18px;font:500 15px/1.2 Arial,Helvetica,sans-serif}
     @media(max-width:1200px){.destroy-service-container{width:calc(100% - 50px);max-width:none}}
-    @media(max-width:900px){.destroy-service-container{padding:16px 0 48px}.destroy-service-hero{min-height:440px}.destroy-service-hero__content{padding:38px 24px}.destroy-service-hero h1{font-size:32px}.destroy-service-intro,.destroy-check-list,.destroy-facts,.destroy-steps,.destroy-related-grid{grid-template-columns:1fr}.destroy-service-intro{gap:28px}.destroy-elementor-section{padding:48px 0!important}.destroy-service-works .swiper-wrapper{grid-auto-columns:minmax(250px,86%);gap:18px}.destroy-service-works img{height:300px}.destroy-elementor-section.destroy-service-request{grid-template-columns:1fr;gap:24px;margin-bottom:32px!important;padding:24px!important}}
+    @media(max-width:900px){.destroy-service-container{padding:16px 0 48px}.destroy-service-hero{min-height:400px}.destroy-service-hero__content{padding:38px 24px}.destroy-service-hero h1{font-size:28px}.destroy-service-intro,.destroy-check-list,.destroy-facts,.destroy-steps,.destroy-related-grid{grid-template-columns:1fr}.destroy-service-intro{gap:28px}.destroy-elementor-section{padding:48px 0!important}.destroy-service-works .swiper-wrapper{grid-auto-columns:minmax(250px,86%);gap:18px}.destroy-service-works img{height:300px}.destroy-elementor-section.destroy-service-request{grid-template-columns:1fr;gap:24px;margin-bottom:32px!important;padding:24px!important}}
     @media(max-width:700px){.destroy-service-container{width:calc(100% - 20px)}}
   </style>`;
 }
