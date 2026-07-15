@@ -510,7 +510,6 @@ export function renderRenderedServiceHero(slug: string, body: string) {
     <img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="eager" fetchpriority="high" decoding="async">
     <div class="destroy-rendered-service-hero__shade"></div>
     <div class="destroy-rendered-service-hero__content">
-      <span>Услуги DESTROY</span>
       <h1>${escapeHtml(title)}</h1>
       <p>Профессиональный демонтаж с фиксированной сметой, фотоотчетами, погрузкой и вывозом строительного мусора.</p>
       <div><a href="#заявка">Оставить заявку</a><a href="/calc/">Рассчитать стоимость</a></div>
@@ -554,7 +553,7 @@ export function renderServiceUpgradeStyles() {
     .destroy-service-upgrade{width:min(1180px,calc(100% - 100px));max-width:1180px;margin:0 auto;padding:28px 0 70px;color:#111;font-family:Manrope,Arial,sans-serif;box-sizing:border-box}
     .elementor .destroy-service-upgrade{width:100%;max-width:1180px}
     .destroy-service-upgrade *{box-sizing:border-box}
-    .destroy-rendered-service-hero{position:relative;width:min(1600px,calc(100% - 80px));min-height:430px;margin:24px auto 42px;display:flex;align-items:flex-end;overflow:hidden;border-radius:20px;background:#211b1b;color:#fff;isolation:isolate}
+    .destroy-rendered-service-hero{position:relative;width:min(1640px,calc(100% - 200px));min-height:430px;margin:24px auto 42px;display:flex;align-items:flex-end;overflow:hidden;border-radius:20px;background:#211b1b;color:#fff;isolation:isolate}
     .destroy-rendered-service-hero>img{position:absolute;inset:0;z-index:0;display:block;width:100%;height:100%;object-fit:cover}
     .destroy-rendered-service-hero__shade{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(0,0,0,.84),rgba(0,0,0,.48) 58%,rgba(0,0,0,.18)),linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.7))}
     .destroy-rendered-service-hero__content{position:relative;z-index:2;max-width:790px;padding:52px 50px;font-family:Manrope,Arial,sans-serif}
@@ -577,7 +576,7 @@ export function renderServiceUpgradeStyles() {
     .destroy-upgrade-points li:after{content:"";position:absolute;left:23px;top:50%;width:7px;height:4px;border-left:2px solid #c91515;border-bottom:2px solid #c91515;transform:translateY(-65%) rotate(-45deg)}
     .destroy-upgrade-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
     .destroy-upgrade-gallery__item{aspect-ratio:4/3;margin:0;overflow:hidden;border-radius:8px;background:#eee}
-    .destroy-upgrade-gallery img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+    .elementor .destroy-upgrade-gallery__item>img,.destroy-upgrade-gallery__item>img{display:block!important;width:100%!important;height:100%!important;min-height:100%!important;object-fit:cover!important;object-position:center!important;transition:transform .35s ease}
     .destroy-upgrade-gallery__item:hover img{transform:scale(1.025)}
     .destroy-upgrade-video{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:36px;align-items:center;margin-top:32px;padding:30px;background:#f3f3f3;border-radius:8px}
     .destroy-upgrade-video video{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:8px;background:#171717;object-fit:contain}
@@ -586,7 +585,7 @@ export function renderServiceUpgradeStyles() {
     .destroy-upgrade-cases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
     .destroy-upgrade-case{overflow:hidden;border:1px solid #e4e4e4;border-radius:8px;background:#fff}
     .destroy-upgrade-case>a{display:block;margin:0}
-    .destroy-upgrade-case img{display:block;width:100%;height:220px;object-fit:cover}
+    .elementor .destroy-upgrade-case>a>img,.destroy-upgrade-case>a>img{display:block!important;width:100%!important;height:240px!important;object-fit:cover!important;object-position:center!important}
     .destroy-upgrade-case>div{padding:22px}
     .destroy-upgrade-case span{display:block;margin-bottom:8px;color:#c91515;font:800 11px/1.2 Manrope,Arial,sans-serif;text-transform:uppercase}
     .destroy-upgrade-case h3{margin:0 0 10px;color:#111;font:700 20px/1.25 Merriweather,Georgia,serif;text-transform:uppercase}
@@ -614,6 +613,12 @@ export function renderServiceUpgradeStyles() {
     .destroy-review-letters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start}
     .destroy-review-letters a{display:block;overflow:hidden;border:1px solid #ddd;border-radius:8px;background:#fff}
     .destroy-review-letters img{display:block;width:100%;height:480px;object-fit:cover;object-position:top}
+    @media(max-width:1440px){
+      .destroy-rendered-service-hero{width:calc(100% - 100px)}
+    }
+    @media(max-width:1200px){
+      .destroy-rendered-service-hero{width:calc(100% - 50px)}
+    }
     @media(max-width:900px){
       .destroy-service-upgrade{width:calc(100% - 40px)}
       .destroy-rendered-service-hero{width:calc(100% - 40px);min-height:400px}
@@ -624,6 +629,7 @@ export function renderServiceUpgradeStyles() {
       .destroy-upgrade-points,.destroy-upgrade-faq{grid-template-columns:1fr}
       .destroy-upgrade-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
       .destroy-upgrade-cases,.destroy-client-names,.destroy-review-cards,.destroy-review-letters{grid-template-columns:1fr}
+      .elementor .destroy-upgrade-case>a>img,.destroy-upgrade-case>a>img{height:260px!important}
       .destroy-upgrade-steps{grid-template-columns:1fr 1fr}
       .destroy-upgrade-disposal,.destroy-upgrade-request{padding:28px}
       .destroy-upgrade-request>div:last-child{min-width:0}
@@ -637,6 +643,7 @@ export function renderServiceUpgradeStyles() {
       .destroy-rendered-service-hero__content>div{display:grid}
       .destroy-upgrade-heading h1,.destroy-upgrade-heading h2,.destroy-upgrade-disposal h2,.destroy-upgrade-request h2{font-size:24px}
       .destroy-upgrade-gallery{grid-template-columns:1fr}
+      .elementor .destroy-upgrade-case>a>img,.destroy-upgrade-case>a>img{height:220px!important}
       .destroy-upgrade-steps{grid-template-columns:1fr}
       .destroy-upgrade-steps article{min-height:0}
       .destroy-upgrade-video{padding:16px}

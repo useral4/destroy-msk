@@ -639,7 +639,7 @@ function renderRequestForm() {
 
 function renderElementorCustomPage(page: CustomPage) {
   const shell = getElementorShell();
-  const eyebrow = page.kind === "service" ? "Услуги" : page.eyebrow;
+  const eyebrow = page.kind === "service" ? "" : page.eyebrow;
   const steps = ["Осмотр и расчет", "Демонтаж", "Погрузка и вывоз"];
   const serviceUpgrade =
     page.kind === "service"
@@ -660,7 +660,7 @@ function renderElementorCustomPage(page: CustomPage) {
             <div class="destroy-service-hero__image" style="background-image:url('${escapeHtml(page.heroImage)}')"></div>
             <div class="destroy-service-hero__shade"></div>
             <div class="destroy-service-hero__content">
-              <span>${escapeHtml(eyebrow)}</span>
+              ${eyebrow ? `<span>${escapeHtml(eyebrow)}</span>` : ""}
               <h1>${escapeHtml(page.title)}</h1>
               <p>${escapeHtml(page.intro)}</p>
               <div class="destroy-service-actions">
