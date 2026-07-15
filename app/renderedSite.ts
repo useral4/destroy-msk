@@ -20,31 +20,6 @@ type RenderedPage = {
 const hiddenRenderedSlugs = new Set(["novye-uslugi"]);
 const pages = (manifest.pages as RenderedPage[]).filter((page) => !hiddenRenderedSlugs.has(page.slug));
 
-const renderedWorksGalleries: Record<string, { title: string; images: string[] }> = {
-  "demontazh-zabora": {
-    title: "Наши работы демонтажа забора",
-    images: [
-      "/wp-content/uploads/2025/11/photo_2025-11-01_13-59-39-1.jpg",
-      "/wp-content/uploads/2025/11/photo_2025-11-01_13-59-42.jpg",
-      "/wp-content/uploads/2025/11/photo_2025-11-01_13-59-44.jpg",
-      "/wp-content/uploads/2025/11/photo_2025-11-01_13-59-46.jpg",
-      "/wp-content/uploads/2025/11/photo_2025-11-01_13-59-48.jpg",
-      "/wp-content/uploads/2025/11/photo_2025-11-01_13-59-50.jpg",
-    ],
-  },
-  "demontazh-shtukaturki": {
-    title: "Наши работы демонтажа штукатурки",
-    images: [
-      "/wp-content/uploads/2025/11/photo_2025-11-01_13-49-50.jpg",
-      "/wp-content/uploads/2025/11/photo_2025-11-01_13-49-53.jpg",
-      "/wp-content/uploads/2025/11/photo_2025-11-01_13-49-53-1.jpg",
-      "/wp-content/uploads/2025/11/photo_2025-11-01_13-49-56.jpg",
-      "/wp-content/uploads/2025/11/photo_2025-11-01_13-49-58.jpg",
-      "/wp-content/uploads/2025/11/photo_2025-11-01_13-50-00.jpg",
-    ],
-  },
-};
-
 const compatibilityLayer = String.raw`
 <style id="destroy-static-compatibility">
   html {
@@ -1335,27 +1310,6 @@ export function findRenderedPage(slug: string) {
   return pages.find((page) => page.slug === slug);
 }
 
-function renderWorksBlock(works: { title: string; images: string[] }) {
-  const slides = works.images
-    .map(
-      (src) =>
-        `<div class="swiper-slide"><img src="${src}" alt="${works.title}" loading="lazy" decoding="async"></div>`,
-    )
-    .join("");
-
-  return `<div class="elementor-element elementor-element-fc35a16 elementor-widget elementor-widget-html destroy-rendered-works" data-id="fc35a16" data-element_type="widget" data-e-type="widget" data-widget_type="html.default"><h2 class="h2">${works.title}</h2><div class="swiper mySwiper destroy-rendered-works__slider" aria-label="${works.title}"><div class="swiper-wrapper">${slides}</div><div class="swiper-nav-wrapper" aria-hidden="true"><div class="swiper-button-next"></div><div class="swiper-button-prev"></div></div></div></div>`;
-}
-
-function insertBeforeFooter(body: string, block: string) {
-  const footerIndex = body.search(/<footer\b/i);
-
-  if (footerIndex < 0) {
-    return `${body}${block}`;
-  }
-
-  return `${body.slice(0, footerIndex)}${block}${body.slice(footerIndex)}`;
-}
-
 function insertAfterHeader(body: string, block: string) {
   const headerEnd = body.search(/<\/header>/i);
 
@@ -1367,26 +1321,24 @@ function insertAfterHeader(body: string, block: string) {
   return `${body.slice(0, insertAt)}${block}${body.slice(insertAt)}`;
 }
 
-function insertServicePresentation(body: string, block: string) {
-  for (const marker of ['data-id="5598"', 'data-id="4653"', 'data-id="4659"']) {
-    const markerIndex = body.indexOf(marker);
+function composeUnifiedServiceBody(body: string, presentation: string) {
+  const headerStart = body.search(/<header\b/i);
+  const footerStart = body.search(/<footer\b/i);
 
-    if (markerIndex >= 0) {
-      const elementIndex = body.lastIndexOf("<div", markerIndex);
-
-      if (elementIndex >= 0) {
-        return `${body.slice(0, elementIndex)}${block}${body.slice(elementIndex)}`;
-      }
-    }
+  if (headerStart < 0 || footerStart < 0 || footerStart <= headerStart) {
+    return presentation;
   }
 
-  const worksIndex = body.search(/<div\b[^>]*elementor-element-fc35a16/i);
+  const headerSource = body.slice(headerStart, footerStart);
+  const headerMatch = headerSource.match(/<header\b[\s\S]*?<\/header>/i);
 
-  if (worksIndex < 0) {
-    return insertBeforeFooter(body, block);
+  if (!headerMatch || headerMatch.index === undefined) {
+    return presentation;
   }
 
-  return `${body.slice(0, worksIndex)}${block}${body.slice(worksIndex)}`;
+  const headerEnd = headerStart + headerMatch.index + headerMatch[0].length;
+
+  return `${body.slice(0, headerEnd)}<main class="destroy-unified-service">${presentation}</main>${body.slice(footerStart)}`;
 }
 
 export function readRenderedHtml(page: RenderedPage) {
@@ -1409,23 +1361,11 @@ export function readRenderedHtml(page: RenderedPage) {
     body = body.replaceAll("\u0423\u0441\u043b\u0443\u0433\u0438 DESTROY", "\u0423\u0441\u043b\u0443\u0433\u0438");
   }
 
-  const works = renderedWorksGalleries[page.slug];
-
-  if (works && !body.includes("elementor-element-fc35a16")) {
-    body = insertBeforeFooter(body, renderWorksBlock(works));
-  }
-
   const serviceUpgrade = renderRenderedServiceUpgrade(page.slug, body);
   const serviceHero = renderRenderedServiceHero(page.slug, body);
 
-  if (serviceUpgrade && !body.includes("destroy-service-upgrade")) {
-    body = insertServicePresentation(body, serviceUpgrade);
-    presentationStyles = renderServiceUpgradeStyles();
-  }
-
-  if (serviceHero && !body.includes("destroy-rendered-service-hero")) {
-    body = body.replace(/<h1\b([^>]*)>[\s\S]*?<\/h1>/i, '<h2$1>Подробно об услуге</h2>');
-    body = insertAfterHeader(body, serviceHero);
+  if (serviceUpgrade && serviceHero) {
+    body = composeUnifiedServiceBody(body, `${serviceHero}${serviceUpgrade}`);
     presentationStyles = renderServiceUpgradeStyles();
   }
 

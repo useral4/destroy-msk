@@ -1,3 +1,6 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+
 type ServiceFaq = {
   q: string;
   a: string;
@@ -372,8 +375,12 @@ function extractImages(body: string) {
     const src = tag.match(/\bdata-src=["']([^"']+)["']/i)?.[1] || tag.match(/\bsrc=["']([^"']+)["']/i)?.[1] || "";
     const normalized = normalizeImage(src);
 
+    const localPath = normalized.split(/[?#]/, 1)[0];
+
     if (
       normalized &&
+      localPath.startsWith("/") &&
+      existsSync(join(process.cwd(), "public", localPath.slice(1))) &&
       !normalized.startsWith("data:") &&
       !/logo|max\.svg|whatsapp\.svg|vector-3\.svg|a-1-|paper|favicon/i.test(normalized)
     ) {
@@ -433,9 +440,9 @@ export function renderServiceUpgrade(input: ServiceUpgradeInput) {
       </div>`
     : "";
 
-  return `<section class="destroy-service-upgrade" aria-label="Подробно об услуге">
+  return `<section class="destroy-service-upgrade" aria-label="Информация об услуге">
     <section class="destroy-upgrade-section destroy-upgrade-overview">
-      <div class="destroy-upgrade-heading"><span>Подробно об услуге</span><h2>Что входит в работу</h2><p>${escapeHtml(input.description)}</p></div>
+      <div class="destroy-upgrade-heading"><h2>Что входит в работу</h2><p>${escapeHtml(input.description)}</p></div>
       <ul class="destroy-upgrade-points">${points.map((point) => `<li>${escapeHtml(point)}</li>`).join("")}</ul>
     </section>
 
@@ -553,7 +560,8 @@ export function renderServiceUpgradeStyles() {
     .destroy-service-upgrade{width:min(1180px,calc(100% - 100px));max-width:1180px;margin:0 auto;padding:28px 0 70px;color:#111;font-family:Manrope,Arial,sans-serif;box-sizing:border-box}
     .elementor .destroy-service-upgrade{width:100%;max-width:1180px}
     .destroy-service-upgrade *{box-sizing:border-box}
-    .destroy-rendered-service-hero{position:relative;width:min(1640px,calc(100% - 200px));min-height:430px;margin:24px auto 42px;display:flex;align-items:flex-end;overflow:hidden;border-radius:20px;background:#211b1b;color:#fff;isolation:isolate}
+    .destroy-unified-service{display:block;background:#fff;padding:24px 0 0}
+    .destroy-rendered-service-hero{position:relative;width:min(1180px,calc(100% - 100px));min-height:430px;margin:0 auto 42px;display:flex;align-items:flex-end;overflow:hidden;border-radius:20px;background:#211b1b;color:#fff;isolation:isolate}
     .destroy-rendered-service-hero>img{position:absolute;inset:0;z-index:0;display:block;width:100%;height:100%;object-fit:cover}
     .destroy-rendered-service-hero__shade{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(0,0,0,.84),rgba(0,0,0,.48) 58%,rgba(0,0,0,.18)),linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.7))}
     .destroy-rendered-service-hero__content{position:relative;z-index:2;max-width:790px;padding:52px 50px;font-family:Manrope,Arial,sans-serif}
@@ -614,7 +622,7 @@ export function renderServiceUpgradeStyles() {
     .destroy-review-letters a{display:block;overflow:hidden;border:1px solid #ddd;border-radius:8px;background:#fff}
     .destroy-review-letters img{display:block;width:100%;height:480px;object-fit:cover;object-position:top}
     @media(max-width:1440px){
-      .destroy-rendered-service-hero{width:calc(100% - 100px)}
+      .destroy-rendered-service-hero{width:min(1180px,calc(100% - 100px))}
     }
     @media(max-width:1200px){
       .destroy-rendered-service-hero{width:calc(100% - 50px)}
