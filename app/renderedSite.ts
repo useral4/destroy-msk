@@ -1439,7 +1439,7 @@ export function readRenderedHtml(page: RenderedPage) {
     }
   }
 
-  return `${head}\n${body}\n${presentationStyles}\n${compatibilityLayer}`;
+  return `${presentationStyles}\n${head}\n${body}\n${compatibilityLayer}`;
 }
 
 export function metadataFromHtml(html: string, fallbackTitle = "DESTROY"): Metadata {

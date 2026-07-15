@@ -388,8 +388,8 @@ function renderGallery(images: string[], title: string) {
   return `<div class="destroy-upgrade-gallery">${images
     .slice(0, 6)
     .map(
-      (src, index) =>
-        `<figure class="destroy-upgrade-gallery__item${index === 0 ? " is-large" : ""}"><img src="${escapeHtml(src)}" alt="${escapeHtml(title)}" loading="lazy" decoding="async"></figure>`,
+      (src) =>
+        `<figure class="destroy-upgrade-gallery__item"><img src="${escapeHtml(src)}" alt="${escapeHtml(title)}" loading="lazy" decoding="async"></figure>`,
     )
     .join("")}</div>`;
 }
@@ -420,9 +420,18 @@ export function renderServiceUpgrade(input: ServiceUpgradeInput) {
   const faq = [...(input.faq || []), ...group.faq].filter(
     (item, index, items) => items.findIndex((candidate) => candidate.q === item.q) === index,
   );
-  const treeMedia = groupKey === "trees";
-  const video = treeMedia ? "/media/tree-removal-process.mp4" : "/media/demolition-process.mp4";
-  const poster = treeMedia ? "/media/tree-removal-poster.jpg" : "/media/demolition-process-poster.jpg";
+  const videoMedia =
+    input.slug === "spil-i-udalenie-derevev"
+      ? { video: "/media/tree-removal-process.mp4", poster: "/media/tree-removal-poster.jpg" }
+      : input.slug === "razbor-vethih-stroenij"
+        ? { video: "/media/demolition-process.mp4", poster: "/media/demolition-process-poster.jpg" }
+        : null;
+  const videoBlock = videoMedia
+    ? `<div class="destroy-upgrade-video">
+        <video controls playsinline preload="metadata" poster="${videoMedia.poster}"><source src="${videoMedia.video}" type="video/mp4">Ваш браузер не поддерживает видео.</video>
+        <div><span>Видео процесса</span><h3>${escapeHtml(input.title)}</h3><p>Ролик показывает характер работ и используется как иллюстрация. Видео с объектов DESTROY по вашей задаче менеджер отправит вместе с примерами смет.</p><a href="#заявка">Запросить видео похожего объекта</a></div>
+      </div>`
+    : "";
 
   return `<section class="destroy-service-upgrade" aria-label="Подробно об услуге">
     <section class="destroy-upgrade-section destroy-upgrade-overview">
@@ -431,12 +440,9 @@ export function renderServiceUpgrade(input: ServiceUpgradeInput) {
     </section>
 
     <section class="destroy-upgrade-section destroy-upgrade-media">
-      <div class="destroy-upgrade-heading"><span>Фото и видео</span><h2>Процесс и результат</h2><p>Фотографии из портфолио DESTROY и наглядное видео процесса помогают заранее оценить объем и организацию работ.</p></div>
+      <div class="destroy-upgrade-heading"><span>${videoMedia ? "Фото и видео" : "Фотографии работ"}</span><h2>Процесс и результат</h2><p>${videoMedia ? "Фотографии из портфолио DESTROY и тематическое видео помогают заранее оценить объем и организацию работ." : "Фотографии из портфолио DESTROY показывают реальные объекты, характер демонтажа и результат выполненных работ."}</p></div>
       ${renderGallery(gallery, input.title)}
-      <div class="destroy-upgrade-video">
-        <video controls playsinline preload="metadata" poster="${poster}"><source src="${video}" type="video/mp4">Ваш браузер не поддерживает видео.</video>
-        <div><span>Видео процесса</span><h3>${escapeHtml(input.title)}</h3><p>Ролик показывает характер работ и используется как иллюстрация. Видео с объектов DESTROY по вашей задаче менеджер отправит вместе с примерами смет.</p><a href="#заявка">Запросить видео похожего объекта</a></div>
-      </div>
+      ${videoBlock}
     </section>
 
     <section class="destroy-upgrade-section">
@@ -501,7 +507,7 @@ export function renderRenderedServiceHero(slug: string, body: string) {
   const image = unique([...extractImages(body), ...group.gallery, ...universalGallery])[0];
 
   return `<section class="destroy-rendered-service-hero">
-    <img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" decoding="async">
+    <img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="eager" fetchpriority="high" decoding="async">
     <div class="destroy-rendered-service-hero__shade"></div>
     <div class="destroy-rendered-service-hero__content">
       <span>Услуги DESTROY</span>
@@ -548,7 +554,7 @@ export function renderServiceUpgradeStyles() {
     .destroy-service-upgrade{width:min(1180px,calc(100% - 100px));max-width:1180px;margin:0 auto;padding:28px 0 70px;color:#111;font-family:Manrope,Arial,sans-serif;box-sizing:border-box}
     .elementor .destroy-service-upgrade{width:100%;max-width:1180px}
     .destroy-service-upgrade *{box-sizing:border-box}
-    .destroy-rendered-service-hero{position:relative;width:min(1180px,calc(100% - 100px));min-height:430px;margin:24px auto 42px;display:flex;align-items:flex-end;overflow:hidden;border-radius:20px;background:#211b1b;color:#fff;isolation:isolate}
+    .destroy-rendered-service-hero{position:relative;width:min(1600px,calc(100% - 80px));min-height:430px;margin:24px auto 42px;display:flex;align-items:flex-end;overflow:hidden;border-radius:20px;background:#211b1b;color:#fff;isolation:isolate}
     .destroy-rendered-service-hero>img{position:absolute;inset:0;z-index:0;display:block;width:100%;height:100%;object-fit:cover}
     .destroy-rendered-service-hero__shade{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(0,0,0,.84),rgba(0,0,0,.48) 58%,rgba(0,0,0,.18)),linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.7))}
     .destroy-rendered-service-hero__content{position:relative;z-index:2;max-width:790px;padding:52px 50px;font-family:Manrope,Arial,sans-serif}
@@ -569,13 +575,12 @@ export function renderServiceUpgradeStyles() {
     .destroy-upgrade-points li{position:relative;display:flex;min-height:72px;align-items:center;padding:17px 18px 17px 48px;border:1px solid #e2e2e2;border-radius:8px;background:#fff;font:700 14px/1.4 Manrope,Arial,sans-serif}
     .destroy-upgrade-points li:before{content:"";position:absolute;left:18px;top:50%;width:17px;height:17px;border:1px solid #c91515;border-radius:50%;transform:translateY(-50%)}
     .destroy-upgrade-points li:after{content:"";position:absolute;left:23px;top:50%;width:7px;height:4px;border-left:2px solid #c91515;border-bottom:2px solid #c91515;transform:translateY(-65%) rotate(-45deg)}
-    .destroy-upgrade-gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:190px;gap:12px}
-    .destroy-upgrade-gallery__item{margin:0;overflow:hidden;border-radius:8px;background:#eee}
-    .destroy-upgrade-gallery__item.is-large{grid-column:span 2;grid-row:span 2}
+    .destroy-upgrade-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .destroy-upgrade-gallery__item{aspect-ratio:4/3;margin:0;overflow:hidden;border-radius:8px;background:#eee}
     .destroy-upgrade-gallery img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
     .destroy-upgrade-gallery__item:hover img{transform:scale(1.025)}
     .destroy-upgrade-video{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:36px;align-items:center;margin-top:32px;padding:30px;background:#f3f3f3;border-radius:8px}
-    .destroy-upgrade-video video{display:block;width:100%;height:360px;border-radius:8px;background:#171717;object-fit:cover}
+    .destroy-upgrade-video video{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:8px;background:#171717;object-fit:contain}
     .destroy-upgrade-video h3{margin:0 0 14px;color:#111;font:700 24px/1.25 Merriweather,Georgia,serif;text-transform:uppercase}
     .destroy-upgrade-video a,.destroy-upgrade-case a,.destroy-upgrade-disposal a{display:inline-flex;margin-top:20px;color:#c91515!important;font:800 13px/1.2 Manrope,Arial,sans-serif;text-decoration:none;text-transform:uppercase}
     .destroy-upgrade-cases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
@@ -617,10 +622,9 @@ export function renderServiceUpgradeStyles() {
       .destroy-upgrade-section{padding:48px 0}
       .destroy-upgrade-overview,.destroy-upgrade-video,.destroy-upgrade-disposal,.destroy-upgrade-request{grid-template-columns:1fr}
       .destroy-upgrade-points,.destroy-upgrade-faq{grid-template-columns:1fr}
-      .destroy-upgrade-gallery{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:180px}
+      .destroy-upgrade-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
       .destroy-upgrade-cases,.destroy-client-names,.destroy-review-cards,.destroy-review-letters{grid-template-columns:1fr}
       .destroy-upgrade-steps{grid-template-columns:1fr 1fr}
-      .destroy-upgrade-video video{height:320px}
       .destroy-upgrade-disposal,.destroy-upgrade-request{padding:28px}
       .destroy-upgrade-request>div:last-child{min-width:0}
       .destroy-review-letters img{height:auto;max-height:560px;object-fit:contain}
@@ -632,12 +636,10 @@ export function renderServiceUpgradeStyles() {
       .destroy-rendered-service-hero h1{font-size:27px!important;overflow-wrap:anywhere}
       .destroy-rendered-service-hero__content>div{display:grid}
       .destroy-upgrade-heading h1,.destroy-upgrade-heading h2,.destroy-upgrade-disposal h2,.destroy-upgrade-request h2{font-size:24px}
-      .destroy-upgrade-gallery{grid-auto-rows:145px}
-      .destroy-upgrade-gallery__item.is-large{grid-column:span 2;grid-row:span 2}
+      .destroy-upgrade-gallery{grid-template-columns:1fr}
       .destroy-upgrade-steps{grid-template-columns:1fr}
       .destroy-upgrade-steps article{min-height:0}
       .destroy-upgrade-video{padding:16px}
-      .destroy-upgrade-video video{height:260px}
     }
   </style>`;
 }
